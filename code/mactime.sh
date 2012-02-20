@@ -1,0 +1,1 @@
+fls -r -m /home | mactime -b - 06/24/2011 > timeline.txt

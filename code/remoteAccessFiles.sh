@@ -1,0 +1,1 @@
+/etc/hosts, /etc/hosts.equiv, ~/.rhosts, /etc/hosts.allow, /etc/hosts.deny, /etc/syslog.conf/ etc/rc, /etc/inetd.conf
