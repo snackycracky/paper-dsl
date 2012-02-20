@@ -54,7 +54,7 @@ Die Sektionen würden bei der echten Arbeit wegfallen.
 
 Das Wort “Abstraktion” bezeichnet meist den induktiven Denkprozess des
 Weglassens von Einzelheiten und des Überführens auf etwas Allgemeineres oder
-Einfacheres [...] also [...] jenen Prozess, der Informationen so weit auf ihre
+Einfacheres [...] alsö[...] jenen Prozess, der Informationen söweit auf ihre
 wesentlichen Eigenschaften herab setzt, dass sie psychisch überhaupt weiter
 verarbeitet werden können. (nach \cite{wikiAbsraktion}) Die grundlegenden
 Abstraktionsstufen in der Informatik sind wie folgt aufgeteilt: Die unterste
@@ -75,7 +75,7 @@ Eigenheiten zur Problemlösung voraus. Das Verständnis des eigentlichen Problem
 dass es mit Hilfe von Software zu lösen gilt, liegt nicht immer zu 100% bei dem
 Programmierer, der es mit Java oder C\# bzw. einer 3GL lösen soll. Komplexe
 Probleme z.B. in der Medizin, der Architektur oder im Versicherungswesen sind
-oft so umfangreich, dass die Aufgabe des “Requirements Engeneering”
+oft söumfangreich, dass die Aufgabe des “Requirements Engeneering”
 hauptsächlich darin besteht, zwischen dem Auftragnehmer und Auftraggeber eine
 Verständnisbrücke zu bauen. Diese Brücke ist auf der einen Seite mit
 Implementierungsdetails belastet und auf der anderen mit domänenspezifischem
@@ -163,7 +163,7 @@ Groovy-Meta-Programming verwendet werden.
 ``Language oriented programming is about describing a system through multiple
 DSLs''.(vlg. \cite{fowler2005language})
 
-Sprachorientierte Programmierung ist nach Fowlers Beschreibung also ein
+Sprachorientierte Programmierung ist nach Fowlers Beschreibung alsöein
 gesamtsystem bestehend aus subsystemen, deren Funktionen mit definierten
 Sprachmodellen beschrieben werden. Bestenfalls sollten diese Sprachmodelle
 die fachlichen Probleme auf eine natürliche Art beschreiben können ohne dabei
@@ -183,12 +183,78 @@ eine native Darstellung für BigDecimal und BigInteger. (vgl. \cite{wikigroovy})
 
 \section{Metaprogrammierung}
 
+
+Metaprogrammierung ist eine Programmiertechnik, die Codegenerierung einsetzt, um
+bessere Abstraktion zu ermöglichen.
+Ein Evaluierer bestimmt den Wert eines formalen Ausdrucks. Z.B. ist der Wert des
+formalen Ausdrucks “5 + 3” “8”. Für Metaprogrammierung ist es oft nötig
+formale Ausdrücke zur Lauf- zeit auswerten zu können. Programmiersprachen wie
+Ruby oder Lisp stellen hierfür einen Eva- luierer über eine eval-Funktion
+bereit.
+Linguistische Abstraktion bezeichnet Abstraktion auf linguistischem
+Sprachniveau. Dabei be- zeichnet hier der Begriff “Sprache” primär formale
+Sprachen.
+Metalinguistische Abstraktion ist Abstraktion auf (linguistischem) Sprachniveau,
+die den Evalu- ierer umschreibt oder einen eigenen Evaluierer verwendet. Ein
+Beispiel ist ein lazy eval für eine strikt ausgewertete Sprache wie etwa Java.
+Der Begriff der Metalinguistischen Abstraktion ist nicht klar definiert und eine
+harte Abgrenzung zu anderen Konzepten (etwa Frameworks) vorzu- nehmen ist kaum
+möglich.
+Metaprogrammierung kann man als Werkzeug verstehen, das linguistische
+Abstraktion erzeugt.(vgl. \cite{biekermetaprogrammierung})
+
+Metaprogrammierung bezeichnet eine Programmier-Technik um Code automatisch zu generie- ren. Es geht also um Code der Code schreibt.
+Der Ursprung der Metaprogrammierung geht auf das 1958 am MIT entwickelte Lisp bzw. Sche- me zurück. In Lisp gibt es (defmacro ..) und in Scheme (define-syntax ..) Makros. Ein
+Lisp-Makro ist einer Funktion ähnlich. Eine Funktion erhält Parameter und liefert einen oder mehere Werte zurück. Ein Lisp-Makro erhält Parameter und liefert einen oder mehere Code- Ausdrücke zurück, die wieder evaluiert werden.
+Vor der Entwicklung der Lisp-Makros gab es bereits selbstmodifizierenden Assembler-Code. Das Problem hiermit ist das zu niedrige Abstaktionsniveau, da man sich auf Opcode-Ebene mit der Manipulation des Codes beschäftigen muss.
+In Ruby gibt es die Methoden define method und define class, mit der man Methoden bzw. Klassen definieren kann. Um Metaprogrammierung betreiben zu können, ist es essentiel, dass man solche Funktionen hat, damit man dynamisch Methoden und Klassen erzeugen kann. Des Weiteren stellt Ruby eval Funktionen zur Verfügung, mit denen Code in unterschiedlichen Kon- texten ausgeführt werden kann.
+InRubywirdkomplexereMetaprogrammierungüberInterpreter-Hooksrealisert,etwamethodmissing. method missing wird augerufen, wenn man eine nicht vorhandene Methode auf einem Objekt aufruft.DieDefault-ImplemtierungwirfteineNoMethodErrorException.Durchüberschreiben
+dieser Method kann man z.B. ein Dateisystem Objekt erzeugen, dass als Methodenaufrufe sei-
+ne Unterordner kennt. Dies ermöglicht es z.B. ein Verhalten, analog zu dem Shell-Befehl cd dirname, über fsobj dirname zu realisieren.
+Ein anderer Interpreter-Hook ist Class.inherited, der immer ausgeführt wird, wenn man von einer Klasse erbt. Möchte man verhindern, dass von einer Klasse geerbt wird, kann man in Class.inherited eine Exception werfen.
+
+Oft wird Metaprogrammierung als eine Form der Codekomprimierung verstanden. Es
+geht bei Metaprogrammierung nicht um das reine Einsparen von Zeichen bzw. Code-Zeilen, sondern um Abstraktion.
+
+(vgl. \cite{biekermetaprogrammierung})
+
 Introspection bezeichnet die Fähigkeit, auf Informationen über die Zustäe
 von Objekte, deren Klassen und Verhalten zur Laufzeit zugreifen zu können.
 Intercession erlaubt Zustände und Verhalten von Objekten, aber auch deren
 Klassen zur Laufzeit zu verändern. Intercession setzt meist Introspection
-voraus.
+voraus.\cite{mpInGroovy}
 
+\section{probleme und loesungsansaetze} 
+Ich beschreibe nun einige Probleme mit Metaprogrammierung und DSLs. Es geht mir
+hier nicht um Vollständigkeit, sondern darum einige Probleme und potenzielle
+Lösungen auf zu zeigen.
+Eins der wichtigsten Probleme ist die hohe Komplexität. In [Diomidis Spinellis.
+Rational metaprogramming. IEEE Software, 25(1):78–79, January/Fe- bruary 2008.]
+beschreibt der Autor das Pro- blem wie folgt:
+“While I admire the cleverness and skill that hides behind C++ libraries (...),
+the fact remains that writing advanced template code is devilishly hard, (...)”
+Die Komplexität lässt sich durch die Verwendung bekannter Metaprog. Paradigmen
+und Patterns reduzieren. Lisp hat hier etliche zu bieten, etwa defmacro,
+Higher-Order Functions oder Curry- ing.
+Eine DSL bzw. ein Metaprogammierungsframework sollte im mathematischen Sinne
+abgeschlos- sen sein. D.h. man soll den selben Code erzeugen können, den man von
+Hand schreiben kann und umgekehrt.
+Komplexe DSLs erzeugen teilweise schwer debugbaren Code. Nach Wissensstand des
+Autors gibt es zur Zeit kaum Lösungsansätze für dieses Problem.
+Es bleibt nur anzumerken, dass auch komplexe Frameworks teilweise schwer
+debugbaren Code erzeugen.
+Eine häufige Quelle für schwer debugbaren Code ist es, den Code als String
+darzustellen und dannzuevaluieren.Diesf ührt oft zu sinnfreien Fehlermeldungen
+wie “Syntax error in line 1 at char 42’’, wobei der evaluierte Code an anderer
+Stelle steht. Ruby und viele andere Sprachen bieten Konstrukte an, die es nicht
+zulassen, dass man syntaktisch falschen Code er- zeugt. In Ruby kann man hierfür
+Blöcke verwenden.
+Ein anderes Problem ist die Sprachkonsistens. Es ist schwierig gute und
+konsistente Sprachen zu erzeugen. Es ist aufwändig diese Sprachen zu lernen und
+ihr Support ist ressourcen-intensiv. Es macht daher Sinn die neue Sprache
+möglichst gut in die vorhandene Sprachumgebung ein zu gliedern. Eingebettete
+DSLs helfen hierbei.
+(vgl. \cite{biekermetaprogrammierung})
 
 \section{Metaprogrammierung in Groovy}
 Groovy besteht aus einem flexiblen Metaklassenmodell. Im Sinne einer Open
@@ -213,7 +279,7 @@ Wie in Java ist in Groovy jede Klasse abgeleitet von Object. Groovy ist in
 diesem Hinblick aber wesentlich konsequenter, da auf primitive Datentypen
 bewusst verzichtet wurde, um die Inkonsistenzen bei der Behandlung von pri-
 mitiven Datentypen und Klassen zu vermeiden. Weiterhin ist jede Klasse in Groovy
-eine Instanz von Class, womit Class also auch in Groovy die Klasse der Klassen
+eine Instanz von Class, womit Class alsöauch in Groovy die Klasse der Klassen
 bleibt.  \cite{mpInGroovy}
 
 \paragraph{ getMetaClass setMetaClass} Nicht nur eine Klasse hat eine
@@ -227,7 +293,7 @@ Klasse kann durch Überschreiben dieser zwei Methoden dynamische Properties auf
 Objektebene oder Klassenebene erzeugen. \\
 
 \paragraph{ invokeMethod } Das Verhalten eines Objektes ist wiederum eine Ebene
-höher angesiedelt, spielt sich also auf Klassen- oder Metaklassenebene ab.
+höher angesiedelt, spielt sich alsöauf Klassen- oder Metaklassenebene ab.
 Normalerweise wird dynamisches Verhal- ten damit auf Metaklassenebene
 realisiert, sodass diese Methode der GroovyObjects gar nicht erst aufgerufen
 wird. Nur im Fehlerfall oder mit Hilfe des Tag-Interfaces GroovyInterceptable
@@ -238,7 +304,7 @@ Klassenebene erlaubt, ist das zweite elementare Interface MetaClass die Grund-
 lage für das sehr ausgewogene Metaklassenmodell in Groovy.
 
 \paragraph{ Metaklassen, Klassen und Instanzen} Läuft ein Programm ohne
-Intercession, so gelten für die Metaklassen der Klassen und Instanzen folgen- de
+Intercession, sögelten für die Metaklassen der Klassen und Instanzen folgen- de
 Grundaussagen: Jede Klasse hat eine Metaklasse, die eine Instanz von Me-
 taClassImpl ist und damit MetaClass implementiert. Diese Instanzen werden
 dynamisch erzeugt und sind bis auf wenige Ausnahmen direkt MetaClassImpl
@@ -271,22 +337,22 @@ Verhalten in Groovy außer der ExpandoMetaClass.
 \paragraph{ getProperty setProperty}
 Die Methoden zur Property-Unterstützung auf Metaklassenebene werden von der
 Standardimplementierung von den entsprechenden Methoden von GroovyObject auf-
-gerufen. Die Aufrufreihenfolge ist im Vergleich zu invokeMethod also genau
+gerufen. Die Aufrufreihenfolge ist im Vergleich zu invokeMethod alsögenau
 anders- herum. Auch diese Methoden sind für Intercession geeignet.
 \paragraph{ invokeMissingMethod invokeMissingProperty}
 Diese Backupmethoden werden jeweils aufgerufen, wenn die normalen Aufrufmecha-
 nismen fehlgeschlagen sind. Intercession mit diesen Methoden erlaubt zum
 Beispiel die Erweiterung von Klassen und Objekten um zusätzliche Properties zur
 Laufzeit.
-
+ \cite{mpInGroovy}
 
 
 \begin{figure}[h!]
 	\begin{center}
-	\includegraphics[width=0.6\textwidth]{pics/groovyMetaklassen}
+	\includegraphics[width=0.8\textwidth]{pics/groovyMetaklassen}
 	\end{center}
 	\caption{Beziehung von Metaklassen, Klassen und Instanzen \cite{mpInGroovy})}
-	\label{inodeAufbu}
+	\label{groovyMetaclassDiagram}
 \end{figure}
 
 
@@ -296,9 +362,46 @@ Laufzeit.
 
 
 \subsection{Kategorien}
-
+Mit Kategorien bietet Groovy eine Art dynamische Mix-ins. Es können innerhalb
+von einem Closure, beliebige Methoden zu allen Metaklassen hinzugefügt oder
+überschrieben werden.
+Die Methode use ist eine der Standardmethoden in DefaultGroovyMethods die jeder
+Metaklasse, die von MetaClassImpl erbt, automatisch hinzugefügt wird. Deswegen
+wird häufig von use auch von einem Sprachkonstrukt statt von einer Methode
+gesprochen. Mit use wird die in Klammern angegebene Klasse auf Klas- senmethoden
+untersucht und in org.codehaus.groovy.runtime.GroovyCategory- Support verwaltet.
+Es werden nur Klassenmethoden erlaubt, um Zustände in der Kategoriein- stanz zu
+vermeiden, die nicht threadsicher wären. Der this Parameter wird des- halb bei
+Üerschreiben von Instanzmethoden wie getName explizit als ersten Parameter
+angegeben. Wird nun eine Methode aufgerufen, überprüft MetaClas- sImpl in
+invokeMethod ob es eine Kategorie Methode gibt, die kompatibel ist mit dem
+aktuellen Objekt und den übergebenen Parametern. Gibt es solch eine wird der
+Aufruf delegiert, sonst wird wie in 2.5 beschrieben der normale Aufruf
+fortgesetzt.
+Kategorien sind von Objective-C entlehnt und bieten eine einfache Mög-
+lichkeit, kurzzeitig und ohne Seiteneffekte neue Methoden hinzuzufügen oder
+bestehende zu überschreiben. Sie eignen sich deswegen gut für Aspekt- oder
+Contextorientierte Programmierung. \cite{mpInGroovy}
 \subsection{Expando-MetaClass}
 
+
+\chapter{MDA / MDSD und Metaprogrammierung} 
+Model-driven Architecture (MDA) bzw. Model-Driven Software Development (MDSD)
+und Me- taprogrammierung bzw. DSLs haben eine vergleichbare Problemstellung. In
+der MDA Welt ver- wendet man auf UML etc. basierende graphische Modele. Auch das
+graphische Model muss eine formale Sprache sein, damit es compilerbar ist. Eine
+DSL kann man als textuelle Repräsentation eines Models verstehen.
+Die Komplexität und das Abstraktionsniveau ist abhängig von dem verwendeten
+Model, nicht seiner Repräsentation. Graphische Repräsentation kann man aber
+besser mit zusätzlichen Infor- mationen anreichern, da man diese nach Bedarf
+ein- und ausblenden kann.
+Eine DSL hat den Vorteil, das ihre Darstellung simpler ist, man kann sie
+beispielsweise mit einem einfachen Text Editor bearbeiten oder mit trivialen
+Mitteln ein diff zweier Versionen erstellen (vgl. Sachez Cuadrado and
+Jesu \ldots. Building domain-specific languages for model-driven
+development. IEEE Softw., 24(5):48–55, 2007. \& Diomidis Spinellis. Rational
+metaprogramming. IEEE Software, 25(1):78–79, January/Fe- bruary 2008.).
+ (vgl. \cite{biekermetaprogrammierung})
  
 \chapter{Praktischer Teil}
 
