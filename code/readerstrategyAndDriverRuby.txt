@@ -1,0 +1,12 @@
+mapping('SVCL', ServiceCall) do
+	extract 4..18, 'customer_name'
+	extract 19..23, 'customer_ID'
+	extract 24..27, 'call_type_code'
+	extract 28..35, 'date_of_call_string'
+end
+mapping('USGE', Usage) do
+	extract 9..22, 'customer_name'
+	extract 4..8, 'customer_ID'
+	extract 30..30, 'cycle'
+	extract 31..36, 'read_date'
+end

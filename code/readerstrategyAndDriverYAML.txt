@@ -1,0 +1,11 @@
+mapping IFT dsl.ServiceCall
+  4-18: RequestType
+  19-23: CustomerID
+  24-27 : CallTypeCode
+  28-35 : DateOfCallString
+
+mapping  TVL dsl.Usage
+  4-8 : CustomerID
+  9-22: CustomerName
+  30-30: Cycle
+  31-36: ReadDate

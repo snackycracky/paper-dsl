@@ -60,6 +60,16 @@
   timestamp = {2012.02.20}
 }
 
+@ARTICLE{dsmUhrenArtikel,
+  author = {J. Pekka-Tolvanen},
+  title = {Domänenspezifische Model- lierung für vollständige Code-Generierung,},
+  journal = {Javaspektrum},
+  year = {2006},
+  pages = {9-12},
+  owner = {nils},
+  timestamp = {2012.02.21}
+}
+
 @BOOK{rechenberg2000informatik,
   title = {Was ist Informatik?: eine allgemeinverst{\"a}ndliche Einf{\"u}hrung},
   publisher = {Hanser Verlag},
