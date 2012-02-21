@@ -24,7 +24,7 @@
 \usepackage[square,sort,numbers]{natbib} \usepackage[utf8]{inputenc}
 \usepackage{graphicx} 
 \usepackage[xindy,toc]{glossaries}
-
+ 
  
  
 \input{formating/formating.tex}
@@ -107,19 +107,13 @@ Programmierung, bei dem ein Problem nicht mit einer GPL (general purpose
 language) angegangen wird, sondern bei dem zuerst domänenspezifische Sprachen
 entworfen werden, um dann durch diese das Problem zu lösen. Zu diesem Paradigma
 gehört auch die Entwicklung von domänenorientierten Sprachen und intuitive
-Programmierung (intentional programming). “Intentionale Programmierung ist ein
+Programmierung (intentional programming). “Intentional Programmierung ist ein
 Programmierparadigma. Sie bezeichnet den Ansatz, vom herkömmlichen Quelltext als
 alleinige Spezifikation eines Programms abzurücken, um die Intentionen des
 Programmierers durch eine Vielfalt von jeweils geeigneten
 Spezifikationsmöglichkeiten in besserer Weise auszudrücken.” (vlg.
 \cite{wikiIntentional}) Es werden zwei Arten von DSLs unterschieden
-\cite{fowler2010domain}. Eine interne DSL ist eine in die “General Purpose
-Language” eingebettete “Spracherweiterung”, die sich mit den gegebenen Mitteln
-der Wirtssprache und deren Möglichkeit zur Metaprogrammierung erstellen lässt.
-Vorzugsweise sind solche Wirtssprachen dynamisch typisiert wie z.B. Ruby, Groovy
-oder Scala. Eine externe DSL ist völlig eigenständig und besitzt einen eigenen
-Parser und kann, ohne die “Einschränkungen” einer Wirtssprache, beliebig
-definiert werden.
+\cite{fowler2010domain}. 
 
 \section{Aufgabenstellung (kurz, knapp, präzise) und Erwartungen}
 
@@ -149,14 +143,105 @@ Durchführung und die Ergebnisse auszuwerten und zu beschreiben.
 \section{Abgrenzung}
 Der Fokus dieser Arbeit soll auf die textuelle und nicht auf die graphische
 Repräsentation von DSLs abzielen. “Natural language processing” soll nur
-oberflächlich betrachtet werden. Domänenspezifische Modellierung mit UML soll
-nur am Rande betrachtet werden. Als Toolset sollen ausschließlich MPS und
-Groovy-Meta-Programming verwendet werden.
+oberflächlich betrachtet werden. Domänenspezifische Modellierung mittels
+UML-Profilen soll nur erwähnt werden. Als Toolset sollen
+ausschließlich Groovy-Meta-Programming und MPS (Meta-Programming-System vonJetbrains) verwendet werden.
 \chapter{Theorie}
 
 \section{Domain Specific Languages}
+ 
+ 
+Software wird mit Hilfe von universell einsetzbaren Programmiersprachen  (engl.
+general purpose language, GPL), wie z.B. Java, C\# entwickelt. Diese Sprachen
+sind, für nahezu jeden Anwendungszweck einsetzbar.
+Dadurch werden diese Sprachen komplex und deren Benutzung ist nur durch gut
+ausgebildete Programmierer möglich.
+
+Sachverhalte, Objekte und Prozesse aus der realen Welt werden durch diese Pro-
+grammierer mit Hilfe einer Kombination der universell einsetzbaren Konstrukte
+aus der Programmiersprache nachgebildet. 
+
+Zur Umsetzung eines Programms werden genaue Spezifikationen geliefert.  
+
+Durch testgetrieben Entwicklung und abschliessende Akzeptanztest werden die
+Spezifikationen verifiziert.
+%TODO start copy--
+Diese Art der Softwareentwicklung führt in der Praxis zu verschiedenen Proble-
+men. Es entstehen hohe Aufwände für Spezifikation und Test. Trotzdem ist die
+entwickelte Software häufig fehleranfällig und entspricht oft nicht genau den
+Spezifikationen. Nachbesserungen sind nötig, die Geld und Zeit kosten.
+ 
+Domänenspezifische Sprachen können in bestimmten Situationen helfen, um diesen
+Problemen zu begegnen. Die grundsätzli- che Idee ist, ausgewählte Softwareteile
+nicht mehr mit universell einsetzbaren Programmiersprachen zu entwickeln, son-
+dern stattdessen Sprachen zu benutzen, die auf die konkrete Anwendungsdomäne
+spezialisiert sind. Der Quelltext, der mit einer solchen Sprache entwickelt
+wird, kann später vollautomatisch in den Quell- code einer universellen
+Programmierspra- che übersetzt werden. Der Vorteil ist, dass der Sprachumfang
+der DSL aufgrund der Spezialisierung auf eine Domäne im Vergleich mit einer
+universellen Sprache viel kleiner ist. Um domänenspezifische Sachverhalte als
+Quellcode auszudrücken ist deutlich weniger Zeit und Quellcode nötig, zur
+Programmierung reicht oft das  Domänenwissen des Anwendungsexperten aus. Im
+Extremfall könnte statt dem Programmierer der Anwendungsexperte das benötigte
+Programm schreiben. Die Erstellung des DSS-Quellcodes erfolgt mittels eines
+speziellen Editors, der die Sprachelemente als Textbefehle oder durch grafische
+Elemente bereitstellt.
+Ein solcher Editor kann so definiert werden, dass er, entsprechend den Vorgaben
+der Anwendungsdomäne, nur vorher festge- legte Kombinationen von Sprachelemen-
+ten zulässt und damit der Sicherstellung fachlicher Rahmenbedingungen besonders
+Rechnung trägt.\cite{uniLeipzigTechRadar}
+
+% TODOD end copy ---
+  Eine domänenspezifische Sprache (engl. domain-specific language, DSL) ist, im
+Gegensatz zu gängigen Programmiersprachen, auf ein ausgewähltes
+ Problemfeld (die Domäne) spezialisiert. Sie besitzt hoch spezialisierte
+Sprachelemente mit meist natürlichen Begriffe aus der Anwendungsdomäne.
+Das Gegenteil einer domänenspezifischen Sprache ist eine universell einsetzbare
+Programmiersprache (engl. general purpose language, GPL), wie C und Java, oder
+eine universell einsetzbare Modellierungssprache, wie UML.
+
+Mit Hilfe einer solchen Sprache können ausschliesslich Problembeschreibungen
+innerhalb des jeweiligen Problemgebiets beschriebne werden.
+Andere Problembereiche sollen ausgeblendet werden, damit der Domänenexperte sich
+nur auf das für Ihn wichtigste in dem jeweiligen Bereich konzentrieren kann.
+
+Der Domänenspezialist (z.B. ein Betriebswirt) ist mit dem Problembereich (z.B.
+Produktpreisbildung) sehr vertraut. Die Domänensprache, z.B. zur Beschreibung
+von Preisbildungskomponenten und deren Zusammenhänge, gibt dem Betriebswirt ein
+mögliches Werkzeug, um die Preise für Produkte (z.B. Computerhardware) dynamisch
+anzupassen. Diese DSL ist dann aber für andere Bereiche, wie z.B.
+der Aufstellung des Personalschichtplans nicht einsetzbar.
+
+Im Sprachsektor des Techonologieradars (Juli 2011 von
+Thoughtworks)\footnote[1]{http://www.thoughtworks.com/radar}
+sind sind die domänenspezifischen Sprachen unverändert nahe dem Zentrum
+angesiedelt. Thoughtworks ist der Meinung, dass DSLs eine alte Technologie ist
+und bei Entwicklern einen unterschätzten Stellenwert
+hat. (nach \cite{thoughtworks-tr}) Diese Quelle steht aber unter Vorbehalt in
+Hinblick auf den Verkauf des Buches von Martin Fowler (Chief Scientist von
+Thoughtworks) und Rebecca Parsons (CTO von Thoughtworks) über DSLs\footnote[2]{Domain Specific
+Languages, Addison Wesley 2011} 
 
 \subsection{Unterscheidungen}
+
+Martin Fowler unterscheidet zwischen ausprägungen solcher DSLs, indem er deren
+Beziehung zu einer GPL benennt. Externe DSLs sind eigenständige und unabhängige
+Sprachen die einen eigenen sepziell angefertigten Parser besitzen. 
+
+``Sowohl die konkrete Syntax als auch die Semantik können frei definiert
+werden. SQL oder reguläre Ausdrücke sind Vertreter von externen DSLs. Wenn eine
+DSL innerhalb bzw.'' \cite{wikidsl}
+mit einer GPL definiert wurde nennt er diese interne DSL. Solche eingebettete Spracherweiterungen sind mit den
+gegebenene Mittel der ``Wirtssprache'', oft deren Möglichkeit zur
+Metaprogrammierung (Kapitel \ref{metaprogrammingLabel}), erstellt.
+Vorzugsweise sind solche Wirtssprachen dynamisch typisiert wie z.B. Ruby, Groovy
+oder Scala. 
+``Dadurch sinkt der Implementierungsaufwand. Eine interne DSL ist immer eine echte
+Untermenge einer generelleren Sprache.'' \cite{wikidsl}
+
+ 
+
+% TODO vor und nachteile des jeweiligen typs.
 
 \section{Sprachorientierte Programmierung}
 
@@ -181,8 +266,8 @@ eine native Darstellung für BigDecimal und BigInteger. (vgl. \cite{wikigroovy})
 
 
 
-\section{Metaprogrammierung}
-
+\section{Metaprogrammierung}\label{metaprogrammingLabel}
+%TODO sind lisp macros auch metaprogrammierung?
 
 Metaprogrammierung ist eine Programmiertechnik, die Codegenerierung einsetzt, um
 bessere Abstraktion zu ermöglichen.
@@ -203,15 +288,34 @@ möglich.
 Metaprogrammierung kann man als Werkzeug verstehen, das linguistische
 Abstraktion erzeugt.(vgl. \cite{biekermetaprogrammierung})
 
-Metaprogrammierung bezeichnet eine Programmier-Technik um Code automatisch zu generie- ren. Es geht also um Code der Code schreibt.
-Der Ursprung der Metaprogrammierung geht auf das 1958 am MIT entwickelte Lisp bzw. Sche- me zurück. In Lisp gibt es (defmacro ..) und in Scheme (define-syntax ..) Makros. Ein
-Lisp-Makro ist einer Funktion ähnlich. Eine Funktion erhält Parameter und liefert einen oder mehere Werte zurück. Ein Lisp-Makro erhält Parameter und liefert einen oder mehere Code- Ausdrücke zurück, die wieder evaluiert werden.
-Vor der Entwicklung der Lisp-Makros gab es bereits selbstmodifizierenden Assembler-Code. Das Problem hiermit ist das zu niedrige Abstaktionsniveau, da man sich auf Opcode-Ebene mit der Manipulation des Codes beschäftigen muss.
-In Ruby gibt es die Methoden define method und define class, mit der man Methoden bzw. Klassen definieren kann. Um Metaprogrammierung betreiben zu können, ist es essentiel, dass man solche Funktionen hat, damit man dynamisch Methoden und Klassen erzeugen kann. Des Weiteren stellt Ruby eval Funktionen zur Verfügung, mit denen Code in unterschiedlichen Kon- texten ausgeführt werden kann.
-InRubywirdkomplexereMetaprogrammierungüberInterpreter-Hooksrealisert,etwamethodmissing. method missing wird augerufen, wenn man eine nicht vorhandene Methode auf einem Objekt aufruft.DieDefault-ImplemtierungwirfteineNoMethodErrorException.Durchüberschreiben
-dieser Method kann man z.B. ein Dateisystem Objekt erzeugen, dass als Methodenaufrufe sei-
-ne Unterordner kennt. Dies ermöglicht es z.B. ein Verhalten, analog zu dem Shell-Befehl cd dirname, über fsobj dirname zu realisieren.
-Ein anderer Interpreter-Hook ist Class.inherited, der immer ausgeführt wird, wenn man von einer Klasse erbt. Möchte man verhindern, dass von einer Klasse geerbt wird, kann man in Class.inherited eine Exception werfen.
+Metaprogrammierung bezeichnet eine Programmier-Technik um Code automatisch zu
+generie- ren. Es geht also um Code der Code schreibt.
+Der Ursprung der Metaprogrammierung geht auf das 1958 am MIT entwickelte Lisp
+bzw. Sche- me zurück. In Lisp gibt es (defmacro ..) und in Scheme (define-syntax
+..) Makros. Ein Lisp-Makro ist einer Funktion ähnlich. Eine Funktion erhält
+Parameter und liefert einen oder mehere Werte zurück. Ein Lisp-Makro erhält
+Parameter und liefert einen oder mehere Code- Ausdrücke zurück, die wieder
+evaluiert werden.
+Vor der Entwicklung der Lisp-Makros gab es bereits selbstmodifizierenden
+Assembler-Code. Das Problem hiermit ist das zu niedrige Abstaktionsniveau, da
+man sich auf Opcode-Ebene mit der Manipulation des Codes beschäftigen muss.
+In Ruby gibt es die Methoden define method und define class, mit der man
+Methoden bzw. Klassen definieren kann. Um Metaprogrammierung betreiben zu
+können, ist es essentiel, dass man solche Funktionen hat, damit man dynamisch
+Methoden und Klassen erzeugen kann. Des Weiteren stellt Ruby eval Funktionen zur
+Verfügung, mit denen Code in unterschiedlichen Kon- texten ausgeführt werden
+kann.
+InRubywirdkomplexereMetaprogrammierungüberInterpreter-Hooksrealisert,etwamethodmissing.
+method missing wird augerufen, wenn man eine nicht vorhandene Methode auf einem
+Objekt
+aufruft.DieDefault-ImplemtierungwirfteineNoMethodErrorException.Durchüberschreiben
+dieser Method kann man z.B. ein Dateisystem Objekt erzeugen, dass als
+Methodenaufrufe sei- ne Unterordner kennt. Dies ermöglicht es z.B. ein
+Verhalten, analog zu dem Shell-Befehl cd dirname, über fsobj dirname zu
+realisieren.
+Ein anderer Interpreter-Hook ist Class.inherited, der immer ausgeführt wird,
+wenn man von einer Klasse erbt. Möchte man verhindern, dass von einer Klasse
+geerbt wird, kann man in Class.inherited eine Exception werfen.
 
 Oft wird Metaprogrammierung als eine Form der Codekomprimierung verstanden. Es
 geht bei Metaprogrammierung nicht um das reine Einsparen von Zeichen bzw. Code-Zeilen, sondern um Abstraktion.
@@ -411,8 +515,7 @@ metaprogramming. IEEE Software, 25(1):78–79, January/Fe- bruary 2008.).
 
 \chapter{Zusammenfassung und Schlussbetrachtung}
 
-
-
+ 
 \bibliographystyle{alphadin}
 \clearpage\addcontentsline{toc}{chapter}{\bibname}\bibliography{jabref}
 \appendix

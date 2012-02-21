@@ -4,7 +4,18 @@
 @ARTICLE{biekermetaprogrammierung,
   author = {Bieker, F.},
   title = {Metaprogrammierung und linguistische Abstraktion},
-  year = {16. Dezember 2008}
+  year = {16. Dezember 2008},
+  note = {http://www.inf.fu-berlin.de/inst/ag-se/teaching/S-BSE/125_BiekerF_MetaProg.pdf}
+}
+
+@ARTICLE{thoughtworks-tr,
+  author = {ThoughtWorks Technology Advisory Board},
+  title = {Technology Radar},
+  year = {Jan. 2011},
+  month = {Januar},
+  owner = {nils},
+  timestamp = {2012.02.21},
+  url = {http://www.thoughtworks.com/sites/www.thoughtworks.com/files/files/thoughtworks-tech-radar-january-2011-US-color.pdf}
 }
 
 @ARTICLE{fowler2005language,
@@ -18,7 +29,7 @@
 @BOOK{fowler2010domain,
   title = {Domain-specific languages},
   publisher = {Addison-Wesley Professional},
-  year = {2010},
+  year = {2011},
   author = {Fowler, M. and Parsons, R.}
 }
 
@@ -30,6 +41,15 @@
   url = {http://www.heise.de/developer/meldung/JetBrains-veroeffentlicht-Meta-Programming-System-2-0-1327137.html},
   owner = {nils},
   timestamp = {2011.11.07}
+}
+
+@ARTICLE{uniLeipzigTechRadar,
+  author = {LPZ E-BUSINESS | IT-RADAR},
+  title = {Domänenspezifische Sprachen},
+  year = {2007},
+  owner = {nils},
+  timestamp = {2012.02.21},
+  url = {http://it-radar.org/uploads/reports/2_2007.pdf}
 }
 
 @ARTICLE{mpInGroovy,
@@ -45,6 +65,16 @@
   publisher = {Hanser Verlag},
   year = {2000},
   author = {Rechenberg, P.}
+}
+
+@ELECTRONIC{wikidsl,
+  author = {unknown},
+  month = {2},
+  year = {2012},
+  title = {Domänenspezifische Sprache},
+  url = {http://de.wikipedia.org/wiki/Domaenenspezifische_Sprache},
+  owner = {nils},
+  timestamp = {2012.02.21}
 }
 
 @ELECTRONIC{wikigroovy,
