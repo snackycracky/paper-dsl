@@ -724,6 +724,18 @@ darin die Betriebswirtschaftliche Unterdomäne betrachtet und darin, noch
 spezieller die Preisbildung für ein Hotelzimmer Pro Nacht.
 
 \section{Vorgehen}
+
+\subsection{Vorüberlegungen}
+
+Die Vorüberlegung erfolgte ohne den Domänenexperten lediglich die Zustimmung
+für das Experiment ``Textuelle-Preisberechnung'' war gegeben, Da der
+Domänenexperte nur wenig Zeit dafür preisgeben wollte. Die Vorüberlegungen
+bestanden hauptsächlich aus der Grammatikstruktur und deren Semantik.
+
+\subsection{Zieldefinierung}
+Das Ziel war es ein Sprache zu erstellen, die sich ausschließlich durch
+Preisbestimmung für jeden möglichen Tag in der Zukunft bzw. für jedes Apartment
+im Hotel definiert.
 \subsection{Bestandsaufnahme}
 Zuerst wurde unverbindlich eine Bestandsaufnahme gemacht. Das Hotel
 ``Schoenhouse Apartments'' besteht aus 50 Apartments in Berlin Mitte. Der
@@ -733,18 +745,117 @@ geschriebenes Property-Management-System (PMS), das zur Verwaltung folgender
 Hauptkomponenten dient: Zimmer-, Gäste-, Apartment-, Sonderleitungs- und
 Preisverwaltung.
 Derzeit wird ein neuartiges PMS erstellt, dass auf Groovy-und-Grails basiert.
+ 
 
-\subsection{Vorüberlegungen}
+\subsection{Erstellung der DSL}
+Begonnen hat die Erstellung der DSL mit der Vorstellung, dass es im PMS ein
+Textbereich gibt in dem die der Text eingefügt und editiert werden kann.
+Der Texteditor sollte mindestens ein ``Rich-Text-Editor'' sein, damit der
+Domänenexpoerte den Text formatieren kann.
+Unter dem Textbereich ist es notwenig, zwei Buttons bereitzustellen. Einen um
+die DSL Live anzuwenden und einen um die DSL zu simulieren also zu testen.
 
-Die Vorüberlegung erfolgte ohne den Domänenexperten  
+Aus der Zieldefinition geht hervor, dass das Resultat der Preisberechnungslogik
+eine Tabelle sein muss, die für jeden Tag und jeden Zimmertyp eine Gleitkommazahl als
+Preis beinhaltet (Tabelle \ref{zielDefinition}).  
+
+\begin{table}[htpb]
+  \centering
+  \begin{tabular}{| l | c | r |} 
+ 	\hline 
+  	Datum & Zimmerkategorie & Tagespreis \\
+  	\hline 
+	1.1.2013 &  Zimmerkategorie1 &  100.00 \\
+	1.1.2013 &  Zimmerkategorie2 &  140.00 \\
+	2.1.2013 &  Zimmerkategorie1 &  100.00 \\
+	2.1.2013 &  Zimmerkategorie2 &  140.00 \\
+	3.1.2013 &  Zimmerkategorie1 &  100.00 \\
+	3.1.2013 &  Zimmerkategorie2 &  140.00 \\
+	\hline 
+  	\end{tabular}  
+ 	\caption{Zielstruktur}
+  \label{zielDefinition}
+\end{table}	 
+
+Perspektivisch war der Gedanke, dass man von einer Menge alle Elemente dazu
+benutzen muss, um den Preis zu bilden. Damit ist gemeint, dass sich die Tage in
+einer Menge befinden und auch die Zimmerkategorien Mengenbasierend sind.
+Weiterhin besteht eine Berechnungslogik zum größten Teil aus mathematischen
+Ausdrücken bzw. Formeln.
+Bemerkenswert ist, das die Erstellung der Domänenlogik nicht zuerst auf der
+Grundlage des semantischen Modells erstellt wurde sondern rein Intuitiv auf
+Basis von bekanntem Domänenwissen. Da sich das semantische Modell als das einer
+Bash-Script-Sequenz mit Schleifen herausstellte, ist es nicht verwunderlich,
+dass ein Programmierer mit langjähriger Erfahrung das auch ohne Schema erstellen
+konnte.
+Begonnen wurde mit einem TestTreiber, der eine Textdatei einliest und diese
+Interpretiert bzw. evaluiert.
+Cliff James hatt das in einem
+Tutorial\footnote{http://www.nextinstruction.com/blog/2012/01/08/creating-dsls-with-groovy/}
+bewerkstelligt und folgenden Trick angewendet:
+Die DSL wird von einer Datei eingelesen und in einen interpolierten String
+umgewandelt. Anschließend wird dieser String in einen Closure-Block eingefügt.
+Da dieser eingefügte String, innerhlab einer ``run'' Methode liegt ist der
+Aufruf immer der selbe.
+Die DSL wird letztendlich von der Groovy Shell Instanz evaluiert (\cite[S.
+368]{koenig2007groovy}). 
+Doch ohne den Kontex um die DSL, speziell ausenstehende Werte ist die DSL nutzlos. Daher wird
+eine Instanz von Binding (\cite[S. 368]{koenig2007groovy}) dazu benutzt um
+Variablen an das Script zu übergeben.
+die Binding Instanz wird dazu benutz um die Variable run eine Closure zuzuweisen
+die die loadDSL Methode im runner aufruft. Die Binding instanz wird dann an
+die GroovyShell instanz übergeben um die Assoziationen zu gewährleisten (Code
+Listing \ref{dslrunner.groovy}) .
+Mit Groovy-Metaprogrammierung ist es möglich den Kontext einer Instanz zu
+wechseln, also die Instanz einer Klasse. Delegate wechselt also zu ``this'' und
+damit ist dann die DSL Bestandteil des DSLRunners. Das bedeutet, das alles was
+in der DSL-Datei geschrieben wurde jetzt Methoden und Variablen der
+DSLRunner-Klasse referenzieren kann. 
+ 
+\lstinputlisting[caption={DSL-Runner},
+label={dslrunner.groovy},style=default]{code/dslrunner.groovy}
+
+Da nun jedmögliche Textdatei an den DSLRunner übergeben werden konnte, um
+Groovy-Script-Code auszuführen ist es dementsprechend auch möglich den Inhalt
+des besagten Textfeldes als Input zu benutzen. Diese triviale Implementierung
+wurde übersprungen. 
+ Eine Schleifeniteration besteht aus einer List oder
+einem Abschnitt (Range) gefolgt von der each Methode und der auszuführenden
+Closure als Parameter für diese ``each'' Methode \ref{normalGroovyLoop.goovy}.
+
+\lstinputlisting[caption={Orgniale Groovy Schleifenbeispiel
+http://groovy.codehaus.org/Collections}, label={normalGroovyLoop.goovy},style=default]{code/normalGroovyLoop.goovy}
+
+Die Versionkontrollhistorie zeigt, dass der erste Eintrag in der DSL aus einer
+Schleife über einem Zeitraum von zwei Jahren erstellt wurde. Denn eine finale
+Liste kann nur durch eine Schleifenähnliche Funktion erstellt werden
+\ref{firstDSLEntry.groovy}.
+
+\lstinputlisting[caption={erster DSL Enturf},
+label={firstDSLEntry.groovy},style=default]{code/firstDSLEntry.groovy}
+
+Durch die im theoretischen Teil vorgestellten Kategorien war es nun möglich
+anstatt der speziellen Notation für zwei Jahre, bzw. die Instanziierung einer
+Dauer (Duration) die Notation 2.years zu verwenden. Weiterhin wurde die Instanz
+der ExpandoMetaClass der Date-Klasse (Date.metaClass) dazu verwendet um eine
+Methode namens ``bis'' für die Date-Klasse zu definieren, die wieder ein Date
+Objekt als Argument entgegennimmt und daraus einen ((Zeit)Abschnitt bzw. engl.
+Range (Notation: ``start..stop'' )) daraus macht.
+
+
+
+
+
+
+
+
+
 
 \subsection{Vorstellung der Idee}
 
-\subsubsection{}
-
-
+\subsubsection{x} 
 \chapter{Auswertung}
-
+ 
 \chapter{Zusammenfassung und Schlussbetrachtung}
 
  %begin copy -- unterschiede dsm und mda

@@ -72,6 +72,13 @@
   url = {http://it-radar.org/uploads/reports/2_2007.pdf}
 }
 
+@BOOK{koenig2007groovy,
+  title = {Groovy in action},
+  publisher = {Manning Publications Co.},
+  year = {2007},
+  author = {Koenig, D. and Glover, A. and King, P. and Laforge, J.}
+}
+
 @ARTICLE{lahres2009objektorientierte,
   author = {Lahres, B. and Ra{\`y}man, G.},
   title = {Objektorientierte Programmierung},
