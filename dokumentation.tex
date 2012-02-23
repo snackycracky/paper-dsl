@@ -113,7 +113,7 @@ alleinige Spezifikation eines Programms abzurücken, um die Intentionen des
 Programmierers durch eine Vielfalt von jeweils geeigneten
 Spezifikationsmöglichkeiten in besserer Weise auszudrücken.” (vlg.
 \cite{wikiIntentional}) Es werden zwei Arten von DSLs unterschieden
-\cite{fowler2010domain}. 
+\cite{fowler2011domain}. 
 
 \section{Aufgabenstellung (kurz, knapp, präzise) und Erwartungen}
 
@@ -145,7 +145,8 @@ Der Fokus dieser Arbeit soll auf die textuelle und nicht auf die graphische
 Repräsentation von DSLs abzielen. “Natural language processing” soll nur
 oberflächlich betrachtet werden. Domänenspezifische Modellierung mittels
 UML-Profilen soll nur erwähnt werden. Als Toolset sollen
-ausschließlich Groovy-Meta-Programming und MPS (Meta-Programming-System vonJetbrains) verwendet werden.
+ausschließlich Groovy-Meta-Programming und MPS (Meta-Programming-System vonJetbrains) verwendet werden.
+%TODO nu interne DSLs werden praktisch angewendet.s und kein MPS
 \chapter{Theorie}
 
 \section{Domain Specific Languages}
@@ -198,16 +199,17 @@ ten zulässt und damit der Sicherstellung fachlicher Rahmenbedingungen besonders
 Rechnung trägt.
 
 
-Eine DSL ist in der Regel nicht dazu ge- eignet, komplette Anwendungen zu gene-
-rieren. Vielmehr sollte ein DSL zur Ent- wicklung kleinerer Anwendungsteile, die
+Eine DSL ist in der Regel nicht dazu geeignet, komplette Anwendungen zu gene-
+rieren. Vielmehr sollte ein DSL zur Entwicklung kleinerer Anwendungsteile, die
 bestimmte Eigenschaften erfüllen, benutzt werden. Besonders sinnvoll ist der
 Einsatz einer DSL für Softwareteile, die häufig änderungen unterliegen. Dies
 ist zum Beispiel bei Produktdefinitionen, Verarbei- tungsregeln, Tarifrechnern
 und ähnlichem oft der Fall. Weiterhin sollte eine DSL nicht für Software
 verwendet werden, an die sehr hohe Performanceanforderungen gestellt werden.
 \cite{uniLeipzigTechRadar}
-
 % TODOD end copy ---
+
+
 Eine domänenspezifische Sprache (engl. domain-specific language, DSL) ist, im
 Gegensatz zu gängigen Programmiersprachen, auf ein ausgewähltes
  Problemfeld (die Domäne) spezialisiert. Sie besitzt hoch spezialisierte
@@ -240,6 +242,52 @@ verwendet werden. Als Zeichen sind hier insbesondere leerzeichen und
 Zeilenumbrüche gemeint. Solche die auch eine angelehnte Bedeutung zu der
 natürlichen Sprache haben. Z.B. Klammern, Semikolen, Kommas, Punkte, Slashes \ldots 
 
+Fowler ist der begründeten Ansicht, dass zu einer DSL immer ein semantisches
+Modell \cite[p. 159]{fowler2011domain} exsistieren sollte, das unabhängig von
+der eigentlichen DSL ist aber direkt dazugehört. Es ist das Modell zu der DSL 
+oder auch das Schema. Die DSL instanziiert das semantische Modell und ist damit
+eine gut lesbare Form der Modellinstanziierung. Das semantische Modell hat somit
+große Ähnlichkeit mir einem Domänen Modell \cite[]{fowler2003patterns}.
+Vorteilhaft ist damit die klare Trennung von Angelegenheiten
+\cite{Hürsch95separationof}, auf der einen Seite das Parsen der DSL durch den
+Parser und auf der anderen Seite die daraus resultierenden Semantiken.
+Die DSL ist damit eine Abbildung des Modells. Veränderungen können an diesem
+formalen Modell separat zur DSL durchgeführt werden. Z.B. kann das semantische
+Model das von einer Zustandsmaschine sein wie in Abbildung
+\ref{state-machine-semantic-model} graphisch dargestellt.
+
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.7\textwidth]{pics/data-model.jpg}
+	\end{center}
+	\caption{Semantisches Modell einer 	Zustandsmaschine
+	- neilvandyke.org/smores/ }
+	\label{state-machine-semantic-model}
+\end{figure}
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.7\textwidth]{pics/zutandsdiaGeldautomat.jpg}
+	\end{center}
+	\caption{Zustandsdiagramm Geldautomat
+	$https://www.fbi.h-da.de/uploads/RTEmagicC_f2da95d8df.gif.gif$ }
+	\label{zutandsdiaGeldautomat.jpg}
+\end{figure}
+
+z.B. ist das Metamodell von Zuständen eines Geldautomaten das Modell einer
+Zustandsmaschine (Abb. \ref{state-machine-semantic-model}). Das Zustandsdiagramm
+des Geldautomaten ist damit das in Abbilung \ref{zutandsdiaGeldautomat.jpg}
+dargestellte. Es beschreibt alle Zustaende und Zustandsübergänge bzw. deren
+vorausgehende Ereignisse bzw. Aktionen. Eine DSL könnte dieses Semantische
+Modell also Metamodell der Zustandsmaschine mit den Gegebenheiten des
+Geldautomaten instanziieren. (Code Listing \ref{geldautomat.dsl}).
+   
+\lstinputlisting[caption={DSL Ausschnitt für ein Geldautomat},
+label={geldautomat.dsl},style=default]{code/geldautomat.dsl}
+
+ 
+
 Im Sprachsektor des Techonologieradars (Juli 2011 von
 Thoughtworks)\footnote{http://www.thoughtworks.com/radar}
 sind sind die domänenspezifischen Sprachen unverändert nahe dem Zentrum
@@ -267,7 +315,6 @@ Vorzugsweise sind solche Wirtssprachen dynamisch typisiert wie z.B. Ruby, Groovy
 oder Scala. 
 ``Dadurch sinkt der Implementierungsaufwand. Eine interne DSL ist immer eine echte
 Untermenge einer generelleren Sprache.'' \cite{wikidsl}
- 
 
 % TODO vor und nachteile des jeweiligen typs.
 
@@ -277,7 +324,6 @@ Untermenge einer generelleren Sprache.'' \cite{wikidsl}
 multiple DSLs[\ldots]LOP is a style of development which operates about
 the idea of building software around a set of DSLs''.(vlg.
 \cite{fowler2005language})
-
 
 Sprachorientierte Programmierung ist nach Fowlers Beschreibung alsöein
 gesamtsystem bestehend aus subsystemen, deren Funktionen mit definierten

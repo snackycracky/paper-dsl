@@ -26,11 +26,25 @@
   year = {2005}
 }
 
-@BOOK{fowler2010domain,
+@BOOK{fowler2003patterns,
+  title = {Patterns of enterprise application architecture},
+  publisher = {Addison-Wesley Professional},
+  year = {2003},
+  author = {Fowler, M.}
+}
+
+@BOOK{fowler2011domain,
   title = {Domain-specific languages},
   publisher = {Addison-Wesley Professional},
   year = {2011},
   author = {Fowler, M. and Parsons, R.}
+}
+
+@BOOK{gamma1995design,
+  title = {Design patterns: elements of reusable object-oriented software},
+  publisher = {Addison-Wesley Professional},
+  year = {1995},
+  author = {Gamma, E.}
 }
 
 @ELECTRONIC{heiseMPS2,
@@ -43,6 +57,12 @@
   timestamp = {2011.11.07}
 }
 
+@TECHREPORT{Hürsch95separationof,
+  author = {Walter L. Hürsch and Cristina Videira Lopes},
+  title = {Separation of Concerns},
+  year = {1995}
+}
+
 @ARTICLE{uniLeipzigTechRadar,
   author = {LPZ E-BUSINESS | IT-RADAR},
   title = {Domänenspezifische Sprachen},
@@ -50,6 +70,14 @@
   owner = {nils},
   timestamp = {2012.02.21},
   url = {http://it-radar.org/uploads/reports/2_2007.pdf}
+}
+
+@ARTICLE{lahres2009objektorientierte,
+  author = {Lahres, B. and Ra{\`y}man, G.},
+  title = {Objektorientierte Programmierung},
+  journal = {Galileo Computing},
+  year = {2009},
+  volume = {2}
 }
 
 @ARTICLE{mpInGroovy,
