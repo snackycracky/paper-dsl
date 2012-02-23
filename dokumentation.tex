@@ -494,7 +494,35 @@ möglichst gut in die vorhandene Sprachumgebung ein zu gliedern. Eingebettete
 DSLs helfen hierbei.
 (vgl. \cite{biekermetaprogrammierung})
 
+
+\subsection{groovy syntaxeigentschaften}
+Omitting parentheses
+Groovy allows you to omit the parentheses for top-level expressions, like with the println command:
+
+println "Hello"
+method a, b
+vs:
+
+println("Hello")
+method(a, b)
+When a closure is the last parameter of a method call, like when using Groovy's 'each‘ iteration mechanism, you can put the closure outside the closing parens, and even omit the parentheses:
+
+list.each( { println it } )
+list.each(){ println it }
+list.each  { println it }
+Always prefer the third form, which is more natural, as an empty pair of parentheses is just useless syntactical noise!
+
+There are some cases where Groovy doesn't allow you to remove parentheses. As I said, top-level expressions can omit them, but for nested method calls or on the right-hand side of an assignment, you can't omit them there.
+
+def foo(n) { n }
+
+println foo 1 // won't work
+def m = foo 1
+
 \section{Metaprogrammierung in Groovy}
+
+
+
 Groovy besteht aus einem flexiblen Metaklassenmodell. Im Sinne einer Open
 Implementation hat der Programmierer nahezu alle Möglich- keiten sein Programm
 mittels Reflection zur Laufzeit zu verändern und damit an die individuellen
@@ -755,6 +783,10 @@ Domänenexpoerte den Text formatieren kann.
 Unter dem Textbereich ist es notwenig, zwei Buttons bereitzustellen. Einen um
 die DSL Live anzuwenden und einen um die DSL zu simulieren also zu testen.
 
+Da das zukünftige PMS in Groovy und Grails erstellt wird und Groovy viele
+Möglichkeiten der Metaprogrammierung und der DSL erstellung explizit hat ist es
+naheliegend, das Experiment in einer internen DSL umzusetzen. 
+
 Aus der Zieldefinition geht hervor, dass das Resultat der Preisberechnungslogik
 eine Tabelle sein muss, die für jeden Tag und jeden Zimmertyp eine Gleitkommazahl als
 Preis beinhaltet (Tabelle \ref{zielDefinition}).  
@@ -810,7 +842,7 @@ Mit Groovy-Metaprogrammierung ist es möglich den Kontext einer Instanz zu
 wechseln, also die Instanz einer Klasse. Delegate wechselt also zu ``this'' und
 damit ist dann die DSL Bestandteil des DSLRunners. Das bedeutet, das alles was
 in der DSL-Datei geschrieben wurde jetzt Methoden und Variablen der
-DSLRunner-Klasse referenzieren kann. 
+DSLRunner-Klasse referenzieren kann.
  
 \lstinputlisting[caption={DSL-Runner},
 label={dslrunner.groovy},style=default]{code/dslrunner.groovy}
@@ -836,11 +868,93 @@ label={firstDSLEntry.groovy},style=default]{code/firstDSLEntry.groovy}
 
 Durch die im theoretischen Teil vorgestellten Kategorien war es nun möglich
 anstatt der speziellen Notation für zwei Jahre, bzw. die Instanziierung einer
-Dauer (Duration) die Notation 2.years zu verwenden. Weiterhin wurde die Instanz
-der ExpandoMetaClass der Date-Klasse (Date.metaClass) dazu verwendet um eine
+Dauer (Duration) die Notation 2.years zu verwenden. 
+
+Weiterhin wurde die Instanz
+der ExpandoMetaClass der Date-Klasse (Date.metaClass) dazu verwendet, um eine
 Methode namens ``bis'' für die Date-Klasse zu definieren, die wieder ein Date
-Objekt als Argument entgegennimmt und daraus einen ((Zeit)Abschnitt bzw. engl.
-Range (Notation: ``start..stop'' )) daraus macht.
+Objekt als Argument entgegennimmt und daraus einen (Zeit)Abschnitt (engl.
+Range, Notation: ``start..stop''  ) daraus ableitet.
+
+Durch das Binding Objekt konnte die vordefinierte instanz (new Date()) mit dem
+Variablennamen ``heute'' übergeben werden. Diese Variable konnte somit in der
+DSL also als solche verwendet werden. 
+
+Die erste Spalte der Zieltabelle ist somit darstellbar, aber die lesbarkeit war
+erhelblich durch Sonderzeichen beeinträchtigt. Ziel war nun die Lesbarkeit
+erheblich zu steigern indem Sonderzeichen weitestgehend eliminiert werden und
+englische Begriffe durch deutsche zu ersetzen.
+Zuerst wurde das wort ``each'' durch ``alle'' ersetzt. Das gelang dadurch, dass
+die die Bedeutung an sich ``jedes Element'' in einer bestimmten Menge
+(engl. Collection) ihren Ursprung hat. Hier wurde wiederrum das
+ExpandoMetaObject dafür Benutzt um der Überklasse ``java.util.Collection'' eine
+Closure für die neu definierte Eigenschaft ``alle'' zu übergeben. Die Closure
+sollte nun eine Iteration über alle Elemente in der Menge leisten und dabei
+nochmals eine Closure entgegennehmen in der dann die Operation auf das Element
+definiert wird. Ausserdem muss der Deligierte wieder auf die Mengeninstanz
+gewechselt werden. Abbilung \ref{alle.groovy} zeigt den Codeabschnitt im
+DSLRunner.
+
+\lstinputlisting[caption={Definition von [1,2].alle({..})},
+label={alle.groovy},style=default]{code/alle.groovy}
+
+Weiterhin wurde aus 2.years eine neue Kategorie definiert, die die deutsche
+Bezeichnung von Jahren benutzt. Also 2.jarhe oder 1.jahr.
+Dazu wurde das metaClass ExpandoMetaObject von der Klasse Number
+dahingehend verändert, dass solche Konstruktionen möglich werden (Code Listing
+ \ref{jahre.groovy}).
+
+\lstinputlisting[caption={Expando Metaclass Jahre},
+label={jahre.groovy},style=default]{code/jahre.groovy}
+
+Durch die vorgestellten Syntaxeigenschaften ist es möglich die Klammern
+wegzulassen und damit den in Code Listing \ref{finalIterationCode.groovy}
+dargestellten DSL-Code zu erzeugen.
+
+\lstinputlisting[caption={Iterationsnotation auf Basis von Kategorien},
+label={finalIterationCode.groovy},style=default]{code/finalIterationCode.groovy}
+
+Um diesen gut lesbaren Code noch mehr an die deutsche Ausdrucksweise anzulehnen
+ist die Verwendung von Command Expressions hilfreich um eine Fluid DSL zu
+erstellen. Das bedeutet, dass in der deutschen Sprache eigentlich folgender
+Ausdruck der natürlichste waer: ``alle Tage von heute bis in zwei Jahren
+einzeln auflisten und jeden Tag immer als Tag bezeichnen.'' Nun diese ehr lange
+Ausdrucksweise ist zwar prezise aber enthält gegenüber einer mit
+minimalen Sonderzeichen geschriebenen Notation noch zu viele Begriffe.
+Ein valider Kompromiss ist folgender: ``von heute bis 2.jahre alleTage \{ tag
+-> \}''.
+Dieser Kompromiss wurde ausgehend von der vorhandenen Programmiersprache in der
+die DSL ``eingebettet'' sein soll und der subjektiven Empfindungsweise des
+Erstellers gemacht. 
+Die Präposition ``von'' ist der Name einer Methode, die als Argument ein Datum
+akzeptiert und eine Methode als Rückgabewert hat.
+``Von'' ist somit eine Methode höherer
+Ordnung\footnote{ \url{de.wikipedia.org/wiki/Funktion_höherer_Ordnung} } und
+in Code Listing \ref{fluentInterface.groovy} dargestellt.
+
+\lstinputlisting[caption={Fluent Interface Implementierung},
+label={fluentInterface.groovy},style=default]{code/fluentInterface.groovy}
+ 
+Der Rückgabetyp ist eine HashMap mit ``keys'' als Methodennamen und
+Closures als ``values'' bzw. dazugehörige ``Methodenkörper''.
+Wenn genau das der Fall ist, ist so ein Listeneintrag widerrum ein Objekt an dem
+Methoden aufgerufen werden können. Wenn eine Map zurückgegeben wird, dann
+identifiziert sich der eintrag der Map anhand des Schlüssels (``bis''). Bis
+referenziert somit einen Closurekörper, der ein Argument entgegennimmt das vom
+Typ Date ist. Letztendlich gibt diese Closure ein Instanz von Range zurück. Der
+Vorteil dabei ist, dass das Argument vom ersten Methodenaufruf (``von(datum)'')
+in der Closure des zweiten Methodenaufrufs benutzt werden kann und somit dieses
+``Fluent Interface'' eine abgekapselte Einheit darstellt.
+Daraus folgt nun folgende Notation neue Notation für die DSL (Code Listing
+\ref{finaldateRangeDSL.groovy}).
+Durch triviales kopieren der ``alle'' zu ``alleTage'' ExpandoMetaObejkt Instanz
+wurde nach dem DRY\footnote{Dave Thomas, interviewed by Bill Venners
+(2003-10-10) http://www.artima.com/intv/dry.html} Prinzip die Closure
+wiederverwendet und alleTage steht für eine Menge, genauer für eine ObjectRange zur verfügung.
+
+\lstinputlisting[caption={Fluent Interface Anwendung},
+label={finaldateRangeDSL.groovy},style=default]{code/finaldateRangeDSL.groovy}
+ 
 
 
 
@@ -849,12 +963,13 @@ Range (Notation: ``start..stop'' )) daraus macht.
 
 
 
-
-
-\subsection{Vorstellung der Idee}
-
-\subsubsection{x} 
 \chapter{Auswertung}
+
+\subsection{Wahl der DSL Variante}
+
+\subsection{Beurteilung des Domänenexperten}
+
+\subsection{Beurteilung der Meta-Programmierungstools von Grovvy}
  
 \chapter{Zusammenfassung und Schlussbetrachtung}
 
