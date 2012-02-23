@@ -271,7 +271,7 @@ Model das von einer Zustandsmaschine sein wie in Abbildung
 	\includegraphics[width=0.7\textwidth]{pics/zutandsdiaGeldautomat.jpg}
 	\end{center}
 	\caption{Zustandsdiagramm Geldautomat
-	$https://www.fbi.h-da.de/uploads/RTEmagicC_f2da95d8df.gif.gif$ }
+	\url{https://www.fbi.h-da.de/uploads/RTEmagicC_f2da95d8df.gif.gif} }
 	\label{zutandsdiaGeldautomat.jpg}
 \end{figure}
 
@@ -285,9 +285,7 @@ Geldautomaten instanziieren. (Code Listing \ref{geldautomat.dsl}).
    
 \lstinputlisting[caption={DSL Ausschnitt für ein Geldautomat},
 label={geldautomat.dsl},style=default]{code/geldautomat.dsl}
-
  
-
 Im Sprachsektor des Techonologieradars (Juli 2011 von
 Thoughtworks)\footnote{http://www.thoughtworks.com/radar}
 sind sind die domänenspezifischen Sprachen unverändert nahe dem Zentrum
@@ -715,9 +713,35 @@ Situationen ist die Wahl zwischen MDA und DSM oft klar.
  
  
 \chapter{Praktischer Teil}
-Der praktische Teil beschäftigt sich nun mit \ldots
+
+Im praktischen Teil soll beschrieben werden, wie eine interne DSL mit Hilfe der
+Groovy-Metaprogrammierung erstellt wurde und wie der Domänenexporte darauf
+reagiert hat.
 
 \section{Die Fachliche Domäne}
+Der fachliche Bereich im gesamten Kontext ist die Hotellerie. Speziell wird
+darin die Betriebswirtschaftliche Unterdomäne betrachtet und darin, noch
+spezieller die Preisbildung für ein Hotelzimmer Pro Nacht.
+
+\section{Vorgehen}
+\subsection{Bestandsaufnahme}
+Zuerst wurde unverbindlich eine Bestandsaufnahme gemacht. Das Hotel
+``Schoenhouse Apartments'' besteht aus 50 Apartments in Berlin Mitte. Der
+Geschäftsführer ist Dipl.-Ing. Immanuel Lutz (Domänenexperte). Dieser bestimmt
+auch hauptsächlich die Preisbildung der Apartments. Weiterhin besitzt das Hotel ein in Java
+geschriebenes Property-Management-System (PMS), das zur Verwaltung folgender
+Hauptkomponenten dient: Zimmer-, Gäste-, Apartment-, Sonderleitungs- und
+Preisverwaltung.
+Derzeit wird ein neuartiges PMS erstellt, dass auf Groovy-und-Grails basiert.
+
+\subsection{Vorüberlegungen}
+
+Die Vorüberlegung erfolgte ohne den Domänenexperten  
+
+\subsection{Vorstellung der Idee}
+
+\subsubsection{}
+
 
 \chapter{Auswertung}
 
