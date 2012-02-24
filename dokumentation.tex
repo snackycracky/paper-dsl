@@ -744,26 +744,26 @@ Situationen ist die Wahl zwischen MDA und DSM oft klar.
 
 Im praktischen Teil soll beschrieben werden, wie eine interne DSL mit Hilfe der
 Groovy-Metaprogrammierung erstellt wurde und wie der Domänenexporte darauf
-reagiert hat.
+reagiert hat. 
 
 \section{Die Fachliche Domäne}
 Der fachliche Bereich im gesamten Kontext ist die Hotellerie. Speziell wird
 darin die Betriebswirtschaftliche Unterdomäne betrachtet und darin, noch
-spezieller die Preisbildung für ein Hotelzimmer Pro Nacht.
+spezieller die tagesabhängige Preisbildung für Hotelzimmer.
 
 \section{Vorgehen}
-
-\subsection{Vorüberlegungen}
-
-Die Vorüberlegung erfolgte ohne den Domänenexperten lediglich die Zustimmung
-für das Experiment ``Textuelle-Preisberechnung'' war gegeben, Da der
-Domänenexperte nur wenig Zeit dafür preisgeben wollte. Die Vorüberlegungen
-bestanden hauptsächlich aus der Grammatikstruktur und deren Semantik.
+Nach der Zieldefinierung soll eine Bestandsaufnahme gemacht werden um die
+Rahmenbedingungen für das Experiment offenzulegen. Danach werden die
+Vorüberlegungen zur Zielerreichung dargestellt und anschließend die
+Implementierung der Lösung beschrieben. Daraus entstehen jeweils Unterziele die
+in den einzelenen Abschnitten näher beschrieben sind. Anschliessend wird jeweils
+ausgewertet und beurteilt.
 
 \subsection{Zieldefinierung}
-Das Ziel war es ein Sprache zu erstellen, die sich ausschließlich durch
+Das Ziel war es eine Sprache zu erstellen, die sich ausschließlich durch
 Preisbestimmung für jeden möglichen Tag in der Zukunft bzw. für jedes Apartment
 im Hotel definiert.
+
 \subsection{Bestandsaufnahme}
 Zuerst wurde unverbindlich eine Bestandsaufnahme gemacht. Das Hotel
 ``Schoenhouse Apartments'' besteht aus 50 Apartments in Berlin Mitte. Der
@@ -774,6 +774,46 @@ Hauptkomponenten dient: Zimmer-, Gäste-, Apartment-, Sonderleitungs- und
 Preisverwaltung.
 Derzeit wird ein neuartiges PMS erstellt, dass auf Groovy-und-Grails basiert.
  
+ \subsection{Vorüberlegungen}
+
+Die Vorüberlegung erfolgte ohne den Domänenexperten lediglich die Zustimmung
+für das Experiment ``Textuelle-Preisberechnung'' war gegeben, Da der
+Domänenexperte nur wenig Zeit dafür preisgeben wollte. Die Vorüberlegungen
+bestanden hauptsächlich aus der Grammatikstruktur und deren Semantik. 
+
+Die DSL soll die Geschäftslogik für die dynamische Bildung der Zimmerpreise
+beschreiben. In einem Hotel sind die Preise abhängig von Faktoren wie
+``Angebot und Nachfrage auf dem Markt'', Investitionskosten, Zimmerkategorie,
+Nebenkosten, Rabattaktionen, Provisionen der Geschäftspartner für eine
+Zimmervermittlung, Zeitraum und überschneidende Ereignisse in der Umgebung
+\cite[S. 44]{hahn1993tourismuspsychologie}. Mit Ereignissen sind Veranstaltungen
+oder Feiertage sowie Saisons gemeint, die die Angebot und Nachfragen beeinflussen. Bewertungen, die
+das Hotel auf Buchungsportalen bekommen hat sind auch Preisentscheident. Wenn
+z.B. mehrere schlechte Bewertungen abgegeben wurden und darauf nur noch wenige
+Gäste Buchen muss überlegt werden, ob das mit dem Preis zu regulieren geht.
+Nicht zuletzt beeinflusst die Auslastung einer Zimmerkategorie oder die
+Gesamtauslastung des Hotels den Zimmerpreis. Das bedeutet, wenn nur noch ein
+Zimmer im Hotel verfügbar ist, dann kann es entsprechend teuer verkauft werden.
+Die Auslastung, Ereignise und die Tage bis zu den Ereignissen zusammen
+kombiniert beinflussen den Preis weiter. Auch die aktuelle Liquidität des
+Unternehmens kann einfluss darauf haben. Der Zimmerpreis ist auch sensibel
+gegenüber den Preisen der direkten Konkurenz in der Umgebung.
+Der Faktor Markt ist der wohl am schwersten zu determinierende, da er sich aus
+vielen anderen Faktoren zusammensetzt. Dazu gehört z.B. die Beziehung zwischen
+angebotenen Hotelzimmern und nachgefragten. Wenn die Auslastung steigt und die
+Nachfrage gleich bleibt, dann resultiert das in steigende Preise.
+Bei sozialen, kulturellen oder positischen ereignissen weichen die Zimmerpreise
+erheblich von der ``Rac-Rate'' (Grundpreisrate) ab.
+Es stellt sich als schweirig heraus, alle Faktoren deterministisch zu
+modellieren, da vor allem der subjektive Geschmack oder persönliche Motivationen
+der potentiellen Gäste nur über statistische Werte berechenbar sind. Genau so
+ist es mit der Faktorenauswahl bei ökonomischen bzw. volkswirtschaftlichen
+Werten, um die Kaufkraft der internationalen Gäste zu bestimmen.
+Formal kann mit diskreten Werten modelliert werden, die in direkter Beziehung zu
+dem Hotel stehen. Indirekte Beziehungen werden hier aus den oben genannten
+Gründen nicht betrachtet.
+Dem Geschäftsführer wird unterstellt, dass er genau diese Preislogik für
+sein Unternehmen individuell, unabhängig und zeitnah regeln muss.
 
 \subsection{Erstellung der DSL}
 Begonnen hat die Erstellung der DSL mit der Vorstellung, dass es im PMS ein
@@ -895,7 +935,7 @@ definiert wird. Ausserdem muss der Deligierte wieder auf die Mengeninstanz
 gewechselt werden. Abbilung \ref{alle.groovy} zeigt den Codeabschnitt im
 DSLRunner.
 
-\lstinputlisting[caption={Definition von [1,2].alle({..})},
+\lstinputlisting[caption={Definition von $[1,2].alle({..})$},
 label={alle.groovy},style=default]{code/alle.groovy}
 
 Weiterhin wurde aus 2.years eine neue Kategorie definiert, die die deutsche
@@ -934,7 +974,7 @@ in Code Listing \ref{fluentInterface.groovy} dargestellt.
 
 \lstinputlisting[caption={Fluent Interface Implementierung},
 label={fluentInterface.groovy},style=default]{code/fluentInterface.groovy}
- 
+
 Der Rückgabetyp ist eine HashMap mit ``keys'' als Methodennamen und
 Closures als ``values'' bzw. dazugehörige ``Methodenkörper''.
 Wenn genau das der Fall ist, ist so ein Listeneintrag widerrum ein Objekt an dem
@@ -954,7 +994,7 @@ wiederverwendet und alleTage steht für eine Menge, genauer für eine ObjectRang
 
 \lstinputlisting[caption={Fluent Interface Anwendung},
 label={finaldateRangeDSL.groovy},style=default]{code/finaldateRangeDSL.groovy}
- 
+
 
 
 
