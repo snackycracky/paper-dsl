@@ -157,24 +157,22 @@ oberflächlich betrachtet werden. Der praktische Teil berichtet ausschließlich
 
 \section{Domain Specific Languages}
  
- 
-Software wird von Programmierern überwiegend mit Hilfe von universell
-einsetzbaren Programmiersprachen (engl.
-general purpose language, GPL), wie z.B. Java, C\# entwickelt. Diese Sprachen
-sind, für nahezu jeden Anwendungszweck einsetzbar.
-Dadurch werden diese Sprachen komplex und deren Benutzung ist nur durch gut
-ausgebildete Programmierer möglich.
- 
-
-Sachverhalte, Objekte und Prozesse aus der realen Welt werden durch diese Pro-
-grammierer mit Hilfe einer Kombination der universell einsetzbaren Konstrukte
-aus der Programmiersprache nachgebildet. 
-
-Zur Umsetzung eines Programms werden genaue Spezifikationen geliefert.  
-
-Durch testgetrieben Entwicklung und abschliessende Akzeptanztest werden die
-Spezifikationen verifiziert.
-
+% Programmierer entwickeln Software überwiegend in universell einsetzbaren
+% Programmiersprachen (engl.
+% general purpose language, GPL), wie z.B. Java, C\#.
+% Diese Sprachen sind, für nahezu jeden Anwendungszweck einsetzbar.
+% Dadurch werden diese Sprachen komplex und deren Benutzung ist nur durch gut
+% ausgebildete Programmierer möglich.
+% Programmierer bilden Sachverhalte, Objekte und Prozesse aus der realen Welt
+% mit Hilfe einer Kombination der universell einsetzbaren Konstrukte
+% aus der Programmiersprache ab.
+% Zur Erstellung benötigen die Entwickler Spezifikationen, die die zu erstellende
+% Software genau beschreiben. Diese werden widerrum von Experten erstellt, deren
+% Job es ist mit den Auftraggebern bzw. den Domänenexperten zu kommunizieren, um
+% daraus eine Spezifikation abzuleiten. Diese Spezifikation ist der sogenannte
+% Problemraum. Die Erstellte Software ist der Lösungsraum. 
+% Um die Spezifikation wäerend oder nach der Entwicklungsphase zu verifizieren
+% sind Tests notwendig.
 
 
 
@@ -312,13 +310,22 @@ Sprachen die einen eigenen sepziell angefertigten Parser besitzen.
 ``Sowohl die konkrete Syntax als auch die Semantik können frei definiert
 werden. SQL oder reguläre Ausdrücke sind Vertreter von externen DSLs. Wenn eine
 DSL innerhalb bzw.'' \cite{wikidsl}
-mit einer GPL definiert wurde nennt er diese interne DSL. Solche eingebettete Spracherweiterungen sind mit den
-gegebenene Mittel der ``Wirtssprache'', oft deren Möglichkeit zur
+mit einer GPL definiert wurde, nennt er diese interne DSL. Solche eingebettete
+Spracherweiterungen sind mit den gegebenene Mittel der ``Wirtssprache'', oft deren Möglichkeit zur
 Metaprogrammierung (Kapitel \ref{metaprogrammingLabel}), erstellt.
 Vorzugsweise sind solche Wirtssprachen dynamisch typisiert wie z.B. Ruby, Groovy
 oder Scala. 
 ``Dadurch sinkt der Implementierungsaufwand. Eine interne DSL ist immer eine echte
 Untermenge einer generelleren Sprache.'' \cite{wikidsl}
+
+DSLs die nicht in der Hostsprache implementiert sind werden trotzdem von einer
+anderen Programmiersprache geparst und weiterverarbeitet. Zusätzlich ist man bei
+einer separaten Sprachdefinition nicht syntaktisch eingeschränkt. Damit sind vor
+allem Szenarien gemeint bei denen z.B. Methodennamen hinter die
+Argumentenklammer geschrieben ist: ``(1,1)addiere'' oder sonstige nur denkbare
+syntaktische Abwandlugnen.
+
+
 
 % TODO vor und nachteile des jeweiligen typs.
 
@@ -329,11 +336,14 @@ multiple DSLs[\ldots]LOP is a style of development which operates about
 the idea of building software around a set of DSLs''.(vlg.
 \cite{fowler2005language})
 
-Sprachorientierte Programmierung ist nach Fowlers Beschreibung alsöein
-gesamtsystem bestehend aus subsystemen, deren Funktionen mit definierten
-Sprachmodellen beschrieben werden. Bestenfalls sollten diese Sprachmodelle
-die fachlichen Probleme auf eine natürliche Art beschreiben können ohne dabei
-mehr zu beschreiben als das Fachgebiet benötigt.
+Sprachorientierte Programmierung ist nach Fowlers Beschreibung als ein Vorgehen
+bei dem eine Programmiersprache sich auch mehreren Unter-Programmiersprachen
+zusammensetzt, deren Funktionen mit definierten Sprachmodellen beschrieben
+werden.
+Diese Sprachmodelle sollen die fachlichen Probleme auf eine
+natürliche Art beschreiben können, ohne dabei mehr zu beschreiben als das
+Fachgebiet benötigt. Dabei liegt der Fokus auf der Problembeschreibung und nicht
+auf der Lösungsbeschreibung.
 
 In dem oft zitierten Paper beschreibt Fowler ein kleines Programm, das dazu
 dient Textdateien, die eine bestimmte Struktur haben in Objektinstanzen zu
@@ -393,6 +403,11 @@ Syntax.
 
 \lstinputlisting[caption={Instanzen der verschiedenen Strategien - RUBY},
 label={readerstrategyAndDriverRuby},style=default]{code/readerstrategyAndDriverRuby.txt}
+
+%TODO language workbenches vorstellen
+
+
+
 
 \section{Groovy}
 
@@ -1185,11 +1200,11 @@ hilft die DSL zu erstellen.
 \subsection{Wahl der DSL Variante}
 Bewertung des Probands: Lesbarkeit, intuitivem Verständnis und Flexibilität
 
-Durch die Verwendung einer 
-
 \subsection{Beurteilung des Domänenexperten}
 
 \subsection{Beurteilung der Meta-Programmierungstools von Grovvy}
+ 
+ einfacher da kein aufwand für gui zu betreiben ist.
  
 \chapter{Zusammenfassung und Schlussbetrachtung}
 
