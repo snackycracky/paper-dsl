@@ -97,7 +97,7 @@ Metamodell einer abstrakten Syntax, Constraints (Statischer Semantik) und einer
 konkreten Syntax. Eine festgelegte Semantik weist den Sprachelementen eine
 Bedeutung zu.” (vlg. S.30 \cite{mdaDPunkt})
 
-\section{Begriffserklärung (falls notwendig)}
+\section{Begriffserklärung}
 Eine DSL beinhaltet ein Metamodell. In einer Domänengrammatik gibt es das
 Konzept an sich, das beschrieben werden soll. Konzepte können Daten, Strukturen
 oder Anweisungen bzw. Verhalten und Bedingungen sein. Das Metamodell oder auch
@@ -117,48 +117,54 @@ Spezifikationsmöglichkeiten in besserer Weise auszudrücken.” (vlg.
 
 \section{Aufgabenstellung (kurz, knapp, präzise) und Erwartungen}
 
-Anhand mehrerer Problemfälle soll das Paradigma der sprachorientierten
-Programmierung und die damit verbundenen Konzepte der domänenorientierten
-Programmierung analysiert und geprüft werden. Mehrere vergleichsweise einfache
-DSLs sollen mit Hilfe von Groovy-Metaprogramming als interne DSLs bzw. mit dem
-Meta-Programming-System (MPS) sollen überschaubare externe DSLs entworfen
-werden. Domänenexperten, die keine Erfahrung mit Programmierung haben, sollen an
-interne bzw. externe DSLs für deren bekannte Domäne herangeführt werden, um
-diese anschließend nach Lesbarkeit, intuitivem Verständnis und Flexibilität zu
-bewerten. Dabei bekommen die Probanden mehrere Aufgaben, die sie mit den
-gegebenen DSLs lösen sollen.
-Die Erwartungen sind, dass bei kleinen Systemen, der Aufwand zu hoch ist, extraeine DSL einzusetzten. Bei komplexen Systemen stellt eine geeignete DSL jedocheinen unmittelbaren Mehrwert dar.
+Das Paradigma der sprachorientierten Programmierung und die damit verbundenen
+Konzepte der domänenorientierten Programmierung sollen in dieser Arbeit
+analysiert und geprüft werden. 
 
+
+Eine einfache DSLs soll mit Hilfe von
+Groovy-Metaprogramming als interne DSLs entworfen werden.
+
+Dabei stellen sich folgende Fragen: Wie effizient ist die Erstellung einer DSL
+mittels der Programmiersprache Groovy und wie reagiert der Domänenexperte auf
+die DSL?
+
+Der Domänenexperte, die keine Erfahrung mit Programmierung haben, sollen an
+interne DSLs für deren bekannte Domäne herangeführt werden, um diese
+anschließend nach Lesbarkeit, intuitivem Verständnis und Flexibilität zu
+bewerten. Dabei bekommt der Proband mehrere Aufgaben, die mit den
+gegebenen DSLs zu lösen sind.
+ 
+ %TODO erwartungen?
+ 
 \section{Gliederung}
 
 Zuerst werden theoretische Grundlagen zum Thema “Sprachorientierte
 Programmierung” und Metamodellierung erläutert. Der praktische Teil beginnt mit
-der Vorstellung der Problemdomänen und deren verschiedenen Anforderungen. Dann
-werden die zu implementierenden DSLs konzeptionell vorgestellt. Die Umsetzung
-dieser Konzepte mit den Toolsets wird im nächsten Kapitel beschrieben. Weiterhin
+der Vorstellung der Problemdomäne und deren verschiedenen Anforderungen. 
+Der nächste Schritt in dieser Arbeit beschäftigt sich mit der konzptionellen
+Implementierung der DSL.  Weiterhin
 soll die Testumgebung mit den Probanden spezifiziert werden, um danach die
-Durchführung und die Ergebnisse auszuwerten und zu beschreiben.
-
+Durchführung und die Ergebnisse auszuwerten und zu beschreiben.
 
 \section{Abgrenzung}
 Der Fokus dieser Arbeit soll auf die textuelle und nicht auf die graphische
 Repräsentation von DSLs abzielen. “Natural language processing” soll nur
-oberflächlich betrachtet werden. Domänenspezifische Modellierung mittels
-UML-Profilen soll nur erwähnt werden. Als Toolset sollen
-ausschließlich Groovy-Meta-Programming und MPS (Meta-Programming-System vonJetbrains) verwendet werden.
+oberflächlich betrachtet werden. Der praktische Teil berichtet ausschließlich
+über die Groovy-Metaprogrammierung. 
 %TODO nu interne DSLs werden praktisch angewendet.s und kein MPS
 \chapter{Theorie}
 
 \section{Domain Specific Languages}
  
  
-Software wird mit Hilfe von universell einsetzbaren Programmiersprachen  (engl.
+Software wird von Programmierern überwiegend mit Hilfe von universell
+einsetzbaren Programmiersprachen (engl.
 general purpose language, GPL), wie z.B. Java, C\# entwickelt. Diese Sprachen
 sind, für nahezu jeden Anwendungszweck einsetzbar.
 Dadurch werden diese Sprachen komplex und deren Benutzung ist nur durch gut
 ausgebildete Programmierer möglich.
-
-
+ 
 
 Sachverhalte, Objekte und Prozesse aus der realen Welt werden durch diese Pro-
 grammierer mit Hilfe einer Kombination der universell einsetzbaren Konstrukte
@@ -173,41 +179,41 @@ Spezifikationen verifiziert.
 
 
 %TODO start copy--
-Diese Art der Softwareentwicklung führt in der Praxis zu verschiedenen Proble-
-men. Es entstehen hohe Aufwände für Spezifikation und Test. Trotzdem ist die
-entwickelte Software häufig fehleranfällig und entspricht oft nicht genau den
-Spezifikationen. Nachbesserungen sind nötig, die Geld und Zeit kosten.
- 
-Domänenspezifische Sprachen können in bestimmten Situationen helfen, um diesen
-Problemen zu begegnen. Die grundsätzli- che Idee ist, ausgewählte Softwareteile
-nicht mehr mit universell einsetzbaren Programmiersprachen zu entwickeln, son-
-dern stattdessen Sprachen zu benutzen, die auf die konkrete Anwendungsdomäne
-spezialisiert sind. Der Quelltext, der mit einer solchen Sprache entwickelt
-wird, kann später vollautomatisch in den Quell- code einer universellen
-Programmierspra- che übersetzt werden. Der Vorteil ist, dass der Sprachumfang
-der DSL aufgrund der Spezialisierung auf eine Domäne im Vergleich mit einer
-universellen Sprache viel kleiner ist. Um domänenspezifische Sachverhalte als
-Quellcode auszudrücken ist deutlich weniger Zeit und Quellcode nötig, zur
-Programmierung reicht oft das  Domänenwissen des Anwendungsexperten aus. Im
-Extremfall könnte statt dem Programmierer der Anwendungsexperte das benötigte
-Programm schreiben. Die Erstellung des DSS-Quellcodes erfolgt mittels eines
-speziellen Editors, der die Sprachelemente als Textbefehle oder durch grafische
-Elemente bereitstellt.
-Ein solcher Editor kann so definiert werden, dass er, entsprechend den Vorgaben
-der Anwendungsdomäne, nur vorher festge- legte Kombinationen von Sprachelemen-
-ten zulässt und damit der Sicherstellung fachlicher Rahmenbedingungen besonders
-Rechnung trägt.
-
-
-Eine DSL ist in der Regel nicht dazu geeignet, komplette Anwendungen zu gene-
-rieren. Vielmehr sollte ein DSL zur Entwicklung kleinerer Anwendungsteile, die
-bestimmte Eigenschaften erfüllen, benutzt werden. Besonders sinnvoll ist der
-Einsatz einer DSL für Softwareteile, die häufig änderungen unterliegen. Dies
-ist zum Beispiel bei Produktdefinitionen, Verarbei- tungsregeln, Tarifrechnern
-und ähnlichem oft der Fall. Weiterhin sollte eine DSL nicht für Software
-verwendet werden, an die sehr hohe Performanceanforderungen gestellt werden.
-\cite{uniLeipzigTechRadar}
-% TODOD end copy ---
+% Diese Art der Softwareentwicklung führt in der Praxis zu verschiedenen Proble-
+% men. Es entstehen hohe Aufwände für Spezifikation und Test. Trotzdem ist die
+% entwickelte Software häufig fehleranfällig und entspricht oft nicht genau den
+% Spezifikationen. Nachbesserungen sind nötig, die Geld und Zeit kosten.
+%  
+% Domänenspezifische Sprachen können in bestimmten Situationen helfen, um diesen
+% Problemen zu begegnen. Die grundsätzli- che Idee ist, ausgewählte Softwareteile
+% nicht mehr mit universell einsetzbaren Programmiersprachen zu entwickeln, son-
+% dern stattdessen Sprachen zu benutzen, die auf die konkrete Anwendungsdomäne
+% spezialisiert sind. Der Quelltext, der mit einer solchen Sprache entwickelt
+% wird, kann später vollautomatisch in den Quell- code einer universellen
+% Programmierspra- che übersetzt werden. Der Vorteil ist, dass der Sprachumfang
+% der DSL aufgrund der Spezialisierung auf eine Domäne im Vergleich mit einer
+% universellen Sprache viel kleiner ist. Um domänenspezifische Sachverhalte als
+% Quellcode auszudrücken ist deutlich weniger Zeit und Quellcode nötig, zur
+% Programmierung reicht oft das  Domänenwissen des Anwendungsexperten aus. Im
+% Extremfall könnte statt dem Programmierer der Anwendungsexperte das benötigte
+% Programm schreiben. Die Erstellung des DSS-Quellcodes erfolgt mittels eines
+% speziellen Editors, der die Sprachelemente als Textbefehle oder durch grafische
+% Elemente bereitstellt.
+% Ein solcher Editor kann so definiert werden, dass er, entsprechend den Vorgaben
+% der Anwendungsdomäne, nur vorher festge- legte Kombinationen von Sprachelemen-
+% ten zulässt und damit der Sicherstellung fachlicher Rahmenbedingungen besonders
+% Rechnung trägt.
+% 
+% 
+% Eine DSL ist in der Regel nicht dazu geeignet, komplette Anwendungen zu gene-
+% rieren. Vielmehr sollte ein DSL zur Entwicklung kleinerer Anwendungsteile, die
+% bestimmte Eigenschaften erfüllen, benutzt werden. Besonders sinnvoll ist der
+% Einsatz einer DSL für Softwareteile, die häufig änderungen unterliegen. Dies
+% ist zum Beispiel bei Produktdefinitionen, Verarbei- tungsregeln, Tarifrechnern
+% und ähnlichem oft der Fall. Weiterhin sollte eine DSL nicht für Software
+% verwendet werden, an die sehr hohe Performanceanforderungen gestellt werden.
+% \cite{uniLeipzigTechRadar}
+% % TODOD end copy ---
 
 
 Eine domänenspezifische Sprache (engl. domain-specific language, DSL) ist, im
@@ -401,98 +407,106 @@ eine native Darstellung für BigDecimal und BigInteger. (vgl. \cite{wikigroovy})
 
 
 \section{Metaprogrammierung}\label{metaprogrammingLabel}
+
+
+
+
+
+
+
+
 %TODO sind lisp macros auch metaprogrammierung?
 
-Metaprogrammierung ist eine Programmiertechnik, die Codegenerierung einsetzt, um
-bessere Abstraktion zu ermöglichen.
-Ein Evaluierer bestimmt den Wert eines formalen Ausdrucks. Z.B. ist der Wert des
-formalen Ausdrucks “5 + 3” “8”. Für Metaprogrammierung ist es oft nötig
-formale Ausdrücke zur Lauf- zeit auswerten zu können. Programmiersprachen wie
-Ruby oder Lisp stellen hierfür einen Eva- luierer über eine eval-Funktion
-bereit.
-Linguistische Abstraktion bezeichnet Abstraktion auf linguistischem
-Sprachniveau. Dabei be- zeichnet hier der Begriff “Sprache” primär formale
-Sprachen.
-Metalinguistische Abstraktion ist Abstraktion auf (linguistischem) Sprachniveau,
-die den Evalu- ierer umschreibt oder einen eigenen Evaluierer verwendet. Ein
-Beispiel ist ein lazy eval für eine strikt ausgewertete Sprache wie etwa Java.
-Der Begriff der Metalinguistischen Abstraktion ist nicht klar definiert und eine
-harte Abgrenzung zu anderen Konzepten (etwa Frameworks) vorzu- nehmen ist kaum
-möglich.
-Metaprogrammierung kann man als Werkzeug verstehen, das linguistische
-Abstraktion erzeugt.(vgl. \cite{biekermetaprogrammierung})
-
-Metaprogrammierung bezeichnet eine Programmier-Technik um Code automatisch zu
-generie- ren. Es geht also um Code der Code schreibt.
-Der Ursprung der Metaprogrammierung geht auf das 1958 am MIT entwickelte Lisp
-bzw. Sche- me zurück. In Lisp gibt es (defmacro ..) und in Scheme (define-syntax
-..) Makros. Ein Lisp-Makro ist einer Funktion ähnlich. Eine Funktion erhält
-Parameter und liefert einen oder mehere Werte zurück. Ein Lisp-Makro erhält
-Parameter und liefert einen oder mehere Code- Ausdrücke zurück, die wieder
-evaluiert werden.
-Vor der Entwicklung der Lisp-Makros gab es bereits selbstmodifizierenden
-Assembler-Code. Das Problem hiermit ist das zu niedrige Abstaktionsniveau, da
-man sich auf Opcode-Ebene mit der Manipulation des Codes beschäftigen muss.
-In Ruby gibt es die Methoden define method und define class, mit der man
-Methoden bzw. Klassen definieren kann. Um Metaprogrammierung betreiben zu
-können, ist es essentiel, dass man solche Funktionen hat, damit man dynamisch
-Methoden und Klassen erzeugen kann. Des Weiteren stellt Ruby eval Funktionen zur
-Verfügung, mit denen Code in unterschiedlichen Kon- texten ausgeführt werden
-kann.
-InRubywirdkomplexereMetaprogrammierungüberInterpreter-Hooksrealisert,etwamethodmissing.
-method missing wird augerufen, wenn man eine nicht vorhandene Methode auf einem
-Objekt
-aufruft.DieDefault-ImplemtierungwirfteineNoMethodErrorException.Durchüberschreiben
-dieser Method kann man z.B. ein Dateisystem Objekt erzeugen, dass als
-Methodenaufrufe sei- ne Unterordner kennt. Dies ermöglicht es z.B. ein
-Verhalten, analog zu dem Shell-Befehl cd dirname, über fsobj dirname zu
-realisieren.
-Ein anderer Interpreter-Hook ist Class.inherited, der immer ausgeführt wird,
-wenn man von einer Klasse erbt. Möchte man verhindern, dass von einer Klasse
-geerbt wird, kann man in Class.inherited eine Exception werfen.
-
-Oft wird Metaprogrammierung als eine Form der Codekomprimierung verstanden. Es
-geht bei Metaprogrammierung nicht um das reine Einsparen von Zeichen bzw. Code-Zeilen, sondern um Abstraktion.
-
-(vgl. \cite{biekermetaprogrammierung})
-
-Introspection bezeichnet die Fähigkeit, auf Informationen über die Zustäe
-von Objekte, deren Klassen und Verhalten zur Laufzeit zugreifen zu können.
-Intercession erlaubt Zustände und Verhalten von Objekten, aber auch deren
-Klassen zur Laufzeit zu verändern. Intercession setzt meist Introspection
-voraus.\cite{mpInGroovy}
-
-\section{probleme und loesungsansaetze} 
-Ich beschreibe nun einige Probleme mit Metaprogrammierung und DSLs. Es geht mir
-hier nicht um Vollständigkeit, sondern darum einige Probleme und potenzielle
-Lösungen auf zu zeigen.
-Eins der wichtigsten Probleme ist die hohe Komplexität. In [Diomidis Spinellis.
-Rational metaprogramming. IEEE Software, 25(1):78–79, January/Fe- bruary 2008.]
-beschreibt der Autor das Pro- blem wie folgt:
-“While I admire the cleverness and skill that hides behind C++ libraries (...),
-the fact remains that writing advanced template code is devilishly hard, (...)”
-Die Komplexität lässt sich durch die Verwendung bekannter Metaprog. Paradigmen
-und Patterns reduzieren. Lisp hat hier etliche zu bieten, etwa defmacro,
-Higher-Order Functions oder Currying.
-Eine DSL bzw. ein Metaprogammierungsframework sollte im mathematischen Sinne
-abgeschlos- sen sein. D.h. man soll den selben Code erzeugen können, den man von
-Hand schreiben kann und umgekehrt.
-Komplexe DSLs erzeugen teilweise schwer debugbaren Code. Nach Wissensstand des
-Autors gibt es zur Zeit kaum Lösungsansätze für dieses Problem.
-Es bleibt nur anzumerken, dass auch komplexe Frameworks teilweise schwer
-debugbaren Code erzeugen.
-Eine häufige Quelle für schwer debugbaren Code ist es, den Code als String
-darzustellen und dannzuevaluieren.Diesf ührt oft zu sinnfreien Fehlermeldungen
-wie “Syntax error in line 1 at char 42’’, wobei der evaluierte Code an anderer
-Stelle steht. Ruby und viele andere Sprachen bieten Konstrukte an, die es nicht
-zulassen, dass man syntaktisch falschen Code er- zeugt. In Ruby kann man hierfür
-Blöcke verwenden.
-Ein anderes Problem ist die Sprachkonsistens. Es ist schwierig gute und
-konsistente Sprachen zu erzeugen. Es ist aufwändig diese Sprachen zu lernen und
-ihr Support ist ressourcen-intensiv. Es macht daher Sinn die neue Sprache
-möglichst gut in die vorhandene Sprachumgebung ein zu gliedern. Eingebettete
-DSLs helfen hierbei.
-(vgl. \cite{biekermetaprogrammierung})
+% Metaprogrammierung ist eine Programmiertechnik, die Codegenerierung einsetzt, um
+% bessere Abstraktion zu ermöglichen.
+% Ein Evaluierer bestimmt den Wert eines formalen Ausdrucks. Z.B. ist der Wert des
+% formalen Ausdrucks “5 + 3” “8”. Für Metaprogrammierung ist es oft nötig
+% formale Ausdrücke zur Lauf- zeit auswerten zu können. Programmiersprachen wie
+% Ruby oder Lisp stellen hierfür einen Eva- luierer über eine eval-Funktion
+% bereit.
+% Linguistische Abstraktion bezeichnet Abstraktion auf linguistischem
+% Sprachniveau. Dabei be- zeichnet hier der Begriff “Sprache” primär formale
+% Sprachen.
+% Metalinguistische Abstraktion ist Abstraktion auf (linguistischem) Sprachniveau,
+% die den Evalu- ierer umschreibt oder einen eigenen Evaluierer verwendet. Ein
+% Beispiel ist ein lazy eval für eine strikt ausgewertete Sprache wie etwa Java.
+% Der Begriff der Metalinguistischen Abstraktion ist nicht klar definiert und eine
+% harte Abgrenzung zu anderen Konzepten (etwa Frameworks) vorzu- nehmen ist kaum
+% möglich.
+% Metaprogrammierung kann man als Werkzeug verstehen, das linguistische
+% Abstraktion erzeugt.(vgl. \cite{biekermetaprogrammierung})
+% 
+% Metaprogrammierung bezeichnet eine Programmier-Technik um Code automatisch zu
+% generie- ren. Es geht also um Code der Code schreibt.
+% Der Ursprung der Metaprogrammierung geht auf das 1958 am MIT entwickelte Lisp
+% bzw. Sche- me zurück. In Lisp gibt es (defmacro ..) und in Scheme (define-syntax
+% ..) Makros. Ein Lisp-Makro ist einer Funktion ähnlich. Eine Funktion erhält
+% Parameter und liefert einen oder mehere Werte zurück. Ein Lisp-Makro erhält
+% Parameter und liefert einen oder mehere Code- Ausdrücke zurück, die wieder
+% evaluiert werden.
+% Vor der Entwicklung der Lisp-Makros gab es bereits selbstmodifizierenden
+% Assembler-Code. Das Problem hiermit ist das zu niedrige Abstaktionsniveau, da
+% man sich auf Opcode-Ebene mit der Manipulation des Codes beschäftigen muss.
+% In Ruby gibt es die Methoden define method und define class, mit der man
+% Methoden bzw. Klassen definieren kann. Um Metaprogrammierung betreiben zu
+% können, ist es essentiel, dass man solche Funktionen hat, damit man dynamisch
+% Methoden und Klassen erzeugen kann. Des Weiteren stellt Ruby eval Funktionen zur
+% Verfügung, mit denen Code in unterschiedlichen Kon- texten ausgeführt werden
+% kann.
+% InRubywirdkomplexereMetaprogrammierungüberInterpreter-Hooksrealisert,etwamethodmissing.
+% method missing wird augerufen, wenn man eine nicht vorhandene Methode auf einem
+% Objekt
+% aufruft.DieDefault-ImplemtierungwirfteineNoMethodErrorException.Durchüberschreiben
+% dieser Method kann man z.B. ein Dateisystem Objekt erzeugen, dass als
+% Methodenaufrufe sei- ne Unterordner kennt. Dies ermöglicht es z.B. ein
+% Verhalten, analog zu dem Shell-Befehl cd dirname, über fsobj dirname zu
+% realisieren.
+% Ein anderer Interpreter-Hook ist Class.inherited, der immer ausgeführt wird,
+% wenn man von einer Klasse erbt. Möchte man verhindern, dass von einer Klasse
+% geerbt wird, kann man in Class.inherited eine Exception werfen.
+% 
+% Oft wird Metaprogrammierung als eine Form der Codekomprimierung verstanden. Es
+% geht bei Metaprogrammierung nicht um das reine Einsparen von Zeichen bzw. Code-Zeilen, sondern um Abstraktion.
+% 
+% (vgl. \cite{biekermetaprogrammierung})
+% 
+% Introspection bezeichnet die Fähigkeit, auf Informationen über die Zustäe
+% von Objekte, deren Klassen und Verhalten zur Laufzeit zugreifen zu können.
+% Intercession erlaubt Zustände und Verhalten von Objekten, aber auch deren
+% Klassen zur Laufzeit zu verändern. Intercession setzt meist Introspection
+% voraus.\cite{mpInGroovy}
+% 
+% \section{probleme und loesungsansaetze} 
+% Ich beschreibe nun einige Probleme mit Metaprogrammierung und DSLs. Es geht mir
+% hier nicht um Vollständigkeit, sondern darum einige Probleme und potenzielle
+% Lösungen auf zu zeigen.
+% Eins der wichtigsten Probleme ist die hohe Komplexität. In [Diomidis Spinellis.
+% Rational metaprogramming. IEEE Software, 25(1):78–79, January/Fe- bruary 2008.]
+% beschreibt der Autor das Pro- blem wie folgt:
+% “While I admire the cleverness and skill that hides behind C++ libraries (...),
+% the fact remains that writing advanced template code is devilishly hard, (...)”
+% Die Komplexität lässt sich durch die Verwendung bekannter Metaprog. Paradigmen
+% und Patterns reduzieren. Lisp hat hier etliche zu bieten, etwa defmacro,
+% Higher-Order Functions oder Currying.
+% Eine DSL bzw. ein Metaprogammierungsframework sollte im mathematischen Sinne
+% abgeschlos- sen sein. D.h. man soll den selben Code erzeugen können, den man von
+% Hand schreiben kann und umgekehrt.
+% Komplexe DSLs erzeugen teilweise schwer debugbaren Code. Nach Wissensstand des
+% Autors gibt es zur Zeit kaum Lösungsansätze für dieses Problem.
+% Es bleibt nur anzumerken, dass auch komplexe Frameworks teilweise schwer
+% debugbaren Code erzeugen.
+% Eine häufige Quelle für schwer debugbaren Code ist es, den Code als String
+% darzustellen und dannzuevaluieren.Diesf ührt oft zu sinnfreien Fehlermeldungen
+% wie “Syntax error in line 1 at char 42’’, wobei der evaluierte Code an anderer
+% Stelle steht. Ruby und viele andere Sprachen bieten Konstrukte an, die es nicht
+% zulassen, dass man syntaktisch falschen Code er- zeugt. In Ruby kann man hierfür
+% Blöcke verwenden.
+% Ein anderes Problem ist die Sprachkonsistens. Es ist schwierig gute und
+% konsistente Sprachen zu erzeugen. Es ist aufwändig diese Sprachen zu lernen und
+% ihr Support ist ressourcen-intensiv. Es macht daher Sinn die neue Sprache
+% möglichst gut in die vorhandene Sprachumgebung ein zu gliedern. Eingebettete
+% DSLs helfen hierbei.
+% (vgl. \cite{biekermetaprogrammierung})
 
 
 \subsection{groovy syntaxeigentschaften}
@@ -521,105 +535,105 @@ def m = foo 1
 
 \section{Metaprogrammierung in Groovy}
 
-
-
-Groovy besteht aus einem flexiblen Metaklassenmodell. Im Sinne einer Open
-Implementation hat der Programmierer nahezu alle Möglich- keiten sein Programm
-mittels Reflection zur Laufzeit zu verändern und damit an die individuellen
-Bedürfnisse anzupassen. \cite{mpInGroovy} Da Groovy auf der Java VM ausgeführt
-wird und somit auch den Grundregeln des Javaklassenmodells folgen muss,
-unterliegt es auch dessen Einschränkungen. In Java ist eine Veränderungen der
-Klassen zur Laufzeit nicht vorgesehen. Die Java Runtime Environement stellt mit
-dem java.reflect Package primär eine Mölichkeit zur Introspection bereit.
-[\ldots] 
-Erst Javassist, und Reflex erlauben echtes dynamisches
-Verhalten, in dem auf Byteco- de Ebene die Klasse verändert wird. 
-
-Dazu muss allerdings die Klasse teilweise umständlich entladen und neugeladen
-werden. 
-Ein Meta Object Protocol auf der Java VM kann
-somit nur mittels einer zusätzlichen Indirektionsschicht realisiert werden.
-Dazu werden bestehende Konzepte von Java benutzt und um ein Metaklassenmodell
-erweitert. Aus dem Java Unterbau ergeben sich folgende Grundsätze:
-Wie in Java ist in Groovy jede Klasse abgeleitet von Object. Groovy ist in
-diesem Hinblick aber wesentlich konsequenter, da auf primitive Datentypen
-bewusst verzichtet wurde, um die Inkonsistenzen bei der Behandlung von pri-
-mitiven Datentypen und Klassen zu vermeiden. Weiterhin ist jede Klasse in Groovy
-eine Instanz von Class, womit Class alsöauch in Groovy die Klasse der Klassen
-bleibt.  \cite{mpInGroovy}
-
-\paragraph{ getMetaClass setMetaClass} Nicht nur eine Klasse hat eine
-Metaklasse, sondern auch jedes einzelne Groovy Objekt kann eine von der Klasse
-unabhängige Metaklasse haben (siehe 2.4). Diese instanz- spezifische Metaklasse
-ist über die beiden Methoden zugänglich.\\
-
-\paragraph{ getProperty setProperty} Properties definieren den Zustand eines
-Objektes und werden in Groovy primär auf Instanz und Klassenebene abgebildet. Jede Groovy
-Klasse kann durch Überschreiben dieser zwei Methoden dynamische Properties auf
-Objektebene oder Klassenebene erzeugen. \\
-
-\paragraph{ invokeMethod } Das Verhalten eines Objektes ist wiederum eine Ebene
-höher angesiedelt, spielt sich alsöauf Klassen- oder Metaklassenebene ab.
-Normalerweise wird dynamisches Verhal- ten damit auf Metaklassenebene
-realisiert, sodass diese Methode der GroovyObjects gar nicht erst aufgerufen
-wird. Nur im Fehlerfall oder mit Hilfe des Tag-Interfaces GroovyInterceptable
-wird invokeMethod aufgerufen (in 2.5 genau beschrieben).
-
-[\ldots] Während GroovyObject dynamisches Verhalten auf Objekt- und
-Klassenebene erlaubt, ist das zweite elementare Interface MetaClass die Grund-
-lage für das sehr ausgewogene Metaklassenmodell in Groovy.
-
-\paragraph{ Metaklassen, Klassen und Instanzen} Läuft ein Programm ohne
-Intercession, sögelten für die Metaklassen der Klassen und Instanzen folgen- de
-Grundaussagen: Jede Klasse hat eine Metaklasse, die eine Instanz von Me-
-taClassImpl ist und damit MetaClass implementiert. Diese Instanzen werden
-dynamisch erzeugt und sind bis auf wenige Ausnahmen direkt MetaClassImpl
-Instanzen. Java Klassen erhalten eine Instanz von ExpandoMetaClass als Meta-
-klasse, damit auch diesen Klassen Methoden hinzugefügt werden können. Neue
-Instanzen von Klassen werden über die Metaklasse der Klasse erstellt und haben
-diese Metaklasse als Metaklasse.
-
-
-
-
- 
-\paragraph{ getProperties getMethods getMetaMethods}
-Die Methoden der Introspection in Groovy. Der Unterschied zwischen getMethods
-und getMetaMethods wird in 2.5 näher erläutert.
-\paragraph{ getClassNode}
-Liefert den AST der Metaklasse sofern verfügbar. Erlaubt auch die Modifikation
-dieses ASTs und ist damit sowohl für Introspection als auch Intercession
-geeignet. Aufgrund der Komplexität des ASTs wird allerdings dynamisches
-Verhalten häufiger über die ExpandoMetaClass realisiert und der AST verwendet,
-um Quelltextfragmente neu zu interpretieren. In den Standardbibliotheken wird so
-zum Beispiel eine Closure auto- matisch in ein SQL Statement umgewandelt, um das
-SELECT Statement performant zu benutzen.
-\paragraph{ invokeMethod}
-Jeder Methodenaufruf wird primär von der Metaklasse behandelt und entweder an
-die invokeMethod Funktion des GroovyObjects oder aber an die entsprechende
-Methode der Klasse delegiert. Das Erzeugen einer eigenen Metaklasse und
-überschreiben dieser Methode ist die Hauptmöglichkeit für dynamisches
-Verhalten in Groovy außer der ExpandoMetaClass.
-\paragraph{ getProperty setProperty}
-Die Methoden zur Property-Unterstützung auf Metaklassenebene werden von der
-Standardimplementierung von den entsprechenden Methoden von GroovyObject auf-
-gerufen. Die Aufrufreihenfolge ist im Vergleich zu invokeMethod alsögenau
-anders- herum. Auch diese Methoden sind für Intercession geeignet.
-\paragraph{ invokeMissingMethod invokeMissingProperty}
-Diese Backupmethoden werden jeweils aufgerufen, wenn die normalen Aufrufmecha-
-nismen fehlgeschlagen sind. Intercession mit diesen Methoden erlaubt zum
-Beispiel die Erweiterung von Klassen und Objekten um zusätzliche Properties zur
-Laufzeit.
- \cite{mpInGroovy}
-
-
-\begin{figure}[h!]
-	\begin{center}
-	\includegraphics[width=0.8\textwidth]{pics/groovyMetaklassen}
-	\end{center}
-	\caption{Beziehung von Metaklassen, Klassen und Instanzen \cite{mpInGroovy})}
-	\label{groovyMetaclassDiagram}
-\end{figure}
+% 
+% 
+% Groovy besteht aus einem flexiblen Metaklassenmodell. Im Sinne einer Open
+% Implementation hat der Programmierer nahezu alle Möglich- keiten sein Programm
+% mittels Reflection zur Laufzeit zu verändern und damit an die individuellen
+% Bedürfnisse anzupassen. \cite{mpInGroovy} Da Groovy auf der Java VM ausgeführt
+% wird und somit auch den Grundregeln des Javaklassenmodells folgen muss,
+% unterliegt es auch dessen Einschränkungen. In Java ist eine Veränderungen der
+% Klassen zur Laufzeit nicht vorgesehen. Die Java Runtime Environement stellt mit
+% dem java.reflect Package primär eine Mölichkeit zur Introspection bereit.
+% [\ldots] 
+% Erst Javassist, und Reflex erlauben echtes dynamisches
+% Verhalten, in dem auf Byteco- de Ebene die Klasse verändert wird. 
+% 
+% Dazu muss allerdings die Klasse teilweise umständlich entladen und neugeladen
+% werden. 
+% Ein Meta Object Protocol auf der Java VM kann
+% somit nur mittels einer zusätzlichen Indirektionsschicht realisiert werden.
+% Dazu werden bestehende Konzepte von Java benutzt und um ein Metaklassenmodell
+% erweitert. Aus dem Java Unterbau ergeben sich folgende Grundsätze:
+% Wie in Java ist in Groovy jede Klasse abgeleitet von Object. Groovy ist in
+% diesem Hinblick aber wesentlich konsequenter, da auf primitive Datentypen
+% bewusst verzichtet wurde, um die Inkonsistenzen bei der Behandlung von pri-
+% mitiven Datentypen und Klassen zu vermeiden. Weiterhin ist jede Klasse in Groovy
+% eine Instanz von Class, womit Class alsöauch in Groovy die Klasse der Klassen
+% bleibt.  \cite{mpInGroovy}
+% 
+% \paragraph{ getMetaClass setMetaClass} Nicht nur eine Klasse hat eine
+% Metaklasse, sondern auch jedes einzelne Groovy Objekt kann eine von der Klasse
+% unabhängige Metaklasse haben (siehe 2.4). Diese instanz- spezifische Metaklasse
+% ist über die beiden Methoden zugänglich.\\
+% 
+% \paragraph{ getProperty setProperty} Properties definieren den Zustand eines
+% Objektes und werden in Groovy primär auf Instanz und Klassenebene abgebildet. Jede Groovy
+% Klasse kann durch Überschreiben dieser zwei Methoden dynamische Properties auf
+% Objektebene oder Klassenebene erzeugen. \\
+% 
+% \paragraph{ invokeMethod } Das Verhalten eines Objektes ist wiederum eine Ebene
+% höher angesiedelt, spielt sich alsöauf Klassen- oder Metaklassenebene ab.
+% Normalerweise wird dynamisches Verhal- ten damit auf Metaklassenebene
+% realisiert, sodass diese Methode der GroovyObjects gar nicht erst aufgerufen
+% wird. Nur im Fehlerfall oder mit Hilfe des Tag-Interfaces GroovyInterceptable
+% wird invokeMethod aufgerufen (in 2.5 genau beschrieben).
+% 
+% [\ldots] Während GroovyObject dynamisches Verhalten auf Objekt- und
+% Klassenebene erlaubt, ist das zweite elementare Interface MetaClass die Grund-
+% lage für das sehr ausgewogene Metaklassenmodell in Groovy.
+% 
+% \paragraph{ Metaklassen, Klassen und Instanzen} Läuft ein Programm ohne
+% Intercession, sögelten für die Metaklassen der Klassen und Instanzen folgen- de
+% Grundaussagen: Jede Klasse hat eine Metaklasse, die eine Instanz von Me-
+% taClassImpl ist und damit MetaClass implementiert. Diese Instanzen werden
+% dynamisch erzeugt und sind bis auf wenige Ausnahmen direkt MetaClassImpl
+% Instanzen. Java Klassen erhalten eine Instanz von ExpandoMetaClass als Meta-
+% klasse, damit auch diesen Klassen Methoden hinzugefügt werden können. Neue
+% Instanzen von Klassen werden über die Metaklasse der Klasse erstellt und haben
+% diese Metaklasse als Metaklasse.
+% 
+% 
+% 
+% 
+%  
+% \paragraph{ getProperties getMethods getMetaMethods}
+% Die Methoden der Introspection in Groovy. Der Unterschied zwischen getMethods
+% und getMetaMethods wird in 2.5 näher erläutert.
+% \paragraph{ getClassNode}
+% Liefert den AST der Metaklasse sofern verfügbar. Erlaubt auch die Modifikation
+% dieses ASTs und ist damit sowohl für Introspection als auch Intercession
+% geeignet. Aufgrund der Komplexität des ASTs wird allerdings dynamisches
+% Verhalten häufiger über die ExpandoMetaClass realisiert und der AST verwendet,
+% um Quelltextfragmente neu zu interpretieren. In den Standardbibliotheken wird so
+% zum Beispiel eine Closure auto- matisch in ein SQL Statement umgewandelt, um das
+% SELECT Statement performant zu benutzen.
+% \paragraph{ invokeMethod}
+% Jeder Methodenaufruf wird primär von der Metaklasse behandelt und entweder an
+% die invokeMethod Funktion des GroovyObjects oder aber an die entsprechende
+% Methode der Klasse delegiert. Das Erzeugen einer eigenen Metaklasse und
+% überschreiben dieser Methode ist die Hauptmöglichkeit für dynamisches
+% Verhalten in Groovy außer der ExpandoMetaClass.
+% \paragraph{ getProperty setProperty}
+% Die Methoden zur Property-Unterstützung auf Metaklassenebene werden von der
+% Standardimplementierung von den entsprechenden Methoden von GroovyObject auf-
+% gerufen. Die Aufrufreihenfolge ist im Vergleich zu invokeMethod alsögenau
+% anders- herum. Auch diese Methoden sind für Intercession geeignet.
+% \paragraph{ invokeMissingMethod invokeMissingProperty}
+% Diese Backupmethoden werden jeweils aufgerufen, wenn die normalen Aufrufmecha-
+% nismen fehlgeschlagen sind. Intercession mit diesen Methoden erlaubt zum
+% Beispiel die Erweiterung von Klassen und Objekten um zusätzliche Properties zur
+% Laufzeit.
+%  \cite{mpInGroovy}
+% 
+% 
+% \begin{figure}[h!]
+% 	\begin{center}
+% 	\includegraphics[width=0.8\textwidth]{pics/groovyMetaklassen}
+% 	\end{center}
+% 	\caption{Beziehung von Metaklassen, Klassen und Instanzen \cite{mpInGroovy})}
+% 	\label{groovyMetaclassDiagram}
+% \end{figure}
 
 
 
@@ -628,117 +642,117 @@ Laufzeit.
 
 
 \subsection{Kategorien}
-Mit Kategorien bietet Groovy eine Art dynamische Mix-ins. Es können innerhalb
-von einem Closure, beliebige Methoden zu allen Metaklassen hinzugefügt oder
-überschrieben werden.
-Die Methode use ist eine der Standardmethoden in DefaultGroovyMethods die jeder
-Metaklasse, die von MetaClassImpl erbt, automatisch hinzugefügt wird. Deswegen
-wird häufig von use auch von einem Sprachkonstrukt statt von einer Methode
-gesprochen. Mit use wird die in Klammern angegebene Klasse auf Klas- senmethoden
-untersucht und in org.codehaus.groovy.runtime.GroovyCategory- Support verwaltet.
-Es werden nur Klassenmethoden erlaubt, um Zustände in der Kategoriein- stanz zu
-vermeiden, die nicht threadsicher wären. Der this Parameter wird des- halb bei
-Üerschreiben von Instanzmethoden wie getName explizit als ersten Parameter
-angegeben. Wird nun eine Methode aufgerufen, überprüft MetaClas- sImpl in
-invokeMethod ob es eine Kategorie Methode gibt, die kompatibel ist mit dem
-aktuellen Objekt und den übergebenen Parametern. Gibt es solch eine wird der
-Aufruf delegiert, sonst wird wie in 2.5 beschrieben der normale Aufruf
-fortgesetzt.
-Kategorien sind von Objective-C entlehnt und bieten eine einfache Mög-
-lichkeit, kurzzeitig und ohne Seiteneffekte neue Methoden hinzuzufügen oder
-bestehende zu überschreiben. Sie eignen sich deswegen gut für Aspekt- oder
-Contextorientierte Programmierung. \cite{mpInGroovy}
-\subsection{Expando-MetaClass}
+% Mit Kategorien bietet Groovy eine Art dynamische Mix-ins. Es können innerhalb
+% von einem Closure, beliebige Methoden zu allen Metaklassen hinzugefügt oder
+% überschrieben werden.
+% Die Methode use ist eine der Standardmethoden in DefaultGroovyMethods die jeder
+% Metaklasse, die von MetaClassImpl erbt, automatisch hinzugefügt wird. Deswegen
+% wird häufig von use auch von einem Sprachkonstrukt statt von einer Methode
+% gesprochen. Mit use wird die in Klammern angegebene Klasse auf Klas- senmethoden
+% untersucht und in org.codehaus.groovy.runtime.GroovyCategory- Support verwaltet.
+% Es werden nur Klassenmethoden erlaubt, um Zustände in der Kategoriein- stanz zu
+% vermeiden, die nicht threadsicher wären. Der this Parameter wird des- halb bei
+% Üerschreiben von Instanzmethoden wie getName explizit als ersten Parameter
+% angegeben. Wird nun eine Methode aufgerufen, überprüft MetaClas- sImpl in
+% invokeMethod ob es eine Kategorie Methode gibt, die kompatibel ist mit dem
+% aktuellen Objekt und den übergebenen Parametern. Gibt es solch eine wird der
+% Aufruf delegiert, sonst wird wie in 2.5 beschrieben der normale Aufruf
+% fortgesetzt.
+% Kategorien sind von Objective-C entlehnt und bieten eine einfache Mög-
+% lichkeit, kurzzeitig und ohne Seiteneffekte neue Methoden hinzuzufügen oder
+% bestehende zu überschreiben. Sie eignen sich deswegen gut für Aspekt- oder
+% Contextorientierte Programmierung. \cite{mpInGroovy}
+% \subsection{Expando-MetaClass}
 
 
 \chapter{MDA / MDSD und DSM Unterschiede} 
 %begin copy
-Model-driven Architecture (MDA) bzw. Model-Driven Software Development (MDSD)
-und Me- taprogrammierung bzw. DSLs haben eine vergleichbare Problemstellung. In
-der MDA Welt ver- wendet man auf UML etc. basierende graphische Modele. Auch das
-graphische Model muss eine formale Sprache sein, damit es compilerbar ist. Eine
-DSL kann man als textuelle Repräsentation eines Models verstehen.
-Die Komplexität und das Abstraktionsniveau ist abhängig von dem verwendeten
-Model, nicht seiner Repräsentation. Graphische Repräsentation kann man aber
-besser mit zusätzlichen Infor- mationen anreichern, da man diese nach Bedarf
-ein- und ausblenden kann.
-Eine DSL hat den Vorteil, das ihre Darstellung simpler ist, man kann sie
-beispielsweise mit einem einfachen Text Editor bearbeiten oder mit trivialen
-Mitteln ein diff zweier Versionen erstellen (vgl. Sachez Cuadrado and
-Jesu \ldots. Building domain-specific languages for model-driven
-development. IEEE Softw., 24(5):48–55, 2007. \& Diomidis Spinellis. Rational
-metaprogramming. IEEE Software, 25(1):78–79, January/Fe- bruary 2008.).
- (vgl. \cite{biekermetaprogrammierung})
- %end copy
- 
- 
- %begin copy -- wie funktioniert eine dsl
- In unserem Beispiel mit der Uhrenanwendung sind die
-Domänenkonzepte hergeleitet aus der visuellen Anzeige (z.
-B. Zeiteinheiten, Symbole etc.), der Kontrollstruktur (Nutzer
-drückt Knopf, Alarm wird ausgelöst etc.) und darunter liegenden
-Diensten (d. h. Zeit und ihre Manipulation, Alarm). Indem
-diese Konzepte in die Modellierungssprache eingebracht und
-weiter verfeinert werden, erzeugen wir die Spezifikation der
-Sprache (d. h. das Metamodell). Das Ziel ist hier, die gewählten
-Konzepte akkurat auf die Semantik der Domäne abzubilden. \cite{dsmUhrenArtikel}
- %end copy
- 
- 
-  
- %begin copy -- unterschiede dsm und mda
-Wie unterscheidet sich DSM von MDA?
-Nachdem wir mit Beispielen die Hauptprinzipien von domänenspezifischer
-Modellierung demonstriert haben, können wir
-sie nun mit anderen gängigen modellbasierten Entwicklungsansätzen
-vergleichen und speziell mit der Model Driven Architecture
-(MDA) der OMG. Ganz grundsätzlich beinhaltet MDA
-die Umwandlung von UML-Modellen auf einem höheren Abstraktionsniveau
-in UML-Modelle auf einem niedrigeren Abstraktionsniveau.
-Gewöhnlich sind dies zwei Ebenen, und zwar
-plattformunabhängige Modelle (PIMs) und plattformspezifische
-Modelle (PSMs). Diese PIMs und PSMs sind reines UML
-und bieten daher keine wirkliche Erhöhung der Abstraktion.
-In der MDA werden auf jeder Stufe die Modelle einer detaillierteren
-Bearbeitung mit Reverse und Roundtrip Engineering
-unterzogen und am Ende wird wesentlicher Code aus dem finalen
-Modell generiert. Die OMG verfolgt mit MDA das Ziel,
-dasselbe PIM auf verschiedenen Software-Plattformen nutzen
-zu können. Außerdem will die OMG alle Übersetzungen und
-Modellformate standardisieren, sodass die Modelle zwischen
-den Werkzeugen verschiedener Hersteller austauschbar werden.
-Dies erreichen zu wollen, ist sehr ambitioniert, aber man
-ist noch viele Jahre davon entfernt. Diese Zielsetzung zeigt jedoch
-klar die Unterschiede zwischen DSM und MDA und beantwortet
-die Frage, wann welcher Ansatz anzuwenden ist.
-DSM erfordert Domänen-Fachwissen, ein Potenzial, das eine
-Firma nur erreichen kann, wenn sie kontinuierlich in der gleichen
-Problemdomäne arbeitet. Dies sind typischerweise eher
-Produkt- oder Systementwicklungshäuser als Projekthäuser.
-Hier ist die Plattformunabhängigkeit keine wichtige Anforderung, obwohl sie mit DSM einfach erreicht werden kann, indem
-verschiedene Code-Generatoren für verschiedene Softwareund/
-oder Produktplattformen eingesetzt werden. Stattdessen
-liegt das Hauptaugenmerk der DSM auf der signifikanten Verbesserung
-der Entwicklerproduktivität.
-Mit der MDA richtet die OMG ihren Fokus nicht auf die Nutzung
-von DSM-Sprachen, sondern auf generisches UML, ihre
-eigene Standard-Modellierungssprache. Sie versucht nicht, das
-möglicherweise existierende Domänen-Fachwissen einer Firma
-einzukapseln, sondern nimmt an, dass dieses Wissen nicht
-vorhanden oder irrelevant ist. Es scheint daher, dass die MDA,
-wenn die OMG letztlich ihre selbstgesteckten Ziele erreicht, geeignet
-für System- oder Anwendungsintegrationsprojekte ist.
-MDA setzt ein fundiertes Wissen ihrer Methodik voraus,
-welches nicht per se in einer Firma vorhanden ist und durch
-Erfahrung erlangt werden muss. Folglich muss das MDAFachwissen
-angeeignet oder von außerhalb eingekauft werden,
-wohingegen das Domänen-Fachwissen für die DSM schon in
-einer Organisation verfügbar ist und angewendet wird. In diesen
-Situationen ist die Wahl zwischen MDA und DSM oft klar.
- \cite{dsmUhrenArtikel}
- %end copy
- 
- 
+% Model-driven Architecture (MDA) bzw. Model-Driven Software Development (MDSD)
+% und Me- taprogrammierung bzw. DSLs haben eine vergleichbare Problemstellung. In
+% der MDA Welt ver- wendet man auf UML etc. basierende graphische Modele. Auch das
+% graphische Model muss eine formale Sprache sein, damit es compilerbar ist. Eine
+% DSL kann man als textuelle Repräsentation eines Models verstehen.
+% Die Komplexität und das Abstraktionsniveau ist abhängig von dem verwendeten
+% Model, nicht seiner Repräsentation. Graphische Repräsentation kann man aber
+% besser mit zusätzlichen Infor- mationen anreichern, da man diese nach Bedarf
+% ein- und ausblenden kann.
+% Eine DSL hat den Vorteil, das ihre Darstellung simpler ist, man kann sie
+% beispielsweise mit einem einfachen Text Editor bearbeiten oder mit trivialen
+% Mitteln ein diff zweier Versionen erstellen (vgl. Sachez Cuadrado and
+% Jesu \ldots. Building domain-specific languages for model-driven
+% development. IEEE Softw., 24(5):48–55, 2007. \& Diomidis Spinellis. Rational
+% metaprogramming. IEEE Software, 25(1):78–79, January/Fe- bruary 2008.).
+%  (vgl. \cite{biekermetaprogrammierung})
+%  %end copy
+%  
+%  
+%  %begin copy -- wie funktioniert eine dsl
+%  In unserem Beispiel mit der Uhrenanwendung sind die
+% Domänenkonzepte hergeleitet aus der visuellen Anzeige (z.
+% B. Zeiteinheiten, Symbole etc.), der Kontrollstruktur (Nutzer
+% drückt Knopf, Alarm wird ausgelöst etc.) und darunter liegenden
+% Diensten (d. h. Zeit und ihre Manipulation, Alarm). Indem
+% diese Konzepte in die Modellierungssprache eingebracht und
+% weiter verfeinert werden, erzeugen wir die Spezifikation der
+% Sprache (d. h. das Metamodell). Das Ziel ist hier, die gewählten
+% Konzepte akkurat auf die Semantik der Domäne abzubilden. \cite{dsmUhrenArtikel}
+%  %end copy
+%  
+%  
+%   
+%  %begin copy -- unterschiede dsm und mda
+% Wie unterscheidet sich DSM von MDA?
+% Nachdem wir mit Beispielen die Hauptprinzipien von domänenspezifischer
+% Modellierung demonstriert haben, können wir
+% sie nun mit anderen gängigen modellbasierten Entwicklungsansätzen
+% vergleichen und speziell mit der Model Driven Architecture
+% (MDA) der OMG. Ganz grundsätzlich beinhaltet MDA
+% die Umwandlung von UML-Modellen auf einem höheren Abstraktionsniveau
+% in UML-Modelle auf einem niedrigeren Abstraktionsniveau.
+% Gewöhnlich sind dies zwei Ebenen, und zwar
+% plattformunabhängige Modelle (PIMs) und plattformspezifische
+% Modelle (PSMs). Diese PIMs und PSMs sind reines UML
+% und bieten daher keine wirkliche Erhöhung der Abstraktion.
+% In der MDA werden auf jeder Stufe die Modelle einer detaillierteren
+% Bearbeitung mit Reverse und Roundtrip Engineering
+% unterzogen und am Ende wird wesentlicher Code aus dem finalen
+% Modell generiert. Die OMG verfolgt mit MDA das Ziel,
+% dasselbe PIM auf verschiedenen Software-Plattformen nutzen
+% zu können. Außerdem will die OMG alle Übersetzungen und
+% Modellformate standardisieren, sodass die Modelle zwischen
+% den Werkzeugen verschiedener Hersteller austauschbar werden.
+% Dies erreichen zu wollen, ist sehr ambitioniert, aber man
+% ist noch viele Jahre davon entfernt. Diese Zielsetzung zeigt jedoch
+% klar die Unterschiede zwischen DSM und MDA und beantwortet
+% die Frage, wann welcher Ansatz anzuwenden ist.
+% DSM erfordert Domänen-Fachwissen, ein Potenzial, das eine
+% Firma nur erreichen kann, wenn sie kontinuierlich in der gleichen
+% Problemdomäne arbeitet. Dies sind typischerweise eher
+% Produkt- oder Systementwicklungshäuser als Projekthäuser.
+% Hier ist die Plattformunabhängigkeit keine wichtige Anforderung, obwohl sie mit DSM einfach erreicht werden kann, indem
+% verschiedene Code-Generatoren für verschiedene Softwareund/
+% oder Produktplattformen eingesetzt werden. Stattdessen
+% liegt das Hauptaugenmerk der DSM auf der signifikanten Verbesserung
+% der Entwicklerproduktivität.
+% Mit der MDA richtet die OMG ihren Fokus nicht auf die Nutzung
+% von DSM-Sprachen, sondern auf generisches UML, ihre
+% eigene Standard-Modellierungssprache. Sie versucht nicht, das
+% möglicherweise existierende Domänen-Fachwissen einer Firma
+% einzukapseln, sondern nimmt an, dass dieses Wissen nicht
+% vorhanden oder irrelevant ist. Es scheint daher, dass die MDA,
+% wenn die OMG letztlich ihre selbstgesteckten Ziele erreicht, geeignet
+% für System- oder Anwendungsintegrationsprojekte ist.
+% MDA setzt ein fundiertes Wissen ihrer Methodik voraus,
+% welches nicht per se in einer Firma vorhanden ist und durch
+% Erfahrung erlangt werden muss. Folglich muss das MDAFachwissen
+% angeeignet oder von außerhalb eingekauft werden,
+% wohingegen das Domänen-Fachwissen für die DSM schon in
+% einer Organisation verfügbar ist und angewendet wird. In diesen
+% Situationen ist die Wahl zwischen MDA und DSM oft klar.
+%  \cite{dsmUhrenArtikel}
+%  %end copy
+%  
+%  
  
 \chapter{Praktischer Teil}
 
@@ -747,24 +761,24 @@ Groovy-Metaprogrammierung erstellt wurde und wie der Domänenexporte darauf
 reagiert hat. 
 
 \section{Die Fachliche Domäne}
-Der fachliche Bereich im gesamten Kontext ist die Hotellerie. Speziell wird
-darin die Betriebswirtschaftliche Unterdomäne betrachtet und darin, noch
-spezieller die tagesabhängige Preisbildung für Hotelzimmer.
+Der fachliche Bereich im gesamten Kontext ist die Hotellerie. Diese
+Arbeit betrachtet die Betriebswirtschaftliche Unterdomäne
+ und darin, noch spezieller die tagesabhängige Preisbildung für Hotelzimmer.
 
 \section{Vorgehen}
 Nach der Zieldefinierung soll eine Bestandsaufnahme gemacht werden um die
 Rahmenbedingungen für das Experiment offenzulegen. Danach werden die
 Vorüberlegungen zur Zielerreichung dargestellt und anschließend die
 Implementierung der Lösung beschrieben. Daraus entstehen jeweils Unterziele die
-in den einzelenen Abschnitten näher beschrieben sind. Anschliessend wird jeweils
-ausgewertet und beurteilt.
+in den einzelenen Abschnitten näher beschrieben sind. Anschliessend bietet diese
+Arbeit jeweils eine Ausgewertung und Beurteilung.
 
-\subsection{Zieldefinierung}
+\section{Zieldefinierung}
 Das Ziel war es eine Sprache zu erstellen, die sich ausschließlich durch
 Preisbestimmung für jeden möglichen Tag in der Zukunft bzw. für jedes Apartment
 im Hotel definiert.
 
-\subsection{Bestandsaufnahme}
+\section{Bestandsaufnahme}
 Zuerst wurde unverbindlich eine Bestandsaufnahme gemacht. Das Hotel
 ``Schoenhouse Apartments'' besteht aus 50 Apartments in Berlin Mitte. Der
 Geschäftsführer ist Dipl.-Ing. Immanuel Lutz (Domänenexperte). Dieser bestimmt
@@ -774,7 +788,7 @@ Hauptkomponenten dient: Zimmer-, Gäste-, Apartment-, Sonderleitungs- und
 Preisverwaltung.
 Derzeit wird ein neuartiges PMS erstellt, dass auf Groovy-und-Grails basiert.
  
- \subsection{Vorüberlegungen}
+ \section{Vorüberlegungen}
 
 Die Vorüberlegung erfolgte ohne den Domänenexperten lediglich die Zustimmung
 für das Experiment ``Textuelle-Preisberechnung'' war gegeben, Da der
@@ -812,10 +826,11 @@ Werten, um die Kaufkraft der internationalen Gäste zu bestimmen.
 Formal kann mit diskreten Werten modelliert werden, die in direkter Beziehung zu
 dem Hotel stehen. Indirekte Beziehungen werden hier aus den oben genannten
 Gründen nicht betrachtet.
-Dem Geschäftsführer wird unterstellt, dass er genau diese Preislogik für
-sein Unternehmen individuell, unabhängig und zeitnah regeln muss.
 
-\subsection{Erstellung der DSL}
+Der Geschäftsführer muss genau diese Preislogik für
+sein Unternehmen individuell, unabhängig und zeitnah regeln können.
+
+\section{Erstellung der DSL}\label{erstellungDSL}
 Begonnen hat die Erstellung der DSL mit der Vorstellung, dass es im PMS ein
 Textbereich gibt in dem die der Text eingefügt und editiert werden kann.
 Der Texteditor sollte mindestens ein ``Rich-Text-Editor'' sein, damit der
@@ -824,7 +839,7 @@ Unter dem Textbereich ist es notwenig, zwei Buttons bereitzustellen. Einen um
 die DSL Live anzuwenden und einen um die DSL zu simulieren also zu testen.
 
 Da das zukünftige PMS in Groovy und Grails erstellt wird und Groovy viele
-Möglichkeiten der Metaprogrammierung und der DSL erstellung explizit hat ist es
+Möglichkeiten der Metaprogrammierung und der DSL erstellung explizit hat, ist es
 naheliegend, das Experiment in einer internen DSL umzusetzen. 
 
 Aus der Zieldefinition geht hervor, dass das Resultat der Preisberechnungslogik
@@ -865,8 +880,9 @@ Interpretiert bzw. evaluiert.
 Cliff James hatt das in einem
 Tutorial\footnote{http://www.nextinstruction.com/blog/2012/01/08/creating-dsls-with-groovy/}
 bewerkstelligt und folgenden Trick angewendet:
-Die DSL wird von einer Datei eingelesen und in einen interpolierten String
-umgewandelt. Anschließend wird dieser String in einen Closure-Block eingefügt.
+Die DSL befindet sich innerhalb einer separaten Datei und ist nach Ausführung
+des Einlesecodes in einen interpolierten String umgewandelt. Anschließend wird
+dieser String in einen Closure-Block eingefügt.
 Da dieser eingefügte String, innerhlab einer ``run'' Methode liegt ist der
 Aufruf immer der selbe.
 Die DSL wird letztendlich von der Groovy Shell Instanz evaluiert (\cite[S.
@@ -994,8 +1010,7 @@ wiederverwendet und alleTage steht für eine Menge, genauer für eine ObjectRang
 
 \lstinputlisting[caption={Fluent Interface Anwendung},
 label={finaldateRangeDSL.groovy},style=default]{code/finaldateRangeDSL.groovy}
-
-\subsection{Anbindung an die Hostdomäne}
+ 
 Wie in der Vorbetrachung angemerkt beziehen sich die Preise nicht nur auf den
 Zeitraum sondern werden nicht jedem einzelnen Zimmer sondern einer Kategorie
 zugeordnet.
@@ -1131,18 +1146,46 @@ label={finalDSLComplete.dsl},style=default]{code/finalDSLComplete.dsl}
 
 Dabei sei nochmal auf die besondere Konstruktion hingewiesen ``tage von: heute,
 bis: ereignis.start''. Das ist eine spezielle Notation in Groovy namens
-``named parameters''. tage ist eine Methode, die zwei parameter entgegennimmt.
-``von'' und ``bis''. Durch das entfernen der klammern ist jetzt die
-dahinterliegenede Struktur zu erkennen. Die alternative hinter dem Ausdrück im
+``named parameters''. ``tage'' ist eine Methode, die zwei Parameter entgegennimmt.
+``von'' und ``bis'', die auch so benannt werden müssen. Durch das Entfernen der
+klammern ist jetzt die dahinterliegenede Struktur zu erkennen. Die Alternative hinter dem Ausdrück im
 Kommentar (Zeile 15) ist anders aufgebaut. ``abstand'' ist nun eine Methode, die
 eine Closure als Argument entgegennimmt, in diesem Fall einen Abschnitt
 (Range).
 
+\section{Das semantischen Modell}
+
+Im Kapitel \ref{erstellungDSL} wurde beschrieben wie die DSL erstellt wurde.
+Dabei wurden einige Begriff in bold markiert um die wichtigsten
+Meta-Bestandteile unterschwellig zu verdeutlichen. In Abbilung \ref{mm.png}
+ist deren Zusammensetztung bzw. das semantische Modell der Preisberechnung
+dargestellt.
+Dieses ist sehr stark an das einer Skriptsprache angeleht.
+In diesem Modell sind nur Berechnungsbestandteile durch Asdrücke und Schleifen
+definiert. In einer Scriptsprache ist darüber hinaus noch mehr möglich.
 
 
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.99\textwidth]{pics/mm}
+	\end{center}
+	\caption{Preisberechnung semantisches Modell}
+	\label{mm.png}
+\end{figure}
+
+Die Erstellung dieses Modells, wurde nach der Erstellung der DSL gefertigt um
+daraus z.B. eine bessere Dokumentation zu erstellen, die dem Domänenexperten
+hilft die DSL zu erstellen.
+  
+ 
 \chapter{Auswertung}
 
+
+
 \subsection{Wahl der DSL Variante}
+Bewertung des Probands: Lesbarkeit, intuitivem Verständnis und Flexibilität
+
+Durch die Verwendung einer 
 
 \subsection{Beurteilung des Domänenexperten}
 
@@ -1151,43 +1194,43 @@ eine Closure als Argument entgegennimmt, in diesem Fall einen Abschnitt
 \chapter{Zusammenfassung und Schlussbetrachtung}
 
  %begin copy -- unterschiede dsm und mda
-Domänenspezifische Modellierung erlaubt schnellere Entwicklung
-basierend auf den Modellen der Problemdomäne und weniger auf
-Modellen von Quellcode. Unser Uhrenbeispiel veranschaulichte dies
-schnell. Industrielle Erfahrungen mit DSM [DSM] zeigen bedeutende
-Verbesserungen der Produktivität, niedrigere Entwicklungskosten
-und bessere Qualität. Das Unternehmen Nokia gibt beispielsweise
-an, dass sich die Entwicklung von Mobiltelefonen auf
-diesem Weg um den Faktor 10 beschleunigt. Bei der Firma Lucent
-konnte die Produktivität – abhängig vom Produkt – um das drei- bis
-zehnfache gesteigert werden. Die Schlüsselfaktoren dafür sind:
-H Das Problem wird nur einmal – und zwar auf einem hohen
-Abstraktionsniveau – gelöst und der lauffähige Quellcode
-wird geradewegs aus dieser Lösung generiert.
-H Das Hauptaugenmerk der Entwickler liegt nicht länger auf dem
-Code, sondern beim Modell, dem Problem an sich. Komplexität
-und Implementierungsdetails können so verborgen werden und
-eine bereits bekannte Terminologie rückt in den Vordergrund.
-H Durch eine einheitlichere Entwicklungsumgebung und dadurch,
-dass weniger Wechsel zwischen den Abstraktionsniveaus
-Modell und Implementierung erforderlich sind, lassen
-sich eine bessere Konsistenz der verschiedenen Produkte
-und niedrigere Fehlerraten erreichen.
-H Das Domänenwissen wird für das Entwicklungsteam explizit
-gemacht, indem es in der Modellierungssprache und deren
-Werkzeugunterstützung festgehalten wird.
-Der Einsatz von DSM bedeutet keine zusätzliche Investition,
-wenn der gesamte Zyklus vom Design bis zum arbeitenden
-Code betrachtet wird. Vielmehr spart es Entwicklungsressourcen:
-Traditionell arbeiten alle Entwickler mit den Konzepten der
-Problemdomäne und bilden diese von Hand auf die Implementierungskonzepte
-ab. Aber unter den Entwicklern gibt es große
-Unterschiede. Manche erledigen diese Aufgabe besser, manche
-schlechter. Also lasst die erfahrenen Entwickler die Konzepte
-und deren Abbildung einmal definieren, dann müssen die anderen
-dies nicht erneut tun. Spezifiziert ein Experte den Code-
-Generator, so produziert dieser Anwendungen von besserer
-Qualität, als es normale Entwickler von Hand könnten.
+% Domänenspezifische Modellierung erlaubt schnellere Entwicklung
+% basierend auf den Modellen der Problemdomäne und weniger auf
+% Modellen von Quellcode. Unser Uhrenbeispiel veranschaulichte dies
+% schnell. Industrielle Erfahrungen mit DSM [DSM] zeigen bedeutende
+% Verbesserungen der Produktivität, niedrigere Entwicklungskosten
+% und bessere Qualität. Das Unternehmen Nokia gibt beispielsweise
+% an, dass sich die Entwicklung von Mobiltelefonen auf
+% diesem Weg um den Faktor 10 beschleunigt. Bei der Firma Lucent
+% konnte die Produktivität – abhängig vom Produkt – um das drei- bis
+% zehnfache gesteigert werden. Die Schlüsselfaktoren dafür sind:
+% H Das Problem wird nur einmal – und zwar auf einem hohen
+% Abstraktionsniveau – gelöst und der lauffähige Quellcode
+% wird geradewegs aus dieser Lösung generiert.
+% H Das Hauptaugenmerk der Entwickler liegt nicht länger auf dem
+% Code, sondern beim Modell, dem Problem an sich. Komplexität
+% und Implementierungsdetails können so verborgen werden und
+% eine bereits bekannte Terminologie rückt in den Vordergrund.
+% H Durch eine einheitlichere Entwicklungsumgebung und dadurch,
+% dass weniger Wechsel zwischen den Abstraktionsniveaus
+% Modell und Implementierung erforderlich sind, lassen
+% sich eine bessere Konsistenz der verschiedenen Produkte
+% und niedrigere Fehlerraten erreichen.
+% H Das Domänenwissen wird für das Entwicklungsteam explizit
+% gemacht, indem es in der Modellierungssprache und deren
+% Werkzeugunterstützung festgehalten wird.
+% Der Einsatz von DSM bedeutet keine zusätzliche Investition,
+% wenn der gesamte Zyklus vom Design bis zum arbeitenden
+% Code betrachtet wird. Vielmehr spart es Entwicklungsressourcen:
+% Traditionell arbeiten alle Entwickler mit den Konzepten der
+% Problemdomäne und bilden diese von Hand auf die Implementierungskonzepte
+% ab. Aber unter den Entwicklern gibt es große
+% Unterschiede. Manche erledigen diese Aufgabe besser, manche
+% schlechter. Also lasst die erfahrenen Entwickler die Konzepte
+% und deren Abbildung einmal definieren, dann müssen die anderen
+% dies nicht erneut tun. Spezifiziert ein Experte den Code-
+% Generator, so produziert dieser Anwendungen von besserer
+% Qualität, als es normale Entwickler von Hand könnten.
  \cite{dsmUhrenArtikel}
  %end copy
  
