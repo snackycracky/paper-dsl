@@ -837,12 +837,12 @@ Preis beinhaltet (Tabelle \ref{zielDefinition}).
  	\hline 
   	Datum & Zimmerkategorie & Tagespreis \\
   	\hline 
-	1.1.2013 &  Zimmerkategorie1 &  100.00 \\
-	1.1.2013 &  Zimmerkategorie2 &  140.00 \\
-	2.1.2013 &  Zimmerkategorie1 &  100.00 \\
-	2.1.2013 &  Zimmerkategorie2 &  140.00 \\
-	3.1.2013 &  Zimmerkategorie1 &  100.00 \\
-	3.1.2013 &  Zimmerkategorie2 &  140.00 \\
+	1.1.2013 &  Zimmerkategorie1 &  95.00 \\
+	1.1.2013 &  Zimmerkategorie2 &  105.00 \\
+	2.1.2013 &  Zimmerkategorie1 &  95.00 \\
+	2.1.2013 &  Zimmerkategorie2 &  105.00 \\
+	3.1.2013 &  Zimmerkategorie1 &  95.00 \\
+	3.1.2013 &  Zimmerkategorie2 &  105.00 \\
 	\hline 
   	\end{tabular}  
  	\caption{Zielstruktur}
@@ -935,7 +935,7 @@ definiert wird. Ausserdem muss der Deligierte wieder auf die Mengeninstanz
 gewechselt werden. Abbilung \ref{alle.groovy} zeigt den Codeabschnitt im
 DSLRunner.
 
-\lstinputlisting[caption={Definition von $[1,2].alle({..})$},
+\lstinputlisting[caption={Definition von [1,2].alle(\{..\})},
 label={alle.groovy},style=default]{code/alle.groovy}
 
 Weiterhin wurde aus 2.years eine neue Kategorie definiert, die die deutsche
@@ -990,16 +990,153 @@ Daraus folgt nun folgende Notation neue Notation für die DSL (Code Listing
 Durch triviales kopieren der ``alle'' zu ``alleTage'' ExpandoMetaObejkt Instanz
 wurde nach dem DRY\footnote{Dave Thomas, interviewed by Bill Venners
 (2003-10-10) http://www.artima.com/intv/dry.html} Prinzip die Closure
-wiederverwendet und alleTage steht für eine Menge, genauer für eine ObjectRange zur verfügung.
+wiederverwendet und alleTage steht für eine Menge, genauer für eine ObjectRange zur Verfügung.
 
 \lstinputlisting[caption={Fluent Interface Anwendung},
 label={finaldateRangeDSL.groovy},style=default]{code/finaldateRangeDSL.groovy}
 
+\subsection{Anbindung an die Hostdomäne}
+Wie in der Vorbetrachung angemerkt beziehen sich die Preise nicht nur auf den
+Zeitraum sondern werden nicht jedem einzelnen Zimmer sondern einer Kategorie
+zugeordnet.
+Die Information aus der Hostdomäne (Abb. \ref{domainModelDia.png}) bzw. alle
+Zimmerkategorien, muss nun in Verbindung mit der DSL gebracht werden.
 
+ 
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=1.3\textwidth,angle=90]{pics/domainModelDia.png}
+	\end{center}
+	\caption{PMS - Domänen Modell Diagramausschnitt}
+	\label{domainModelDia.png}
+\end{figure}
 
+Bestenfalls sollte folgende Semantik vollkommen ausreichen:
+``Hotel.Zimmerkategorien'' um die Menge abzubilden.
+Das Binding Objekt erlaubt nun eine Referenzierung der Domänenmodellinstanzen
+mittels dem Grails Framework. Problematisch ist die unterschiedliche Benennung
+der DSL komponenten und der Domänenmodelle. Beispielsweise heisst das Hotel im
+Domänenmodell ``Estate'' und in der DSL nur ``Hotel''. Wiederrum heissen die
+Zimmerkategorien nicht so sondern ``EstateRoomType''. Es ist also notwendig ein
+Mapping zu erstellen, dass genau diese Fälle abdeckt. Der Binding Schlüsselwert
+für das Estate Objekt ist dann Hotel. 
+Da aber die Zimmerkategorien auf kein Feld innerhalb des Domänenmodells
+referenziert, muss ein erneutes Mapping erfolgen. Trivial wäre es in dem
+Domänenobjekt eine Kopie auf ``estateRoomTypes'' zu machen. Da aber so keine
+Kapselung erreichen wird ist es notwendig ein WrapperObjekt zu erstellen und das
+an die DSL zu binden (Code Listing \ref{EstateDSLWrapper.groovy}).
+ 
 
+\lstinputlisting[caption={EstateDSLWrapper.groovy},
+label={EstateDSLWrapper.groovy},style=default]{code/EstateDSLWrapper.groovy}
 
+Das Binding ist in Listing \ref{estateBinding.groovy} dargestellt.
 
+\lstinputlisting[caption={estateBinding.groovy},
+label={estateBinding.groovy},style=default]{code/estateBinding.groovy}
+
+Analog dazu ist dieses Vorgehen auch mit den definierten Ereignissen
+``PriceVariationRange'' durchführbar, welche aus dem Domänenmodell an die DSL
+gebunden werden. Da eine Iterationsnotation (``alle'') eingeführt wurde ist es
+insgesamt nun möglich {\bf Schleife}n zu schachteln Code Listing
+\ref{multipleLoops.dsl}.
+ 
+\lstinputlisting[caption={multipleLoops.dsl},
+label={multipleLoops.dsl},style=default]{code/multipleLoops.dsl}
+
+In Code Listing \ref{multipleLoops.dsl} ist Zusätzlich auch schon der erste
+{\bf Ausdruck} in Zeile 4 dargestellt. Trivialer weise handelt es sich um
+eine Variablendefinition inklusive {\bf Zuweisung}. Dieser Greift auf
+die Iterationsvariable ``ZimmerTyp'' zu und referenziert die in dem Wrapper
+festgelegte Eigenschaft Grundpreis. Im DomänenModell Estate heisst diese
+Klassenvariable ``racRate''.
+Die {\bf Variable} Tagespreis ist letztendlich die die modifiziert
+werden soll und anschließend in die Ergebnistabelle dem Tag und der
+Kategorie zugewiesen werden soll. Die Endtabelle soll in Form einer Liste
+definiert werden um dann mit dem Listenoperator ( << ) diese
+zu füllen. Die Listennotation ist trivialerweise folgende: ``listenname = []''.
+
+Bisher wurden alle Informationen beschrieben um eine finale implementierung
+durchzuführen. Code Listing \ref{trivialSolution.groovy} zeigt, das die
+Zielstellung dahingehen erreicht ist, das eine Liste wie in Tabelle \ref{zielDefinition} durch
+die DSL berechnet wird.
+ 
+\lstinputlisting[caption={Triviale Lösung des Problems},
+label={trivialSolution.groovy},style=default]{code/trivialSolution.groovy}
+
+Das Resultat kann automatisch und transparent gegenüber dem Domänenexperten
+durch ein XML oder JSON Mapping an die ``PartnerChannels'' (Booking.com oder HRS) geschickt werden.
+Das zu implementieren ist nicht Bestandteil dieser Arbeit.
+
+Da das Grundgerüst der DSL damit geschaffen ist erfolt nun die Anpassung des
+Tagespreises durch {\bf Formel}n und {\bf Bedingung}en.
+
+Da der Domänenexperte höchstwahrscheinlich mit Prozenten arbeiten will sollte
+es für denjenigen möglich sein diese Zahlen{\bf funktion} einfach benutzen zu
+können. Mit Hilfe von Kategorien ist es möglich das zu bewerkstelligen um
+letztendlich folgendes DSL
+Wort\footnote{http://de.wikipedia.org/wiki/Wort\_\(Theoretische_Informatik\)}
+zu erstellen: ``10 prozent Tagespreis''
+die Kategorie dazu lautet ist in Code Listing \ref{EnhancedNumber.groovy}
+dargestellt.
+ 
+\lstinputlisting[caption={Kategoriedefinition für Prozent},
+label={EnhancedNumber.groovy},style=default]{code/EnhancedNumber.groovy}
+
+Wie in der Vorüberlegung schon angedeutet gibt es z.B. eine Preiserhöhung wenn
+ein bestimmtes Ereignis eingetroffen ist. So ein wiederkehrendes
+Ereignis ist z.B. ein Wochenende. Wenn also der Domänenexperte sich dazu
+entscheidet den Preis am Wochenende um 10\% anzuheben sollte er folgendes in der
+DSL schreiben können: ``wochenendaufschlag = wenn tag.wochenende dann 10 prozent
+tagesPreis''. Wieder wurde hier die Methode eines Fluent Interfaces benutzt wie
+bei der Zeitabschnittbestimmung (von(x).bis(y)). In Listing
+\ref{ifelseCase.groovy}
+ 
+\lstinputlisting[caption={DSL - if else Ausdruck},
+label={ifelseCase.groovy},style=default]{code/ifelseCase.groovy}
+
+Diese Wenn dann Kombination ist wie an der 0 zu erkennen nur für Formeln
+einsetztbar. 
+Alle Zusätzlichen Erweiterungen für die Date-Klasse sind in Code Listing
+\ref{completeDateMetaClass.groovy} dargestellt. Darunter befindet sich auch die
+Erweiterung ``getWochenende bzw. wochenende''.
+
+\lstinputlisting[caption={Erweiterungen für die Date-Klasse},
+label={completeDateMetaClass.groovy},style=default]{code/completeDateMetaClass.groovy}
+ 
+Dem Domänenexperten wird nun unterstellt, dass er x += 1 als Summierung für x =
+x + 1 erlerenen kann. Letztendlich wäre er nun in der Lage folgenden Ausdruck zu
+schreiben: ``TagesPreis += wenn Tag.wochenende dann 10 prozent TagesPreis''.
+ 
+Weiter könnte sich der Hotelbetreiber dazu entscheiden folgende modifikation an
+dem Tagespreis durchzuführen: Je nach dem wie das Hotel prozentual ausgelastet
+ist, wird der Tagespreis, um diesen prozentualen Anteil von einem drittel des
+Grundpreises, erhöht oder verringert.
+Wieder durch die Binding-Möglichkeit können weitere vordefinierte Variablen
+übergeben werden. Z.B. ``binding.gesamtzimmer =
+Estate.estateRoomTypes*.count()'' und weiterhin die Anzahl der freien
+Zimmer als Methode (Code Listing \ref{predefinedVars.groovy}) 
+
+\lstinputlisting[caption={Vordefinierte Variablen},
+label={predefinedVars.groovy},style=default]{code/predefinedVars.groovy}
+ 
+Abschließend soll hier noch weiter die Möglichkeit vorgestellt werden wie auf
+die vorher erwähnten bzw. vordefinierten Ereignisse zugegriffen werden kann um
+eine Tagespreismanipulation durchzuführen.
+Code Listing \ref{finalDSLComplete.dsl} zeigt eine mögliche Form der DSL in der ca. 90\% der
+Konzepte Beispielhaft dargestellt sind.  
+
+\lstinputlisting[caption={DSL Beispiel},
+label={finalDSLComplete.dsl},style=default]{code/finalDSLComplete.dsl}
+
+Dabei sei nochmal auf die besondere Konstruktion hingewiesen ``tage von: heute,
+bis: ereignis.start''. Das ist eine spezielle Notation in Groovy namens
+``named parameters''. tage ist eine Methode, die zwei parameter entgegennimmt.
+``von'' und ``bis''. Durch das entfernen der klammern ist jetzt die
+dahinterliegenede Struktur zu erkennen. Die alternative hinter dem Ausdrück im
+Kommentar (Zeile 15) ist anders aufgebaut. ``abstand'' ist nun eine Methode, die
+eine Closure als Argument entgegennimmt, in diesem Fall einen Abschnitt
+(Range).
 
 
 
