@@ -116,7 +116,8 @@ Spezifikationsmöglichkeiten in besserer Weise auszudrücken.” (vlg.
 \cite{wikiIntentional}) Es werden zwei Arten von DSLs unterschieden
 \cite{fowler2011domain}. 
 
-\section{Aufgabenstellung (kurz, knapp, präzise) und Erwartungen}
+\section{Aufgabenstellung }
+%(kurz, knapp, präzise) und Erwartungen
 
 Das Paradigma der sprachorientierten Programmierung und die damit verbundenen
 Konzepte der domänenorientierten Programmierung sollen in dieser Arbeit
@@ -479,33 +480,23 @@ Methoden können auch überladen werden. Konstruktoren können hizugefügt oder
   
 
 
-\subsection{groovy syntaxeigentschaften}
-Omitting parentheses
-Groovy allows you to omit the parentheses for top-level expressions, like with the println command:
+\subsection{Syntaxeigentschaften}
 
-println "Hello"
-method a, b
-vs:
-
-println("Hello")
-method(a, b)
-When a closure is the last parameter of a method call, like when using Groovy's 'each‘ iteration mechanism, you can put the closure outside the closing parens, and even omit the parentheses:
-
-list.each( { println it } )
-list.each(){ println it }
-list.each  { println it }
-Always prefer the third form, which is more natural, as an empty pair of parentheses is just useless syntactical noise!
-
-There are some cases where Groovy doesn't allow you to remove parentheses. As I said, top-level expressions can omit them, but for nested method calls or on the right-hand side of an assignment, you can't omit them there.
-
-def foo(n) { n }
-
-println foo 1 // won't work
-def m = foo 1
+Bei ``top-level'' Ausdrücken wie z.B. \texttt{println(``x'')} ist es erlaubt,
+die Klammern wegzulassen \texttt{println ``x'' }
+ 
+Wenn der letzte Parameter einer einer Methode eine Closure ist, dann kann die
+Closure auch ausserhalb des Methodenaufrufs geschrieben werden
+(\texttt{list.each()\{ println it \}}). Die Klammern können auch weggelassen
+werden (\texttt{list.each \{ println it \}})  
+  
+bei Klassenmethoden können die Beim methodenaufruf die
+Klammern nicht weggelassen werden. Bei Zuweisungen ebenfalls nicht (\texttt{def
+x = methodenName y}).
  
 
 \chapter{MDA / MDSD und DSM Unterschiede} 
- 
+ %TODO
  
 \chapter{Praktischer Teil}
 
@@ -951,13 +942,15 @@ handelt.
 \subsection{Wahl der DSL Variante}
 Bewertung des Probands: Lesbarkeit, intuitivem Verständnis und Flexibilität
 
+klammern sind syntactical noise\ldots
+
 \subsection{Beurteilung des Domänenexperten}
 
 \subsection{Beurteilung der Meta-Programmierungstools von Grovvy} 
 Einfacher da kein aufwand für gui zu betreiben ist.
  
 \chapter{Zusammenfassung und Schlussbetrachtung}
-
+ 
  
  
 \bibliographystyle{alphadin}
