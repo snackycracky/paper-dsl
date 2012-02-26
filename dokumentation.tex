@@ -18,6 +18,7 @@
   \usepackage{tipa}
 \usepackage{verbatim} 
 \usepackage{float}  
+\usepackage{courier}
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{setspace}
@@ -421,7 +422,7 @@ label={readerstrategyAndDriverRuby},style=default]{code/readerstrategyAndDriverR
 
 
 
-\section{Groovy}
+\section{Groovy und Eigenschaften für eine interne DSL}
 
 Diese Programmiersprache wurde entwurfen, um auf der JVM (Java Virtual Machine)
 ausgeführt zu werden. Ruby, Python, Dylan und Smalltalk dienten als Inspiration
@@ -438,6 +439,64 @@ native Syntax für Maps, Listen und Reguläre Ausdrücke, ein einfaches
 Templatesystem, eine
 XQuery-ähnliche Syntax zum Ablaufen von Objektbäumen, Operatorüberladung und
 eine native Darstellung für BigDecimal und BigInteger.  
+
+In den nächsten Abschnitten handelt diese Arbeit von den wichtigsten Features
+dieser Programmiersprache, die sich für die Erstellung einer internen DSL
+eignen.
+
+
+\subsection{Expando}\label{expando}
+
+Expandos sind dynamische repräsentationen von Groovy-Beans. Deren
+Klassenvariablen sind über get und set erreichbar. Wenn eine Variable von einem
+Expando angefragt wird und diese nicht exsistiert, dann wird
+keine Exception geworfen sondern null zurückgegeben. Auch wenn eine Variable
+belegt wird, dann wird diese im Expando erzeugt, wenn diese noch nicht
+exsistiert. Es ist auch möglich eine Colsure einer Klassenvariable zuzuweisen.
+Diese ist dann genau wie eine Methode aufrufbar. Die Notation ist ``def x =
+new Expando()''
+
+\subsection{Kategorien}
+
+Wenn eine Methode einer bereits exsistierenden Klasse zur Laufzeit hinzugefügt
+werden soll, dann erfolgt das mittels ``Kategorien''.
+Um eine Methode x zu der vorhandenen Klasse java.lang.Number hinzuzufügen ist
+das erstellen einer neuen Klasse mit einer statischen Methode x erforderlich.
+Das erste Argument der Methode ist dann eine Referenz auf die Instanz.
+Durch die Notation \texttt{use(KlasseMitStatischemX)\{x kann jetzt auf eine
+Instanz von Number angewendet werden.\}}
+
+ \subsection{Metaclass}
+ 
+Jede Groovy Klasse implementiert die ``groovy.lang.GroovyObject''
+ Schnittstelle.
+Dadurch ist die Methode \texttt{getMetaClass} auf jedem Groovy-Objekt
+vorhanden.
+Die \texttt{MetaClass} Klasse wird dadurch referenziert.
+Bei verwendeten Java-Klassen in Groovy Code ist kein solches Interface aber die
+\texttt{MetaClass} wird trotzdem denen zugewiesen und in einer
+\texttt{MetaClass} Registrierung \cite{fowler2003patterns}
+verwaltet.
+In der \texttt{MetaClass} werden alle metainformationen der eigentlichen Klasse
+verwaltet. Die \texttt{MetaClass} erlaubt es neue Klassenvariablen und Methoden einem
+Objekt hinzuzufügen ganz nach dem Expando (Abschnitt \ref{expando}) Prinzip.
+Javaklassen beschreiben das Verhalten zur Zeit der Übersetztung, Metaklassen zur
+das zür Ausführungszeit.
+Die Kardinaliät Objekt und Metaklasse ist immer 1:1.
+Die \texttt{MetaClass} implementiert die Methode \texttt{invokeMethod}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \section{Metaprogrammierung}\label{metaprogrammingLabel}
@@ -956,8 +1015,8 @@ anstatt der speziellen Notation für zwei Jahre, bzw. die Instanziierung einer
 Dauer (Duration) die Notation 2.years zu verwenden. 
 
 Weiterhin wurde die Instanz
-der ExpandoMetaClass der Date-Klasse (Date.metaClass) dazu verwendet, um eine
-Methode namens ``bis'' für die Date-Klasse zu definieren, die wieder ein Date
+der \texttt{ExpandoMetaClass} der Date-Klasse (Date.metaClass) dazu verwendet,
+um eine Methode namens ``bis'' für die Date-Klasse zu definieren, die wieder ein Date
 Objekt als Argument entgegennimmt und daraus einen (Zeit)Abschnitt (engl.
 Range, Notation: ``start..stop''  ) daraus ableitet.
 
@@ -1192,8 +1251,7 @@ dargestellt.
 Dieses ist sehr stark an das einer Skriptsprache angeleht.
 In diesem Modell sind nur Berechnungsbestandteile durch Asdrücke und Schleifen
 definiert. In einer Scriptsprache ist darüber hinaus noch mehr möglich.
-
-
+ 
 \begin{figure}[h!]
 	\begin{center}
 	\includegraphics[width=0.99\textwidth]{pics/mm}
@@ -1224,17 +1282,14 @@ handelt.
 \end{figure}
  
 \chapter{Auswertung}
-
-
-
+ 
 \subsection{Wahl der DSL Variante}
 Bewertung des Probands: Lesbarkeit, intuitivem Verständnis und Flexibilität
 
 \subsection{Beurteilung des Domänenexperten}
 
-\subsection{Beurteilung der Meta-Programmierungstools von Grovvy}
- 
- einfacher da kein aufwand für gui zu betreiben ist.
+\subsection{Beurteilung der Meta-Programmierungstools von Grovvy} 
+Einfacher da kein aufwand für gui zu betreiben ist.
  
 \chapter{Zusammenfassung und Schlussbetrachtung}
 
