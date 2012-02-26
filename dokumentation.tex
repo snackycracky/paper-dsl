@@ -421,6 +421,13 @@ label={readerstrategyAndDriverRuby},style=default]{code/readerstrategyAndDriverR
 
 
 
+\section{Metaprogrammierung}\label{metaprogrammingLabel}
+
+Mittels Metaprogrammierung ist ein Programmierer in der Lage Quelltext zur
+Laufzeit zu ändern. Ein Meta-Objekt-Protokoll (MOP) stellt diese dafür
+benötigten Mittel bereit.
+
+
 
 \section{Groovy und Eigenschaften für eine interne DSL}
 
@@ -442,8 +449,12 @@ eine native Darstellung für BigDecimal und BigInteger.
 
 In den nächsten Abschnitten handelt diese Arbeit von den wichtigsten Features
 dieser Programmiersprache, die sich für die Erstellung einer internen DSL
-eignen.
+eignen. 
 
+
+\section{MOP Leistungsträger}
+Das MOP besteht aus den Haupt-Leistungsträgern: ``Metaclass'',
+``Kategorien'' und ``Expandos''.
 
 \subsection{Expando}\label{expando}
 
@@ -466,42 +477,88 @@ Das erste Argument der Methode ist dann eine Referenz auf die Instanz.
 Durch die Notation \texttt{use(KlasseMitStatischemX)\{x kann jetzt auf eine
 Instanz von Number angewendet werden.\}}
 
- \subsection{Metaclass}
+
+
+% Mit Kategorien bietet Groovy eine Art dynamische Mix-ins. Es können innerhalb
+% von einem Closure, beliebige Methoden zu allen Metaklassen hinzugefügt oder
+% überschrieben werden.
+% Die Methode use ist eine der Standardmethoden in DefaultGroovyMethods die jeder
+% Metaklasse, die von MetaClassImpl erbt, automatisch hinzugefügt wird. Deswegen
+% wird häufig von use auch von einem Sprachkonstrukt statt von einer Methode
+% gesprochen. Mit use wird die in Klammern angegebene Klasse auf Klas- senmethoden
+% untersucht und in org.codehaus.groovy.runtime.GroovyCategory- Support verwaltet.
+% Es werden nur Klassenmethoden erlaubt, um Zustände in der Kategoriein- stanz zu
+% vermeiden, die nicht threadsicher wären. Der this Parameter wird des- halb bei
+% Üerschreiben von Instanzmethoden wie getName explizit als ersten Parameter
+% angegeben. Wird nun eine Methode aufgerufen, überprüft MetaClas- sImpl in
+% invokeMethod ob es eine Kategorie Methode gibt, die kompatibel ist mit dem
+% aktuellen Objekt und den übergebenen Parametern. Gibt es solch eine wird der
+% Aufruf delegiert, sonst wird wie in 2.5 beschrieben der normale Aufruf
+% fortgesetzt.
+% Kategorien sind von Objective-C entlehnt und bieten eine einfache Mög-
+% lichkeit, kurzzeitig und ohne Seiteneffekte neue Methoden hinzuzufügen oder
+% bestehende zu überschreiben. Sie eignen sich deswegen gut für Aspekt- oder
+% Contextorientierte Programmierung. \cite{mpInGroovy}
+% \subsection{Expando-MetaClass}
+
+
+ \subsection{Metaclass}\label{Metaclass}
  
 Jede Groovy Klasse implementiert die ``groovy.lang.GroovyObject''
  Schnittstelle.
 Dadurch ist die Methode \texttt{getMetaClass} auf jedem Groovy-Objekt
 vorhanden.
 Die \texttt{MetaClass} Klasse wird dadurch referenziert.
-Bei verwendeten Java-Klassen in Groovy Code ist kein solches Interface aber die
-\texttt{MetaClass} wird trotzdem denen zugewiesen und in einer
+Bei verwendeten Java-Klassen ist kein solches Interface aber die
+\texttt{MetaClass} wird trotzdem jenen zugewiesen und in einer
 \texttt{MetaClass} Registrierung \cite{fowler2003patterns}
 verwaltet.
-In der \texttt{MetaClass} werden alle metainformationen der eigentlichen Klasse
-verwaltet. Die \texttt{MetaClass} erlaubt es neue Klassenvariablen und Methoden einem
-Objekt hinzuzufügen ganz nach dem Expando (Abschnitt \ref{expando}) Prinzip.
-Javaklassen beschreiben das Verhalten zur Zeit der Übersetztung, Metaklassen zur
-das zür Ausführungszeit.
-Die Kardinaliät Objekt und Metaklasse ist immer 1:1.
+In der \texttt{MetaClass} werden alle Metainformationen der eigentlichen Klasse
+verwaltet. Die \texttt{MetaClass} erlaubt es, nach dem Expando (Abschnitt
+\ref{expando}) Prinzip, neue Klassenvariablen und Methoden einem Objekt
+hinzuzufügen.
+Javaklassen beschreiben das Verhalten zur Zeit der Übersetztung, Metaklassen
+das zur Ausführungszeit.
+Die Kardinaliät zwischen Objekt und Metaklasse ist immer 1:1.
 Die \texttt{MetaClass} implementiert die Methode \texttt{invokeMethod}
 
+\subsection{Closures}
 
+Closures sind abgeschlossene Code-Abschnitte, die an sich einen eigenen
+Datentyp darstellen. Closures werden von geschweiften Klammern abgegrenzt.
+Innerhalb einer Closure sind Paramenter bzw. Argumente vom Ausführungscode durch
+einen Pfeil getrennt \texttt{->}. Parameter vor dem Pfeil sind durch Kommas
+getrennt.
+Closures bestitzen das keywort \texttt{this} aber auch noch \texttt{owner} und
+\texttt{delegate}
 
+\paragraph{owner}
+Dem Attribut Owner ist eine Referenz auf die Elternklasse. Diese Eigenschaft
+kann nicht geändert werden. \texttt{Owner} ist in den meisten Fällen gleich der
+Referenz von  \texttt{this}, außer wenn die umschließende Closure in einer
+andern Closure liegt.
+\paragraph{delegate}
+Diese Eigenschaft ist genau wie die \texttt{owner} Eigenschaft zu verstehen,
+jedoch mit dem bedeutenden Unterschied, dass dem \texttt{delegate} ein anderes
+Objekt zugeordnet werden kann. Das ist mit der \texttt{owner} Eigenschaft nicht
+möglich. So kann z.B. eine Closure einem fremden Objekt zugeordnet werden,
+jedoch ist das Elternobjekt immer noch das in dem die Closure definiert wurde.
+Mit der Neuzuweisung von delegate zum Fremdobjekt ist die Elternreferenz
+veränderbar.
 
+\subsection{ExpandoMetaClass}
 
-
-
-
-
-
-
-
-
-
-
-\section{Metaprogrammierung}\label{metaprogrammingLabel}
-
+Die Metaclass Eigenschaft aus Abschnitt \ref{Metaclass} ist ein Expando
+(Abschnitt \ref{expando}).
+Diese ExpandoMetaClass kann auch dazu verwendet werden um z.B. Methoden zu
+überschreiben. Eine Statische Methode kann mittels folgendem Ausdruck hizugefügt
+oder überschrieben werden: \texttt{Klasse.metaClass.static.x = \{
+Closure-Inhalt\}}. 
+Methoden können auch überladen werden. Konstruktoren können hizugefügt oder
+überschrieben werden. 
  
+
+
 
 %TODO sind lisp macros auch metaprogrammierung?
 
@@ -723,34 +780,7 @@ def m = foo 1
 % 	\label{groovyMetaclassDiagram}
 % \end{figure}
 
-
-
-
-\subsection{Closures} 
-
-
-\subsection{Kategorien}
-% Mit Kategorien bietet Groovy eine Art dynamische Mix-ins. Es können innerhalb
-% von einem Closure, beliebige Methoden zu allen Metaklassen hinzugefügt oder
-% überschrieben werden.
-% Die Methode use ist eine der Standardmethoden in DefaultGroovyMethods die jeder
-% Metaklasse, die von MetaClassImpl erbt, automatisch hinzugefügt wird. Deswegen
-% wird häufig von use auch von einem Sprachkonstrukt statt von einer Methode
-% gesprochen. Mit use wird die in Klammern angegebene Klasse auf Klas- senmethoden
-% untersucht und in org.codehaus.groovy.runtime.GroovyCategory- Support verwaltet.
-% Es werden nur Klassenmethoden erlaubt, um Zustände in der Kategoriein- stanz zu
-% vermeiden, die nicht threadsicher wären. Der this Parameter wird des- halb bei
-% Üerschreiben von Instanzmethoden wie getName explizit als ersten Parameter
-% angegeben. Wird nun eine Methode aufgerufen, überprüft MetaClas- sImpl in
-% invokeMethod ob es eine Kategorie Methode gibt, die kompatibel ist mit dem
-% aktuellen Objekt und den übergebenen Parametern. Gibt es solch eine wird der
-% Aufruf delegiert, sonst wird wie in 2.5 beschrieben der normale Aufruf
-% fortgesetzt.
-% Kategorien sind von Objective-C entlehnt und bieten eine einfache Mög-
-% lichkeit, kurzzeitig und ohne Seiteneffekte neue Methoden hinzuzufügen oder
-% bestehende zu überschreiben. Sie eignen sich deswegen gut für Aspekt- oder
-% Contextorientierte Programmierung. \cite{mpInGroovy}
-% \subsection{Expando-MetaClass}
+ 
 
 
 \chapter{MDA / MDSD und DSM Unterschiede} 

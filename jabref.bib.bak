@@ -21,7 +21,7 @@
 @ARTICLE{fowler2005language,
   author = {Fowler, M.},
   title = {Language workbenches: The killer-app for domain specific languages},
-  journal = {Accessed online from: http://www. martinfowler. com/articles/languageWorkbench.
+  journal = {Accessed online from: http://www.martinfowler.com/articles/languageWorkbench.
 	html},
   year = {2005}
 }
