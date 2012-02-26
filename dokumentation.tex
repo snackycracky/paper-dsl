@@ -326,7 +326,7 @@ Argumentenklammer geschrieben ist: ``(1,1)addiere'' oder sonstige nur denkbare
 syntaktische Abwandlugnen.
 
 
-
+ 
 % TODO vor und nachteile des jeweiligen typs.
 
 \section{Sprachorientierte Programmierung}
@@ -1206,6 +1206,22 @@ Die Erstellung dieses Modells, wurde nach der Erstellung der DSL gefertigt um
 daraus z.B. eine bessere Dokumentation zu erstellen, die dem Domänenexperten
 hilft die DSL zu erstellen.
   
+In Abbildung \ref{mmInstanz.png} ist ein Instanzdiagram, der ersten DSL
+Zeilen, um das Semantische Modell zu verifizieren.
+Durch die Codezeilen-Eigenschaft eines Berechnungsbestandteils kann die
+Abarbeitungssequenz dargestellt werden. Die drei Schleifen werden abgebildet und
+einzelen Ausdrücke innerhalb der Schleifen, wie z.B. ``wenn TagInnerhalbEreignis
+dann 10 prozent tagesPreis'' oder ``Tagespreis = Zimmertyp.Grundpreis''. Die
+grau markierte Instanz soll darstellen, das es sich um ein und das selbe
+handelt. 
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.99\textwidth]{pics/mmInstanz}
+	\end{center}
+	\caption{Instanzdiagram der ersten Codezeilen}
+	\label{mmInstanz.png}
+\end{figure}
  
 \chapter{Auswertung}
 
