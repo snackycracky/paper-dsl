@@ -10,4 +10,4 @@ binding.gesamtzimmer = Estate.get("schoenhouse").estateRoomTypes*.size()
 //Benutzung dieser DSL Spracherweiterung
 verfügbareZimmer = freieZimmer tag
 // abhängig von der Auslastung wird ein Teil von einem Drittel der Grundkosten aufaddiert.
-tagesPreis += verfügbareZimmer / gesamtzimmer * (typ.grundpreis / 3)
+tagesPreis += verfügbareZimmer / gesamtzimmer * (typ.grundpreis / 3)	

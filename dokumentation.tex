@@ -72,7 +72,7 @@ dass zwar kein bestimmtes Problem aber dessen Lösung beschrieben werden kann.
 Die Lösung des Problems muss genau in der Sprache beschrieben werden und setzt
 das Verständnis und die Erfahrung in der Programmiersprache und deren
 Eigenheiten zur Problemlösung voraus. Das Verständnis des eigentlichen Problems,
-dass es mit Hilfe von Software zu lösen gilt, liegt nicht immer zu 100% bei dem
+dass es mit Hilfe von Software zu lösen gilt, liegt nicht immer zu 100\% bei dem
 Programmierer, der es mit Java oder C\# bzw. einer 3GL lösen soll. Komplexe
 Probleme z.B. in der Medizin, der Architektur oder im Versicherungswesen sind
 oft söumfangreich, dass die Aufgabe des “Requirements Engeneering”
@@ -95,7 +95,7 @@ ist neu) dann ... ”. “Eine domänenspezifische Sprache ist nichts anderes al
 eine Programmiersprache für eine Domäne. Sie besteht im Kern aus einem
 Metamodell einer abstrakten Syntax, Constraints (Statischer Semantik) und einer
 konkreten Syntax. Eine festgelegte Semantik weist den Sprachelementen eine
-Bedeutung zu.” (vlg. S.30 \cite{mdaDPunkt})
+Bedeutung zu.” (vlg. S.30 \cite{mdaDPunkt}). 
 
 \section{Begriffserklärung}
 Eine DSL beinhaltet ein Metamodell. In einer Domänengrammatik gibt es das
@@ -223,7 +223,7 @@ Programmiersprache (engl. general purpose language, GPL), wie C und Java, oder
 eine universell einsetzbare Modellierungssprache, wie UML.
 
 Mit Hilfe einer solchen Sprache können ausschliesslich Problembeschreibungen
-innerhalb des jeweiligen Problemgebiets beschriebne werden.
+innerhalb des jeweiligen Problemgebiets beschrieben werden.
 Andere Problembereiche sollen ausgeblendet werden, damit der Domänenexperte sich
 nur auf das für Ihn wichtigste in dem jeweiligen Bereich konzentrieren kann.
 
@@ -331,6 +331,18 @@ syntaktische Abwandlugnen.
 
 \section{Sprachorientierte Programmierung}
 
+Ein Programmierer einer Anwendung auf der Internet-Platform benutzt viele
+Sprachen die alle für einen bestimmten Zweck eingesetzt werden. HTML für die
+Struktur und CSS für die visuelle Repräsentation dieser Stuktur und SQL um Daten
+aus der Datenbank abzufragen bzw. aufzuwerten. Der Entwickler muss sich dann für
+ein Web-Framework entscheiden, das in einer GPL wie
+Java, Ruby oder PHP geschrieben ist. Nicht zuletzt ist Javascript noch eine
+zusätzliche Sprache die Client oder auch Serverseitig\footnote{nodejs.org}
+eingesetzt wird. 
+Das Paradigma sprachorientierte Programmierung ermuntert den Programmier dazu
+eigene Sprachen zu entwerfen die den jeweiligen Problembereich explizit
+beschreiben.
+
 ``Language oriented programming (LOP) is about describing a system through
 multiple DSLs[\ldots]LOP is a style of development which operates about
 the idea of building software around a set of DSLs''.(vlg.
@@ -411,24 +423,26 @@ label={readerstrategyAndDriverRuby},style=default]{code/readerstrategyAndDriverR
 
 \section{Groovy}
 
-Groovy ist eine dynamisch typisierte Programmiersprache und Skriptsprache für
-die Java Virtual Machine.
-Groovy besitzt einige Fähigkeiten, die in Java nicht vorhanden sind: Closures,
-native Syntax für Maps, Listen und Reguläre Ausdrücke, ein einfaches
-Templatesystem, mit dem HTML- und SQL-Code erzeugt werden kann, eine
-XQuery-ähnliche Syntax zum Ablaufen von Objektbäumen, Operatorüberladung und
-eine native Darstellung für BigDecimal und BigInteger. (vgl. \cite{wikigroovy})
+Diese Programmiersprache wurde entwurfen, um auf der JVM (Java Virtual Machine)
+ausgeführt zu werden. Ruby, Python, Dylan und Smalltalk dienten als Inspiration
+für die Entwickler von Groovy.
 
+Eine Maxime für den Entwurf von Groovy war die hochgradige Kompatibilität zu
+Java. Die Sprache ist auch syntaktisch stark an Java angelehnt. Wenn eine .java
+Datei in eine .groovy Datei umbenannt wird, dann ist diese genau so ausführbar.
+Groovy Klassen können auch von Java Klassen erben.
+
+Groovy besitzt Eigenschaften, die sich besser als die von Java eignen, um eine
+DSL zu entwerfen. Dazu zählt die wahlweise dynamische Typisierung, Closures,
+native Syntax für Maps, Listen und Reguläre Ausdrücke, ein einfaches
+Templatesystem, eine
+XQuery-ähnliche Syntax zum Ablaufen von Objektbäumen, Operatorüberladung und
+eine native Darstellung für BigDecimal und BigInteger.  
 
 
 \section{Metaprogrammierung}\label{metaprogrammingLabel}
 
-
-
-
-
-
-
+ 
 
 %TODO sind lisp macros auch metaprogrammierung?
 
