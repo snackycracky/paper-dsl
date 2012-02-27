@@ -383,7 +383,7 @@ benötigten Mittel bereit.
 
 
 
-\section{Groovy und Eigenschaften für eine interne DSL}
+\section{internet DSL mit Groovy}
 
 Groovy wurde entwurfen, um auf der JVM (Java Virtual Machine)
 ausgeführt zu werden. Ruby, Python, Dylan und Smalltalk dienten als Inspiration
@@ -412,8 +412,9 @@ Das MOP besteht aus den Haupt-Leistungsträgern: ``Metaclass'',
 
 \subsection{Expando}\label{expando}
 
-Expandos sind dynamische Repräsentationen von Groovy-Beans. Wenn eine Variable von einem
-Expando angefragt wird und diese nicht exsistiert, dann wird
+Expandos sind dynamische Repräsentationen von Groovy-Beans (Java-Beans mit
+einfacherer Syntax).
+Wenn eine Variable von einem Expando angefragt wird und diese nicht exsistiert, dann wird
 keine Exception geworfen sondern null zurückgegeben. Auch wenn eine Variable
 belegt wird und noch nicht exsistiert, dann wird diese im Expando erzeugt
 .
@@ -451,6 +452,16 @@ Javaklassen beschreiben das Verhalten zur Zeit der Übersetztung, Metaklassen
 das zur Ausführungszeit.
 Die Kardinaliät zwischen Objekt und Metaklasse ist immer 1:1.
 %Die \texttt{MetaClass} implementiert die Methode \texttt{invokeMethod}
+In Abbildung \ref{groovyMetaclassDiagram} sind ide Beziehungen zw. Groovy
+Metaklassen, Klassen und Instanzen dargestellt. 
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.8\textwidth]{pics/groovyMetaklassen}
+	\end{center}
+	\caption{Beziehung von Metaklassen, Klassen und Instanzen \cite{mpInGroovy})}
+	\label{groovyMetaclassDiagram}
+\end{figure}
 
 \subsection{Closures}
 
