@@ -1,3 +1,9 @@
+\section{schmierzettel:}
+
+Aufgabenstellungen zu der DSL:
+
+
+
 \section{DSL}
 
 % Programmierer entwickeln Software überwiegend in universell einsetzbaren
@@ -282,97 +288,8 @@
 
  
 
-
-\chapter{MDA / MDSD und DSM Unterschiede} 
-%begin copy
-% Model-driven Architecture (MDA) bzw. Model-Driven Software Development (MDSD)
-% und Me- taprogrammierung bzw. DSLs haben eine vergleichbare Problemstellung. In
-% der MDA Welt ver- wendet man auf UML etc. basierende graphische Modele. Auch das
-% graphische Model muss eine formale Sprache sein, damit es compilerbar ist. Eine
-% DSL kann man als textuelle Repräsentation eines Models verstehen.
-% Die Komplexität und das Abstraktionsniveau ist abhängig von dem verwendeten
-% Model, nicht seiner Repräsentation. Graphische Repräsentation kann man aber
-% besser mit zusätzlichen Infor- mationen anreichern, da man diese nach Bedarf
-% ein- und ausblenden kann.
-% Eine DSL hat den Vorteil, das ihre Darstellung simpler ist, man kann sie
-% beispielsweise mit einem einfachen Text Editor bearbeiten oder mit trivialen
-% Mitteln ein diff zweier Versionen erstellen (vgl. Sachez Cuadrado and
-% Jesu \ldots. Building domain-specific languages for model-driven
-% development. IEEE Softw., 24(5):48–55, 2007. \& Diomidis Spinellis. Rational
-% metaprogramming. IEEE Software, 25(1):78–79, January/Fe- bruary 2008.).
-%  (vgl. \cite{biekermetaprogrammierung})
-%  %end copy
-%  
-%  
-%  %begin copy -- wie funktioniert eine dsl
-%  In unserem Beispiel mit der Uhrenanwendung sind die
-% Domänenkonzepte hergeleitet aus der visuellen Anzeige (z.
-% B. Zeiteinheiten, Symbole etc.), der Kontrollstruktur (Nutzer
-% drückt Knopf, Alarm wird ausgelöst etc.) und darunter liegenden
-% Diensten (d. h. Zeit und ihre Manipulation, Alarm). Indem
-% diese Konzepte in die Modellierungssprache eingebracht und
-% weiter verfeinert werden, erzeugen wir die Spezifikation der
-% Sprache (d. h. das Metamodell). Das Ziel ist hier, die gewählten
-% Konzepte akkurat auf die Semantik der Domäne abzubilden. \cite{dsmUhrenArtikel}
-%  %end copy
-%  
-%  
-%   
-%  %begin copy -- unterschiede dsm und mda
-% Wie unterscheidet sich DSM von MDA?
-% Nachdem wir mit Beispielen die Hauptprinzipien von domänenspezifischer
-% Modellierung demonstriert haben, können wir
-% sie nun mit anderen gängigen modellbasierten Entwicklungsansätzen
-% vergleichen und speziell mit der Model Driven Architecture
-% (MDA) der OMG. Ganz grundsätzlich beinhaltet MDA
-% die Umwandlung von UML-Modellen auf einem höheren Abstraktionsniveau
-% in UML-Modelle auf einem niedrigeren Abstraktionsniveau.
-% Gewöhnlich sind dies zwei Ebenen, und zwar
-% plattformunabhängige Modelle (PIMs) und plattformspezifische
-% Modelle (PSMs). Diese PIMs und PSMs sind reines UML
-% und bieten daher keine wirkliche Erhöhung der Abstraktion.
-% In der MDA werden auf jeder Stufe die Modelle einer detaillierteren
-% Bearbeitung mit Reverse und Roundtrip Engineering
-% unterzogen und am Ende wird wesentlicher Code aus dem finalen
-% Modell generiert. Die OMG verfolgt mit MDA das Ziel,
-% dasselbe PIM auf verschiedenen Software-Plattformen nutzen
-% zu können. Außerdem will die OMG alle Übersetzungen und
-% Modellformate standardisieren, sodass die Modelle zwischen
-% den Werkzeugen verschiedener Hersteller austauschbar werden.
-% Dies erreichen zu wollen, ist sehr ambitioniert, aber man
-% ist noch viele Jahre davon entfernt. Diese Zielsetzung zeigt jedoch
-% klar die Unterschiede zwischen DSM und MDA und beantwortet
-% die Frage, wann welcher Ansatz anzuwenden ist.
-% DSM erfordert Domänen-Fachwissen, ein Potenzial, das eine
-% Firma nur erreichen kann, wenn sie kontinuierlich in der gleichen
-% Problemdomäne arbeitet. Dies sind typischerweise eher
-% Produkt- oder Systementwicklungshäuser als Projekthäuser.
-% Hier ist die Plattformunabhängigkeit keine wichtige Anforderung, obwohl sie mit DSM einfach erreicht werden kann, indem
-% verschiedene Code-Generatoren für verschiedene Softwareund/
-% oder Produktplattformen eingesetzt werden. Stattdessen
-% liegt das Hauptaugenmerk der DSM auf der signifikanten Verbesserung
-% der Entwicklerproduktivität.
-% Mit der MDA richtet die OMG ihren Fokus nicht auf die Nutzung
-% von DSM-Sprachen, sondern auf generisches UML, ihre
-% eigene Standard-Modellierungssprache. Sie versucht nicht, das
-% möglicherweise existierende Domänen-Fachwissen einer Firma
-% einzukapseln, sondern nimmt an, dass dieses Wissen nicht
-% vorhanden oder irrelevant ist. Es scheint daher, dass die MDA,
-% wenn die OMG letztlich ihre selbstgesteckten Ziele erreicht, geeignet
-% für System- oder Anwendungsintegrationsprojekte ist.
-% MDA setzt ein fundiertes Wissen ihrer Methodik voraus,
-% welches nicht per se in einer Firma vorhanden ist und durch
-% Erfahrung erlangt werden muss. Folglich muss das MDAFachwissen
-% angeeignet oder von außerhalb eingekauft werden,
-% wohingegen das Domänen-Fachwissen für die DSM schon in
-% einer Organisation verfügbar ist und angewendet wird. In diesen
-% Situationen ist die Wahl zwischen MDA und DSM oft klar.
-%  \cite{dsmUhrenArtikel}
-%  %end copy
-%  
-%  
-
-
+ 
+ 
 
 \chapter{Zusammenfassung und Schlussbetrachtung}
 
