@@ -1,6 +1,7 @@
-%TODO  Kapselung erreichen wird ist es notwendig ein Wrapper-Objekt (Adapter-Pattern)
-%\cite{gamma1995design} zu erstellen und das an die DSL zu binden (Code Listing
-% \ref{EstateDSLWrapper.groovy}).
+%TODO Verständnis:
+
+ 
+ 
  
 \documentclass[11pt,english,ngerman, headsepline]{scrreprt}
 \usepackage{lmodern}
@@ -683,10 +684,10 @@ nutzlos. Daher wird eine Instanz von Binding (\cite[S. 368]{koenig2007groovy})
 dazu benutzt, um vordefinierte Variablen an das Script zu übergeben.
 Z.B. um der Variable \texttt{run} eine Closure
 zuzuweisen, die die loadDSL Methode im Runner aufruft wie im Code Listing
-\ref{dslrunner.groovy}) Zeile 22 zu sehen ist.
+\ref{dslrunner.groovy}).
  
 
- Die Binding Instanz wird dann an die GroovyShell
+  Die Binding Instanz wird dann an die GroovyShell
 Instanz übergeben, um die Assoziationen zu gewährleisten.
 
 Mit Groovy-Metaprogrammierung ist es möglich, den Kontext von einer in eine adere Instanz zu
@@ -827,17 +828,18 @@ Bestenfalls sollte folgende Semantik nützlich sein:
 Das Binding Objekt erlaubt nun, eine Referenzierung der Domänenmodellinstanzen
 mittels dem Grails Framework. Problematisch ist die unterschiedliche Benennung
 der DSL Notation und der Domänenmodelle. Beispielsweise heisst das Hotel im
-Domänenmodell \texttt{Estate} und in der DSL nur \texttt{Hotel}. Wiederrum heissen die
-Zimmerkategorien nicht so, sondern \texttt{EstateRoomType}. Es ist
-notwendig ein Mapping zu erstellen, dass genau diese Fälle abdeckt. Der Binding Schlüsselwert
-für das Estate Objekt ist dann \texttt{Hotel}. 
+Domänenmodell \texttt{Estate} und in der DSL nur \texttt{Hotel}. Wiederum
+heissen die Zimmerkategorien nicht so, sondern \texttt{EstateRoomType}. Es ist
+notwendig ein Mapping zu erstellen, das genau diese Fälle abdeckt. Der Binding
+Schlüsselwert für das Estate Objekt ist dann \texttt{Hotel}.
 Da aber die Zimmerkategorien auf kein Feld innerhalb des Domänenmodells
-referenziert, muss ein erneutes Mapping erfolgen. Trivial wäre es in dem
-Domänenobjekt eine Kopie auf \texttt{estateRoomTypes} zu machen. Da aber so keine
-Kapselung erreichen wird ist es notwendig ein Wrapper-Objekt (Adapter-Pattern)
-\cite{gamma1995design} zu erstellen und das an die DSL zu binden (Code Listing \ref{EstateDSLWrapper.groovy}).
+referenziert sind, muss ein erneutes Mapping erfolgen. Trivial wäre es in dem
+Domänenobjekt eine Kopie auf \texttt{estateRoomTypes} zu machen. Da aber so
+keine Kapselung erreichen wird ist es notwendig ein Wrapper-Objekt
+(Adapter-Pattern)
+ \cite{gamma1995design} zu erstellen und das an die DSL zu binden (Code Listing
+ \ref{EstateDSLWrapper.groovy}).
  
-
 \lstinputlisting[caption={EstateDSLWrapper.groovy},
 label={EstateDSLWrapper.groovy},style=default]{code/EstateDSLWrapper.groovy}
 
@@ -848,8 +850,7 @@ label={estateBinding.groovy},style=default]{code/estateBinding.groovy}
 
 Analog dazu ist dieses Vorgehen auch mit den definierten Ereignissen
 ``PriceVariationRange'' durchführbar, welche aus dem Domänenmodell an die DSL
-gebunden werden. Da eine Iterationsnotation (``alle'') eingeführt wurde ist es
-insgesamt nun möglich, {\bf Schleife}n zu schachteln Code Listing
+gebunden werden. Da eine Iterationsnotation (``alle'') eingeführt wurde, ist es nun insgesamt möglich, {\bf Schleife}n zu schachteln Code Listing
 \ref{multipleLoops.dsl}.
  
 \lstinputlisting[caption={multipleLoops.dsl},
@@ -857,19 +858,18 @@ label={multipleLoops.dsl},style=default]{code/multipleLoops.dsl}
 
 In Code Listing \ref{multipleLoops.dsl} ist zusätzlich auch schon der erste
 {\bf Ausdruck} in Zeile 4 dargestellt. Es handelt sich um
-eine Variablendefinition inklusive {\bf Zuweisung}. Dieser Greift auf
+eine Variablendefinition inklusive {\bf Zuweisung}. Dieser greift auf
 die Iterationsvariable \texttt{ZimmerTyp} zu und referenziert die in dem Wrapper
 festgelegte Eigenschaft Grundpreis. Im DomänenModell \texttt{Estate} heisst diese
 Klassenvariable \texttt{racRate}.
-Die {\bf Variable} \texttt{Tagespreis} ist letztendlich die, die modifiziert
-werden soll und anschließend in die Ergebnistabelle dem Tag und der
+Die {\bf Variable} \texttt{Tagespreis} ist letztendlich die, die modifiziert und anschließend in der Ergebnistabelle dem Tag und der
 Kategorie zugewiesen werden soll. Die Endtabelle soll in Form einer Liste
 definiert werden, um dann mit dem Listenoperator ( << ) diese
 zu füllen. Die Listennotation ist trivialerweise folgende: ``listenname = []''.
 
 Bisher wurden alle Informationen beschrieben, um eine finale Implementierung
-durchzuführen. Code Listing \ref{trivialSolution.groovy} zeigt, das die
-Zielstellung dahingehen erreicht ist, dass eine Liste wie in Tabelle
+durchzuführen. Code Listing \ref{trivialSolution.groovy} zeigt, dass die
+Zielstellung dahingehend erreicht ist, dass eine Liste wie in Tabelle
 \ref{zielDefinition} durch die DSL berechnet wird.
  
 \lstinputlisting[caption={Triviale Lösung des Problems},
@@ -877,12 +877,12 @@ label={trivialSolution.groovy},style=default]{code/trivialSolution.groovy}
 
 Das Resultat kann automatisch und transparent gegenüber dem Domänenexperten
 durch ein XML oder JSON Mapping an die ``PartnerChannels'' (Booking.com oder HRS) geschickt werden.
-Das zu implementieren ist nicht Bestandteil dieser Arbeit.
+Das zu Implementieren ist nicht Bestandteil dieser Arbeit.
 
 Da das Grundgerüst der DSL damit geschaffen ist, erfolgt nun die Anpassung des
 Tagespreises durch {\bf Formel}n und {\bf Bedingung}en.
 
-Da der Domänenexperte höchstwahrscheinlich mit Prozenten arbeiten will sollte
+Da der Domänenexperte höchstwahrscheinlich mit Prozenten arbeiten will, sollte
 es für denjenigen möglich sein, diese Zahlen{\bf funktion} einfach benutzen zu
 können. Mit Hilfe von Kategorien ist es möglich das zu bewerkstelligen, um
 letztendlich folgendes DSL
@@ -894,9 +894,9 @@ zu erstellen: ``10 prozent Tagespreis''. Die Kategorie dazu ist in Code Listing
 label={EnhancedNumber.groovy},style=default]{code/EnhancedNumber.groovy}
 
 Wie in der Vorüberlegung schon angedeutet, gibt es z.B. eine Preiserhöhung, wenn
-ein bestimmtes Ereignis eingetroffen ist. So ein wiederkehrendes
-Ereignis ist z.B. ein Wochenende. Wenn also der Domänenexperte sich dazu
-entscheidet den Preis am Wochenende um 10\% anzuheben sollte er folgendes in der
+ein bestimmtes Ereignis eingetroffen ist. Ein wiederkehrendes
+Ereignis ist z.B. ein Wochenende. Wenn sich also der Domänenexperte dazu
+entscheidet den Preis am Wochenende um 10\% anzuheben, sollte er folgendes in der
 DSL schreiben können: ``wochenendaufschlag = wenn tag.wochenende dann 10 prozent
 tagesPreis''. Wie
 bei der Zeitabschnittbestimmung (von(x).bis(y)) wurde hier wieder die Methode
@@ -906,9 +906,9 @@ eines Fluent Interfaces benutzt (Code Listing
 \lstinputlisting[caption={DSL - if else Ausdruck},
 label={ifelseCase.groovy},style=default]{code/ifelseCase.groovy}
 
-Diese Wenn-Dann-Kombination ist wie an der 0 zu erkennen nur für Formeln
+Diese Wenn-Dann-Kombination ist wie an der 0 zu erkennen, nur für Formeln
 einsetzbar. 
-Alle Zusätzlichen Erweiterungen für die Date-Klasse sind in Code Listing
+Alle zusätzlichen Erweiterungen für die Date-Klasse sind in Code Listing
 \ref{completeDateMetaClass.groovy} dargestellt. Darunter befindet sich auch die
 Erweiterung ``getWochenende bzw. wochenende''.
 
@@ -916,7 +916,7 @@ Erweiterung ``getWochenende bzw. wochenende''.
 label={completeDateMetaClass.groovy},style=default]{code/completeDateMetaClass.groovy}
  
 Dem Domänenexperten wird nun unterstellt, dass er x += 1 als Summierung für x =
-x + 1 erlerenen kann. Letztendlich wäre er nun in der Lage folgenden Ausdruck zu
+x + 1 erlernen kann. Letztendlich wäre er nun in der Lage folgenden Ausdruck zu
 schreiben: ``TagesPreis += wenn Tag.wochenende dann 10 prozent TagesPreis''.
  
 Weiter könnte sich der Hotelbetreiber dazu entscheiden, folgende Modifikation an
@@ -926,16 +926,16 @@ Grundpreises erhöht oder verringert.
 Wieder durch die Binding-Möglichkeit können weitere vordefinierte Variablen
 übergeben werden. Z.B. ``binding.gesamtzimmer =
 Estate.estateRoomTypes*.count()'' und weiterhin die Anzahl der freien
-Zimmer als Methode (Code Listing \ref{predefinedVars.groovy}) 
+Zimmer als Methode (Code Listing \ref{predefinedVars.groovy}).
 
 \lstinputlisting[caption={Vordefinierte Variablen},
 label={predefinedVars.groovy},style=default]{code/predefinedVars.groovy}
  
-Abschließend soll hier noch weiter die Möglichkeit vorgestellt werden wie auf
+Abschließend soll hier noch weiter die Möglichkeit vorgestellt werden, wie auf
 die vorher erwähnten bzw. vordefinierten Ereignisse zugegriffen werden kann, um
 eine Tagespreis-Manipulation durchzuführen.
 Code Listing \ref{finalDSLComplete.dsl} zeigt eine mögliche Form der DSL, in der
-ca. 90\% der Konzepte Beispielhaft dargestellt sind.  
+ca. 90\% der Konzepte beispielhaft dargestellt sind.  
 
 \lstinputlisting[caption={DSL Beispiel},
 label={finalDSLComplete.dsl},style=default]{code/finalDSLComplete.dsl}
@@ -943,7 +943,7 @@ label={finalDSLComplete.dsl},style=default]{code/finalDSLComplete.dsl}
 Dabei sei nochmals auf folgende besondere Konstruktion hingewiesen: \texttt{tage
 von:
 heute, bis: ereignis.start} (Ziele 15). Das ist eine spezielle Notation in
-Groovy namens ``named parameters''. \texttt{tage} ist eine Methode, die zwei
+Groovy Namens ``named parameters''. \texttt{tage} ist eine Methode, die zwei
 Parameter entgegennimmt.
 \texttt{von} und \texttt{bis}, die auch so benannt werden müssen. Durch das
 Entfernen der Klammern ist jetzt die dahinterliegende Struktur zu erkennen. Die
@@ -951,10 +951,10 @@ Alternative hinter dem Ausdruck im Kommentar (Zeile 15) ist anders aufgebaut.
 \texttt{abstand} ist eine Methode, die eine Closure als Argument entgegennimmt,
 in diesem Fall einen Abschnitt (Range).
 
-\section{Das semantischen Modell}
+\section{Das semantische Modell}
 
 Im Kapitel \ref{erstellungDSL} wurde beschrieben wie die DSL erstellt wurde.
-Dabei wurden einige Begriff mit bold markiert um die wichtigsten
+Dabei wurden einige Begriffe mit bold markiert, um die wichtigsten
 Meta-Bestandteile zu verdeutlichen. In Abbildung \ref{mm.png}
 ist deren Zusammensetzung bzw. das semantische Modell der Preisberechnung
 dargestellt.
@@ -970,11 +970,11 @@ definiert. In einer Scriptsprache ist darüber hinaus noch mehr möglich.
 	\label{mm.png}
 \end{figure}
 
-Die Erstellung dieses Modells, wurde nach der Erstellung der DSL gefertigt um
+Die Erstellung dieses Modells, wurde nach der Erstellung der DSL gefertigt, um
 daraus z.B. eine bessere Dokumentation zu erstellen, die dem Domänenexperten
 hilft die DSL zu erstellen.
   
-In Abbildung \ref{mmInstanz.png} ist ein Instanzdiagram, der ersten DSL
+In Abbildung \ref{mmInstanz.png} ist ein Instanzdiagramm, der ersten DSL
 Zeilen von Code Listing \ref{finalDSLComplete.dsl}, um das semantische Modell zu
 verifizieren.
 Durch die Codezeilen-Eigenschaft eines Berechnungsbestandteils kann die
@@ -982,13 +982,13 @@ Abarbeitungssequenz dargestellt werden. Die drei Schleifen werden abgebildet und
 die einzelnen Ausdrücke innerhalb der Schleifen, wie z.B. \texttt{wenn
 TagInnerhalbEreignis dann 10 prozent tagesPreis} oder \texttt{Tagespreis =
 Zimmertyp.Grundpreis}. Die grau markierten Instanzen sollen farblich darstellen,
-das es sich um ein und das selbe handelt. 
+dass es sich um ein und dasselbe handelt. 
 
 \begin{figure}[h!]
 	\begin{center}
 	\includegraphics[width=0.99\textwidth]{pics/mmInstanz}
 	\end{center}
-	\caption{Instanzdiagram der ersten Codezeilen}
+	\caption{Instanzdiagramm der ersten Codezeilen}
 	\label{mmInstanz.png}
 \end{figure}
  \clearpage
@@ -996,7 +996,7 @@ das es sich um ein und das selbe handelt.
 \chapter{Einbezug der Domänenexperten}
 
 Die Vorstellung der DSL ist hier in einem Interviewmitschnitt\footnote{51 min -
-http://srvme.de/mda/mitschnitt.mp4} aufgezeichnet wurden.
+http://srvme.de/mda/mitschnitt.mp4} aufgezeichnet worden.
 
 
 \section{Aufgaben zur DSL für den Domänenexperten}
@@ -1011,19 +1011,19 @@ Die Aufgaben sind:
 \item Die Ereignisse sollen bei der Berechnung keine Rolle mehr spielen.
 \item Die Gesamtzimmeranzahl ist um eins gestiegen.
 \item Der Lastminuterabatt soll in Lastminutezuschlag umgewandelt werden.
-\item Definieren sie neu: ExtraLastminuterabatt bei dem 5 tage vorher
-das Zimmer 20 euro weniger kosten soll. 
+\item Definieren sie neu: ExtraLastminuterabatt bei dem 5 Tage vorher
+das Zimmer 20 Euro weniger kosten soll. 
 \item Die Liste soll mit einem Tabellenkopf versehen werden, der die
 Spaltenbezeichung beinhaltet: ``Kategorie'', ``Datum'', ``Tagespreis''. 
 \end{itemize}
 
 \section{Lösungen zu den Aufgaben}
 
-Einer anderen Domänenexpertin, ohne Betriebswirtschaftlichen Hintergrund und
-viel Erfahrung und Umgang mit Excel, wurde die vorhandenen DSL (Code Listing
+Einer anderen Domänenexpertin, ohne betriebswirtschaftlichen Hintergrund und
+viel Erfahrung im Umgang mit Excel, wurde die vorhandene DSL (Code Listing
 \ref{finalDSLComplete.dsl}) gezeigt und erklärt.
-Dabei sollten die Fragen beantwortet werden. Der Experte war nur mit Hilfe dazu
-in der Lage die Fragen zu beantworten.
+Dabei sollten die Fragen beantwortet werden. Die Expertin war nur mit Hilfe dazu
+in der Lage, die Fragen zu beantworten.
 Die Befragung fand im Büro ohne jegliche Störungen statt. Der Expertin wurde die
 Preislogik-DSL vorgestellt und es wurden Erläuterungen zum Denkprozess bei der
 Erstellung der DSL kommuniziert (ca. 20 Minuten). 20 Minuten wurden für die
@@ -1043,19 +1043,19 @@ Eine Aufzeichnung\footnote{42 min - http://srvme.de/mda/aufgabenloesung.mp3} von
 
 Die Idee eine DSL einzuführen wurde überwiegend positiv aufgenommen, weil
 denkbar jede elektronische Unterstützung für die Domäne zuallererst als
-Hilfreich bewertet wird.
+hilfreich bewertet wird.
 In dem vorhandenen PMS hat die Domänenexpertin keinen direkten Kontakt mit der
 Preislogik, sondern nur indirekt.
 Unsicherheit entstand, als die Domänenexpertin die DSL zur Preisberechnung
- zum ersten mal gesehen hat, weil eine
-rein textuelle Repräsentation nicht ihrer Gewöhnung entspricht. Die Wahrnehmung
+ zum ersten Mal gesehen hat, weil sie an eine
+rein textuelle Repräsentation nicht gewohnt ist. Die Wahrnehmung
 und die Erkennung der Bestandteile wurde erst bei näherem Betrachten klarer. 
 Die Expertin war der Meinung, dass eine bessere visuelle Repräsentation der
 Unterscheidung helfen würde. Abschließend wurde die DSL als ein geeignetes
 Kommunikationsmedium gutgeheißen, da die Kommunikation mit dem Programmierer nicht immer eindeutig ist.
 Gegenüber einer grafischen Benutzeroberfläche wurde die DSL und deren Notation
 als ``verwirrend'' eingestuft. Jedoch wurde die DSL letztendlich als flexibler
-eingestuft, da eigne Variablendefinitionen in grafischen ehr unüblich sind.
+angesehen, da eigene Variablendefinitionen in vordefinierten, grafischen User Interfaces eher unüblich sind.
 Positiv sind die überwiegend richtigen Antworten der Fragen zu bewerten.
 Insgesamt wurden mit Hilfestellung 80\% der Fragen beantwortet. Die Fragen waren
 aufgrund ihrer Nachfragen nur zu 80\% eineindeutig.
@@ -1068,21 +1068,21 @@ aufgrund ihrer Nachfragen nur zu 80\% eineindeutig.
 Die Einsparung des GUI-Interfaces ist gegenüber der Entwicklungsgeschwindigkeit
 als positiv zu bewerten, wenn die DSL als Kommunikationsmedium mit dem Experten
 benutzt werden soll. 
-Da die DSL keinen speziellen Editor verfügt, der direkte Hilfe für die
+Da die DSL über keinen speziellen Editor verfügt, der direkte Hilfe für die
 Erstellung der DSL bietet (Syntax Fehler, Autovervollständigung, Debugger,
-Versionskontrolle) ist ein fehlerfreies und effektives Editieren fasst unmöglich
+Versionskontrolle), ist ein fehlerfreies und effektives Editieren fast unmöglich
 und würde beim Domänenexperten schnell zu Frustration führen. 
 
-Die Möglichkeiten zur Erstellung einer DSL in Groovy sind ausreichend aber oft
+Die Möglichkeiten zur Erstellung einer DSL in Groovy sind ausreichend, aber oft
 in der Notation beschränkt. 
-Die Implementierung einer eigenen DSL war für den Programmierer neuartiges
-Gebiet. Der Aufwand zum erlernen der DSL-Leistungsträger in Groovy war gegenüber
-einer herkömmlichen statischen Implementierung hoch. Die Benutzung des MOP ein
+Die Implementierung einer eigenen DSL war für den Programmierer ein neues
+Gebiet. Der Aufwand zum Erlernen der DSL-Leistungsträger in Groovy war gegenüber
+einer herkömmlichen statischen Implementierung hoch. Die Benutzung des MOP ist ein
 erheblicher Gewinn gegenüber den herkömmlichen Programmiermethoden, da nach
-einer Implementierung Ausdrucksstärkerer Quelltext vorliegt, der die Lesbarkeit
+einer Implementierung ausdrucksstärkerer Quelltext vorliegt, der die Lesbarkeit
 fördert.
 Eine zukünftige Verwendung von DSLs und dem MOP ist nach dieser Arbeit für den
-Autor fasst nicht mehr wegzudenken, da der Nutzen gegenüber dem Aufwand beim 
+Autor fast nicht mehr wegzudenken, da der Nutzen den Aufwand beim 
 Erstellen deutlich überwiegt. Lediglich beim Lernen der Konzepte gab es
 einen deutlichen Mehraufwand.
  
