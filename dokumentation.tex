@@ -49,9 +49,9 @@
 
 \chapter{Einleitung} 
 
-Die Sektionen würden bei der echten Arbeit wegfallen.
 
-\section{Motivation (Heranführen an das Thema)}
+
+\section{Motivation}
 
 Das Wort “Abstraktion” bezeichnet meist den induktiven Denkprozess des
 Weglassens von Einzelheiten und des Überführens auf etwas Allgemeineres oder
@@ -139,8 +139,8 @@ Eine einfache DSLs soll mit Hilfe von
 Groovy-Metaprogramming als interne DSLs entworfen werden.
 
 Dabei stellen sich folgende Fragen: Wie effizient ist die Erstellung einer DSL
-mittels der Programmiersprache Groovy und wie reagiert der Domänenexperte auf
-die DSL?
+mittels der Programmiersprache Groovy (Kapitel \ref{reaktionProgrammierer}) und wie
+reagiert der Domänenexperte auf die DSL (Kapitel \ref{reaktionExperte})?
 
 Domänenexperten, die keine Erfahrung mit Programmierung haben, sollen an
 interne DSLs für deren bekannte Domäne herangeführt werden, um diese
@@ -153,8 +153,8 @@ gegebenen DSLs zu lösen sind.
 \section{Gliederung}
 
 Im theoretischen Teil stellt diese Arbeit eine Abhandlung über die Grundlagen
-des ``sprachorientierten Programmierparadigmas'' (LOP) dar und die damit
-verbundene Metaprogrammierung speziell für die Programmiersprache ``Groovy''.
+des ``sprachorientierten Programmierparadigmas'' (LOP) dar und die
+damit verbundene Metaprogrammierung speziell für die Programmiersprache ``Groovy''.
 
 Der praktische Teil befasst sich mit der Anwendung dieses Paradigmas. Der Autor
 entwirft dazu eine interne DSL in Groovy und erklärt die Vorgehensweise von der
@@ -263,7 +263,142 @@ label={readerstrategyAndDriverRuby},style=default]{code/readerstrategyAndDriverR
 
 %TODO language workbenches vorstellen
 
+\section{Domain Specific Languages}
+ 
 
+Eine domänenspezifische Sprache (engl. domain-specific language, DSL) ist, im
+Gegensatz zu gängigen Programmiersprachen, auf ein ausgewähltes
+ Problemfeld (die Domäne) spezialisiert. Sie besitzt hoch spezialisierte
+Sprachelemente mit meist natürlichen Begriffe aus der Anwendungsdomäne.
+Das Gegenteil einer domänenspezifischen Sprache ist eine universell einsetzbare
+Programmiersprache (engl. general purpose language, GPL), wie C und Java, oder
+eine universell einsetzbare Modellierungssprache, wie UML.
+
+Mit Hilfe einer solchen Sprache können ausschliesslich Problembeschreibungen
+innerhalb des jeweiligen Problemgebiets beschrieben werden.
+Andere Problembereiche sind ausgeblendet, damit der Domänenexperte sich
+nur auf das für Ihn wichtigste, in dem jeweiligen Bereich, konzentrieren kann.
+
+Der Domänenspezialist (z.B. ein Betriebswirt) ist mit dem Problembereich (z.B.
+Produktpreisbildung) sehr vertraut. Die Domänensprache, z.B. zur Beschreibung
+von Preisbildungskomponenten und deren Zusammenhänge gibt dem Betriebswirt ein
+mögliches Werkzeug, um die Preise für Produkte (z.B. Computerhardware) dynamisch
+anzupassen. Diese DSL ist dann aber für andere Bereiche, wie z.B.
+der Aufstellung des Personalschichtplans nicht einsetzbar.
+
+Die Charakteristiken einer DSL ist vorzugsweise eine minimale Syntax, die nur
+die nötigsten Mittel zur Strukturierung benötigt, um die Lesbarkeit zu erhöhen
+und keine Ablenkung vom Problem zu schaffen. 
+Was genau eine minimale Syntax ausmacht ist schwer messbar zu machen.
+Vorzugsweise sollte die Syntax keine Redundanzen aufweisen, wie das z.B. bei
+XML der Fall ist, indem das offene und geschlossen Element den selben
+Tagnamen tragen. Es sollte ein Zeichen bzw. eine minimale
+Kombination aus mehreren Zeichen und deren Position in der DSL für eine Informationseinheit
+verwendet werden. Als Zeichen sind hier insbesondere Leerzeichen und
+Zeilenumbrüche gemeint. Damit sind Zeichen gemeint, die auch eine angelehnte
+Bedeutung zu der natürlichen Sprache haben, z.B. Klammern, Semikola, Kommas,
+Punkte und Querstrich. \ldots
+
+Fowler ist der begründeten Ansicht, dass zu einer DSL immer ein semantisches
+Modell \cite[p. 159]{fowler2011domain} existieren sollte, das unabhängig von
+der eigentlichen DSL ist aber direkt dazugehört. Es ist das Modell zu der DSL 
+oder auch das Schema derer. Die Anwendung der DSL instanziiert das semantische
+Modell und ist damit eine gut lesbare Form der Modellinstanziierung. Das semantische Modell hat somit
+große Ähnlichkeit mir einem Domänen Modell \cite[]{fowler2003patterns}.
+Vorteilhaft ist damit die klare ``Trennung der Angelegenheiten'' (separation of
+concerns) \cite{Huersch95separationof}, auf der einen Seite das Parsen der DSL
+durch den Parser und auf der anderen Seite die daraus resultierenden Semantiken.
+Die DSL ist damit eine Abbildung des Modells. Veränderungen können an diesem
+formalen Modell separat zur DSL durchgeführt werden. Z.B. kann das semantische
+Model das von einer Zustandsmaschine sein wie in Abbildung
+\ref{state-machine-semantic-model} graphisch dargestellt.
+
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.7\textwidth]{pics/data-model.jpg}
+	\end{center}
+	\caption{Semantisches Modell einer 	Zustandsmaschine
+	- neilvandyke.org/smores/ }
+	\label{state-machine-semantic-model}
+\end{figure}
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.7\textwidth]{pics/zutandsdiaGeldautomat.jpg}
+	\end{center}
+	\caption{Zustandsdiagramm Geldautomat
+	\url{https://www.fbi.h-da.de/uploads/RTEmagicC_f2da95d8df.gif.gif} }
+	\label{zutandsdiaGeldautomat.jpg}
+\end{figure}
+
+z.B. ist das Metamodell von Zuständen eines Geldautomaten das Modell einer
+Zustandsmaschine (Abb. \ref{state-machine-semantic-model}). Das Zustandsdiagramm
+des Geldautomaten ist damit das in Abbildung \ref{zutandsdiaGeldautomat.jpg}
+dargestellte. Es beschreibt alle Zustände und Zustandsübergänge bzw. deren
+vorausgehende Ereignisse bzw. Aktionen. Eine DSL könnte dieses semantische
+Modell, das Metamodell der Zustandsmaschine, mit den Gegebenheiten des
+Geldautomaten instanziieren. (Code Listing \ref{geldautomat.dsl}).
+   
+\lstinputlisting[caption={DSL Ausschnitt für ein Geldautomat},
+label={geldautomat.dsl},style=default]{code/geldautomat.dsl}
+ 
+
+
+\subsection{Unterscheidungen}
+
+Martin Fowler unterscheidet zwischen Ausprägungen von DSLs, indem er deren
+Beziehung zu einer GPL benennt. Externe DSLs sind eigenständige und unabhängige
+Sprachen die einen eigenen speziell angefertigten Parser besitzen. 
+
+``Sowohl die konkrete Syntax als auch die Semantik können frei definiert
+werden. SQL oder reguläre Ausdrücke sind Vertreter von externen DSLs.''
+\cite{wikidsl} Wenn eine DSL innerhalb bzw.
+mit einer GPL definiert wurde, nennt er diese interne DSL. Solche eingebettete
+Spracherweiterungen sind mit den gegebenen Mitteln der ``Wirtssprache'',
+genauer die Möglichkeit zur Metaprogrammierung (Kapitel
+\ref{metaprogrammingLabel}), erstellt.
+Vorzugsweise sind solche Wirtssprachen dynamisch typisiert wie z.B. Ruby, Groovy
+oder Scala. 
+``Dadurch sinkt der Implementierungsaufwand. Eine interne DSL ist immer eine echte
+Untermenge einer generelleren Sprache.'' \cite{wikidsl}
+
+DSLs, die nicht in der Hostsprache implementiert sind, werden von einer anderen
+Programmiersprache geparst und weiterverarbeitet. Eine eigenständige
+Sprachdefinition unterliegt keiner Einschränkung durch die Wirtssprache.
+Damit sind absurde Szenarien gemeint, bei denen z.B. Methodennamen hinter die
+Argumentenklammer geschrieben sind: ``(1,1)addiere'' oder sonstige denkbare
+syntaktische Abwandlungen.
+
+
+\subsection{vergleich zu MDA / MDD } 
+
+Model-Driven Architecture (MDA) bzw. Model-Driven Development (MDD) und Me-
+taprogrammierung bzw. DSLs haben eine vergleichbare Problemstellung.
+
+Mit der MDA richtet die OMG ihren Fokus nicht auf die Nutzung
+von DSM-Sprachen, sondern auf generisches UML in graphischer Form,
+ihre eigene Standard-Modellierungssprache.
+
+Auch graphische Modelle müssen eine formale Sprache haben, damit sie weiter 
+verarbeitet werden können.  Eine DSL ist eine textuelle Repräsentation des 
+semantischen Models.
+ 
+Die Komplexität und das Abstraktionsniveau ist abhängig von dem verwendeten
+semantischen Model, nicht seiner Repräsentation. 
+
+Eine DSL hat den Vorteil, das ihre Darstellung simpler ist, man kann sie
+beispielsweise mit einem einfachen Text Editor bearbeiten oder mit trivialen
+Mitteln ein ``diff’’ zweier Versionen erstellen (vgl.  \cite{cuadrado2007building}.
+\cite{spinellis2008rational}, nach \cite{biekermetaprogrammierung}).
+
+``Mit der MDA richtet die OMG ihren Fokus nicht auf die Nutzung
+von DSM-Sprachen, sondern auf generisches UML, ihre
+eigene Standard-Modellierungssprache. Sie versucht nicht, das
+möglicherweise existierende Domänen-Fachwissen einer Firma
+einzukapseln, sondern nimmt an, dass dieses Wissen nicht
+vorhanden oder irrelevant ist. '' \cite{dsmUhrenArtikel}
+ 
 
 \section{Metaprogrammierung}\label{metaprogrammingLabel}
 
@@ -407,142 +542,7 @@ x = methodenName y}''.
  \subsection{Command Expressions}
  %TODO
 
-\section{Domain Specific Languages}
- 
 
-Eine domänenspezifische Sprache (engl. domain-specific language, DSL) ist, im
-Gegensatz zu gängigen Programmiersprachen, auf ein ausgewähltes
- Problemfeld (die Domäne) spezialisiert. Sie besitzt hoch spezialisierte
-Sprachelemente mit meist natürlichen Begriffe aus der Anwendungsdomäne.
-Das Gegenteil einer domänenspezifischen Sprache ist eine universell einsetzbare
-Programmiersprache (engl. general purpose language, GPL), wie C und Java, oder
-eine universell einsetzbare Modellierungssprache, wie UML.
-
-Mit Hilfe einer solchen Sprache können ausschliesslich Problembeschreibungen
-innerhalb des jeweiligen Problemgebiets beschrieben werden.
-Andere Problembereiche sind ausgeblendet, damit der Domänenexperte sich
-nur auf das für Ihn wichtigste, in dem jeweiligen Bereich, konzentrieren kann.
-
-Der Domänenspezialist (z.B. ein Betriebswirt) ist mit dem Problembereich (z.B.
-Produktpreisbildung) sehr vertraut. Die Domänensprache, z.B. zur Beschreibung
-von Preisbildungskomponenten und deren Zusammenhänge gibt dem Betriebswirt ein
-mögliches Werkzeug, um die Preise für Produkte (z.B. Computerhardware) dynamisch
-anzupassen. Diese DSL ist dann aber für andere Bereiche, wie z.B.
-der Aufstellung des Personalschichtplans nicht einsetzbar.
-
-Die Charakteristiken einer DSL ist vorzugsweise eine minimale Syntax, die nur
-die nötigsten Mittel zur Strukturierung benötigt, um die Lesbarkeit zu erhöhen
-und keine Ablenkung vom Problem zu schaffen. 
-Was genau eine minimale Syntax ausmacht ist schwer messbar zu machen.
-Vorzugsweise sollte die Syntax keine Redundanzen aufweisen, wie das z.B. bei
-XML der Fall ist, indem das offene und geschlossen Element den selben
-Tagnamen tragen. Es sollte ein Zeichen bzw. eine minimale
-Kombination aus mehreren Zeichen und deren Position in der DSL für eine Informationseinheit
-verwendet werden. Als Zeichen sind hier insbesondere Leerzeichen und
-Zeilenumbrüche gemeint. Damit sind Zeichen gemeint, die auch eine angelehnte
-Bedeutung zu der natürlichen Sprache haben, z.B. Klammern, Semikola, Kommas,
-Punkte und Querstrich. \ldots
-
-Fowler ist der begründeten Ansicht, dass zu einer DSL immer ein semantisches
-Modell \cite[p. 159]{fowler2011domain} existieren sollte, das unabhängig von
-der eigentlichen DSL ist aber direkt dazugehört. Es ist das Modell zu der DSL 
-oder auch das Schema derer. Die Anwendung der DSL instanziiert das semantische
-Modell und ist damit eine gut lesbare Form der Modellinstanziierung. Das semantische Modell hat somit
-große Ähnlichkeit mir einem Domänen Modell \cite[]{fowler2003patterns}.
-Vorteilhaft ist damit die klare ``Trennung der Angelegenheiten'' (separation of
-concerns) \cite{Huersch95separationof}, auf der einen Seite das Parsen der DSL
-durch den Parser und auf der anderen Seite die daraus resultierenden Semantiken.
-Die DSL ist damit eine Abbildung des Modells. Veränderungen können an diesem
-formalen Modell separat zur DSL durchgeführt werden. Z.B. kann das semantische
-Model das von einer Zustandsmaschine sein wie in Abbildung
-\ref{state-machine-semantic-model} graphisch dargestellt.
-
-
-\begin{figure}[h!]
-	\begin{center}
-	\includegraphics[width=0.7\textwidth]{pics/data-model.jpg}
-	\end{center}
-	\caption{Semantisches Modell einer 	Zustandsmaschine
-	- neilvandyke.org/smores/ }
-	\label{state-machine-semantic-model}
-\end{figure}
-
-\begin{figure}[h!]
-	\begin{center}
-	\includegraphics[width=0.7\textwidth]{pics/zutandsdiaGeldautomat.jpg}
-	\end{center}
-	\caption{Zustandsdiagramm Geldautomat
-	\url{https://www.fbi.h-da.de/uploads/RTEmagicC_f2da95d8df.gif.gif} }
-	\label{zutandsdiaGeldautomat.jpg}
-\end{figure}
-
-z.B. ist das Metamodell von Zuständen eines Geldautomaten das Modell einer
-Zustandsmaschine (Abb. \ref{state-machine-semantic-model}). Das Zustandsdiagramm
-des Geldautomaten ist damit das in Abbildung \ref{zutandsdiaGeldautomat.jpg}
-dargestellte. Es beschreibt alle Zustände und Zustandsübergänge bzw. deren
-vorausgehende Ereignisse bzw. Aktionen. Eine DSL könnte dieses semantische
-Modell, das Metamodell der Zustandsmaschine, mit den Gegebenheiten des
-Geldautomaten instanziieren. (Code Listing \ref{geldautomat.dsl}).
-   
-\lstinputlisting[caption={DSL Ausschnitt für ein Geldautomat},
-label={geldautomat.dsl},style=default]{code/geldautomat.dsl}
- 
-
-
-\subsection{Unterscheidungen}
-
-Martin Fowler unterscheidet zwischen Ausprägungen von DSLs, indem er deren
-Beziehung zu einer GPL benennt. Externe DSLs sind eigenständige und unabhängige
-Sprachen die einen eigenen speziell angefertigten Parser besitzen. 
-
-``Sowohl die konkrete Syntax als auch die Semantik können frei definiert
-werden. SQL oder reguläre Ausdrücke sind Vertreter von externen DSLs.''
-\cite{wikidsl} Wenn eine DSL innerhalb bzw.
-mit einer GPL definiert wurde, nennt er diese interne DSL. Solche eingebettete
-Spracherweiterungen sind mit den gegebenen Mitteln der ``Wirtssprache'',
-genauer die Möglichkeit zur Metaprogrammierung (Kapitel
-\ref{metaprogrammingLabel}), erstellt.
-Vorzugsweise sind solche Wirtssprachen dynamisch typisiert wie z.B. Ruby, Groovy
-oder Scala. 
-``Dadurch sinkt der Implementierungsaufwand. Eine interne DSL ist immer eine echte
-Untermenge einer generelleren Sprache.'' \cite{wikidsl}
-
-DSLs, die nicht in der Hostsprache implementiert sind, werden von einer anderen
-Programmiersprache geparst und weiterverarbeitet. Eine eigenständige
-Sprachdefinition unterliegt keiner Einschränkung durch die Wirtssprache.
-Damit sind absurde Szenarien gemeint, bei denen z.B. Methodennamen hinter die
-Argumentenklammer geschrieben sind: ``(1,1)addiere'' oder sonstige denkbare
-syntaktische Abwandlungen.
-
-
-\subsection{vergleich zu MDA / MDD } 
-
-Model-Driven Architecture (MDA) bzw. Model-Driven Development (MDD) und Me-
-taprogrammierung bzw. DSLs haben eine vergleichbare Problemstellung.
-
-Mit der MDA richtet die OMG ihren Fokus nicht auf die Nutzung
-von DSM-Sprachen, sondern auf generisches UML in graphischer Form,
-ihre eigene Standard-Modellierungssprache.
-
-Auch graphische Modelle müssen eine formale Sprache haben, damit sie weiter 
-verarbeitet werden können.  Eine DSL ist eine textuelle Repräsentation des 
-semantischen Models.
- 
-Die Komplexität und das Abstraktionsniveau ist abhängig von dem verwendeten
-semantischen Model, nicht seiner Repräsentation. 
-
-Eine DSL hat den Vorteil, das ihre Darstellung simpler ist, man kann sie
-beispielsweise mit einem einfachen Text Editor bearbeiten oder mit trivialen
-Mitteln ein ``diff’’ zweier Versionen erstellen (vgl.  \cite{cuadrado2007building}.
-\cite{spinellis2008rational}, nach \cite{biekermetaprogrammierung}).
-
-``Mit der MDA richtet die OMG ihren Fokus nicht auf die Nutzung
-von DSM-Sprachen, sondern auf generisches UML, ihre
-eigene Standard-Modellierungssprache. Sie versucht nicht, das
-möglicherweise existierende Domänen-Fachwissen einer Firma
-einzukapseln, sondern nimmt an, dass dieses Wissen nicht
-vorhanden oder irrelevant ist. '' \cite{dsmUhrenArtikel}
- 
  
 \chapter{Implementierung einer DSL }
 
@@ -1035,7 +1035,7 @@ Eine Aufzeichnung\footnote{42 min - http://srvme.de/mda/aufgabenloesung.mp3} von
 \chapter{Auswertung}
   
 
-\section{Beurteilung durch Domänenexperte}
+\section{Beurteilung durch Domänenexperte}\label{reaktionExperte}
 
 Die Idee eine DSL einzuführen wurde überwiegend positiv aufgenommen, weil
 denkbar jede elektronische Unterstützung für die Domäne zuallererst als
@@ -1059,7 +1059,7 @@ aufgrund ihrer Nachfragen nur zu 80\% eineindeutig.
 %Bewertung des Probands: Lesbarkeit, intuitivem Verständnis und Flexibilität
 
 
-\section{Beurteilung durch Programmierer}
+\section{Beurteilung durch Programmierer}\label{reaktionProgrammierer}
  
 Die Einsparung des GUI-Interfaces ist gegenüber der Entwicklungsgeschwindigkeit
 als positiv zu bewerten, wenn die DSL als Kommunikationsmedium mit dem Experten
@@ -1091,7 +1091,7 @@ diente als Bewertungsgrundlage dieses Paradigmas aus der Sicht des
 Programmierers und aus der des Domänenexperten. 
 In zukünftigen Arbeiten ist die Verwendung einer ``Language Workbench''\cite{fowler2005language}
 unvermeidbar, um die Akzeptanz der Domänenexperten noch weiter zu steigern.
- 
+
  
 \bibliographystyle{alphadin}
 \clearpage\addcontentsline{toc}{chapter}{\bibname}\bibliography{jabref}
