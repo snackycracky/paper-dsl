@@ -55,7 +55,7 @@ Die Sektionen würden bei der echten Arbeit wegfallen.
 
 Das Wort “Abstraktion” bezeichnet meist den induktiven Denkprozess des
 Weglassens von Einzelheiten und des Überführens auf etwas Allgemeineres oder
-Einfacheres [...] alsö[...] jenen Prozess, der Informationen söweit auf ihre
+Einfacheres [...] also [...] jenen Prozess, der Informationen soweit auf ihre
 wesentlichen Eigenschaften herab setzt, dass sie psychisch überhaupt weiter
 verarbeitet werden können. (nach \cite{wikiAbsraktion}) Die grundlegenden
 Abstraktionsstufen in der Informatik sind wie folgt aufgeteilt: Die unterste
@@ -76,7 +76,7 @@ Eigenheiten zur Problemlösung voraus. Das Verständnis des eigentlichen Problem
 dass es mit Hilfe von Software zu lösen gilt, liegt nicht immer zu 100\% bei dem
 Programmierer, der es mit Java oder C\# bzw. einer 3GL lösen soll. Komplexe
 Probleme z.B. in der Medizin, der Architektur oder im Versicherungswesen sind
-oft söumfangreich, dass die Aufgabe des “Requirements Engeneering”
+oft so umfangreich, dass die Aufgabe des “Requirements Engeneering”
 hauptsächlich darin besteht, zwischen dem Auftragnehmer und Auftraggeber eine
 Verständnisbrücke zu bauen. Diese Brücke ist auf der einen Seite mit
 Implementierungsdetails belastet und auf der anderen mit domänenspezifischem
@@ -96,7 +96,8 @@ ist neu) dann ... ”. “Eine domänenspezifische Sprache ist nichts anderes al
 eine Programmiersprache für eine Domäne. Sie besteht im Kern aus einem
 Metamodell einer abstrakten Syntax, Constraints (Statischer Semantik) und einer
 konkreten Syntax. Eine festgelegte Semantik weist den Sprachelementen eine
-Bedeutung zu.” (vlg. S.30 \cite{mdaDPunkt}). 
+Bedeutung zu.” (vlg. S.30 \cite{mdaDPunkt}). 
+
 Im Sprachsektor des Techonologieradars (Juli 2011 von
 Thoughtworks)\footnote{http://www.thoughtworks.com/radar}
 sind die domänenspezifischen Sprachen unverändert nahe dem Zentrum
@@ -123,7 +124,8 @@ alleinige Spezifikation eines Programms abzurücken, um die Intentionen des
 Programmierers durch eine Vielfalt von jeweils geeigneten
 Spezifikationsmöglichkeiten in besserer Weise auszudrücken.” (vlg.
 \cite{wikiIntentional}) Es werden zwei Arten von DSLs unterschieden
-\cite{fowler2011domain}. 
+\cite{fowler2011domain}. 
+
 
 \section{Aufgabenstellung }
 %(kurz, knapp, präzise) und Erwartungen
@@ -154,9 +156,9 @@ Im theoretischen Teil stellt diese Arbeit eine Abhandlung über die Grundlagen
 des ``sprachorientierten Programmierparadigmas'' (LOP) dar und die damit
 verbundene Metaprogrammierung speziell für die Programmiersprache ``Groovy''.
 
-Der praktische Teil befasst sich mit der Anwendung dieses Paradigmas. Der Author
+Der praktische Teil befasst sich mit der Anwendung dieses Paradigmas. Der Autor
 entwirft dazu eine interne DSL in Groovy und erklärt die Vorgehensweise von der
-Idee bis zur implementierung.
+Idee bis zur Implementierung.
 Anschließend findet eine Auswertung bzw. Bewertung des Paradigmas und
 dessen Nutzen statt.
 
@@ -169,12 +171,13 @@ oberflächlich betrachtet werden. Der praktische Teil berichtet ausschließlich
 Es werden nur interne DSLs betrachtet und es findet kein Vergleich zu externen
 DSLs statt.
 
-%TODO nu interne DSLs werden praktisch angewendet.s und kein MPS
+%TODO nu interne DSLs werden praktisch angewendet.s und kein MPS
+
 \chapter{ Sprachorientierte Programmierung}
 
 Ein Programmierer einer Anwendung für die Browser-Platform benutzt viele
 Sprachen, die alle für einen bestimmten Zweck eingesetzt werden. HTML für die
-Struktur der Anwendung, CSS für die visuelle Repräsentation dieser Stuktur
+Struktur der Anwendung, CSS für die visuelle Repräsentation dieser Struktur
 und SQL um Daten aus der Datenbank abzufragen bzw. aufzuwerten. Der Entwickler muss sich dann für
 ein Web-Framework entscheiden, das in einer GPL wie
 Java, Ruby oder PHP geschrieben ist. Nicht zuletzt ist Javascript eine
@@ -208,7 +211,7 @@ Data Interchange) ist ein Beispiel dafür (Listing \ref{edimsg.txt}).
 label={edimsg.txt},style=default]{code/edimsg.txt}
 
 Je nachdem wie z.B. die ersten drei Zeichen einer Zeile sind, wird beim
-Parser eine bestimmte ``Parsing-Strategie'' angewedet. 
+Parser eine bestimmte ``Parsing-Strategie'' angewendet. 
 Die angewendete Strategie\cite{gamma1995design} wird dann dazu verwendet, um den
 Rest der Zeile auszulesen. Diese Strategie kann zusätzlich folgendermaßen
 konfiguriert werden:
@@ -227,7 +230,7 @@ und deren Instanzen an den Reader-Treiber übergeben werden  (Listing
 label={readerstrategyAndDriver},style=default]{code/readerstrategyAndDriver.java}
 
 Um diese Konfigurationen besser konfigurierbar zu machen, ohne immer neuen
-Bytecode genierieren zu müssen könnte man eine
+Bytecode generieren zu müssen könnte man eine
 YAML\footnote{http://de.wikipedia.org/wiki/YAML}-Datei schreiben und diese als
 Input für die Strategiekonfiguration benutzen  (Listing
 \ref{readerstrategyAndDriverYAML.txt}).
@@ -272,7 +275,7 @@ benötigten Mittel bereit.
 
 \section{Interne DSLs mit Groovy}
 
-Groovy wurde entwurfen, um auf der JVM (Java Virtual Machine)
+Groovy wurde entworfen, um auf der JVM (Java Virtual Machine)
 ausgeführt zu werden. Ruby, Python, Dylan und Smalltalk dienten als Inspiration
 für die Entwickler von Groovy.
 
@@ -301,17 +304,17 @@ Das MOP besteht aus den Haupt-Leistungsträgern: ``Metaclass'',
 
 Expandos sind dynamische Repräsentationen von Groovy-Beans (Java-Beans mit
 einfacherer Syntax).
-Wenn eine Variable von einem Expando angefragt wird und diese nicht exsistiert, dann wird
+Wenn eine Variable von einem Expando angefragt wird und diese nicht existiert, dann wird
 keine Exception geworfen sondern null zurückgegeben. Auch wenn eine Variable
-belegt wird und noch nicht exsistiert, dann wird diese im Expando erzeugt
+belegt wird und noch nicht existiert, dann wird diese im Expando erzeugt
 .
-Es ist auch möglich eine Colsure einer Klassenvariable zuzuweisen.
+Es ist auch möglich eine Closure einer Klassenvariable zuzuweisen.
 Diese ist dann genau wie eine Methode aufrufbar. Die Notation von einem
 Expando ist ``def x = new Expando()''
 
 \subsection{Kategorien}
 
-Wenn eine Methode einer bereits exsistierenden Klasse zur Laufzeit hinzugefügt
+Wenn eine Methode einer bereits existierenden Klasse zur Laufzeit hinzugefügt
 werden soll, dann erfolgt das mittels ``Kategorien''.
 Um eine Methode x zu der vorhandenen Klasse java.lang.Number hinzuzufügen, ist
 das erstellen einer neuen Klasse mit einer statischen Methode x erforderlich.
@@ -335,7 +338,7 @@ In der \texttt{MetaClass} werden alle Metainformationen der eigentlichen Klasse
 verwaltet. Die \texttt{MetaClass} erlaubt es, nach dem Expando (Abschnitt
 \ref{expando}) Prinzip, neue Klassenvariablen und Methoden einem Objekt
 hinzuzufügen.
-Javaklassen beschreiben das Verhalten zur Zeit der Übersetztung, Metaklassen
+Javaklassen beschreiben das Verhalten zur Zeit der Übersetzung, Metaklassen
 das zur Ausführungszeit.
 Die Kardinaliät zwischen Objekt und Metaklasse ist immer 1:1.
 %Die \texttt{MetaClass} implementiert die Methode \texttt{invokeMethod}
@@ -354,10 +357,10 @@ Metaklassen, Klassen und Instanzen dargestellt.
 
 Closures sind abgeschlossene Code-Abschnitte, die an sich einen eigenen
 Datentyp darstellen. Closures werden von geschweiften Klammern abgegrenzt.
-Innerhalb einer Closure sind Paramenter bzw. Argumente vom Ausführungscode durch
+Innerhalb einer Closure sind Parameter bzw. Argumente vom Ausführungscode durch
 einen Pfeil getrennt \texttt{->}. Parameter vor dem Pfeil sind durch Kommas
 getrennt.
-Closures bestitzen das keywort \texttt{this} aber auch noch \texttt{owner} und
+Closures besitzen das Keywort \texttt{this} aber auch noch \texttt{owner} und
 \texttt{delegate}
 
 \paragraph{owner}
@@ -379,10 +382,10 @@ Elternreferenz veränderbar.
 Die Metaclass Eigenschaft aus Abschnitt \ref{Metaclass} ist ein Expando
 (Abschnitt \ref{expando}).
 Diese ExpandoMetaClass kann auch dazu verwendet werden um z.B. Methoden zu
-überschreiben. Eine Statische Methode kann mittels folgendem Ausdruck hizugefügt
+überschreiben. Eine Statische Methode kann mittels folgendem Ausdruck hinzugefügt
 oder überschrieben werden: \texttt{Klasse.metaClass.static.x = \{
 Closure-Inhalt\}}. 
-Methoden können auch überladen werden. Konstruktoren können hizugefügt oder
+Methoden können auch überladen werden. Konstruktoren können hinzugefügt oder
 überschrieben werden. 
   
 
@@ -437,11 +440,11 @@ Tagnamen tragen. Es sollte ein Zeichen bzw. eine minimale
 Kombination aus mehreren Zeichen und deren Position in der DSL für eine Informationseinheit
 verwendet werden. Als Zeichen sind hier insbesondere Leerzeichen und
 Zeilenumbrüche gemeint. Damit sind Zeichen gemeint, die auch eine angelehnte
-Bedeutung zu der natürlichen Sprache haben, z.B. Klammern, Semikolen, Kommas,
-Punkte und Slashes. \ldots
+Bedeutung zu der natürlichen Sprache haben, z.B. Klammern, Semikola, Kommas,
+Punkte und Querstrich. \ldots
 
 Fowler ist der begründeten Ansicht, dass zu einer DSL immer ein semantisches
-Modell \cite[p. 159]{fowler2011domain} exsistieren sollte, das unabhängig von
+Modell \cite[p. 159]{fowler2011domain} existieren sollte, das unabhängig von
 der eigentlichen DSL ist aber direkt dazugehört. Es ist das Modell zu der DSL 
 oder auch das Schema derer. Die Anwendung der DSL instanziiert das semantische
 Modell und ist damit eine gut lesbare Form der Modellinstanziierung. Das semantische Modell hat somit
@@ -475,7 +478,7 @@ Model das von einer Zustandsmaschine sein wie in Abbildung
 
 z.B. ist das Metamodell von Zuständen eines Geldautomaten das Modell einer
 Zustandsmaschine (Abb. \ref{state-machine-semantic-model}). Das Zustandsdiagramm
-des Geldautomaten ist damit das in Abbilung \ref{zutandsdiaGeldautomat.jpg}
+des Geldautomaten ist damit das in Abbildung \ref{zutandsdiaGeldautomat.jpg}
 dargestellte. Es beschreibt alle Zustände und Zustandsübergänge bzw. deren
 vorausgehende Ereignisse bzw. Aktionen. Eine DSL könnte dieses semantische
 Modell, das Metamodell der Zustandsmaschine, mit den Gegebenheiten des
@@ -490,13 +493,13 @@ label={geldautomat.dsl},style=default]{code/geldautomat.dsl}
 
 Martin Fowler unterscheidet zwischen Ausprägungen von DSLs, indem er deren
 Beziehung zu einer GPL benennt. Externe DSLs sind eigenständige und unabhängige
-Sprachen die einen eigenen sepziell angefertigten Parser besitzen. 
+Sprachen die einen eigenen speziell angefertigten Parser besitzen. 
 
 ``Sowohl die konkrete Syntax als auch die Semantik können frei definiert
 werden. SQL oder reguläre Ausdrücke sind Vertreter von externen DSLs.''
 \cite{wikidsl} Wenn eine DSL innerhalb bzw.
 mit einer GPL definiert wurde, nennt er diese interne DSL. Solche eingebettete
-Spracherweiterungen sind mit den gegebenene Mittel der ``Wirtssprache'',
+Spracherweiterungen sind mit den gegebenen Mitteln der ``Wirtssprache'',
 genauer die Möglichkeit zur Metaprogrammierung (Kapitel
 \ref{metaprogrammingLabel}), erstellt.
 Vorzugsweise sind solche Wirtssprachen dynamisch typisiert wie z.B. Ruby, Groovy
@@ -509,7 +512,7 @@ Programmiersprache geparst und weiterverarbeitet. Eine eigenständige
 Sprachdefinition unterliegt keiner Einschränkung durch die Wirtssprache.
 Damit sind absurde Szenarien gemeint, bei denen z.B. Methodennamen hinter die
 Argumentenklammer geschrieben sind: ``(1,1)addiere'' oder sonstige denkbare
-syntaktische Abwandlugnen.
+syntaktische Abwandlungen.
 
 
 \subsection{vergleich zu MDA / MDD } 
@@ -530,7 +533,7 @@ semantischen Model, nicht seiner Repräsentation.
 
 Eine DSL hat den Vorteil, das ihre Darstellung simpler ist, man kann sie
 beispielsweise mit einem einfachen Text Editor bearbeiten oder mit trivialen
-Mitteln ein diff zweier Versionen erstellen (vgl.  \cite{cuadrado2007building}.
+Mitteln ein ``diff’’ zweier Versionen erstellen (vgl.  \cite{cuadrado2007building}.
 \cite{spinellis2008rational}, nach \cite{biekermetaprogrammierung}).
 
 ``Mit der MDA richtet die OMG ihren Fokus nicht auf die Nutzung
@@ -569,7 +572,7 @@ im Hotel definiert.
 Geschäftsführer ist Dipl.-Ing. Immanuel Lutz (Domänenexperte). Dieser bestimmt
 auch hauptsächlich die Preisbildung der Apartments. Weiterhin besitzt das Hotel ein in Java
 geschriebenes Property-Management-System (PMS), das zur Verwaltung folgender
-Hauptkomponenten dient: Zimmer-, Gäste-, Apartment-, Sonderleitungs- und
+Hauptkomponenten dient: Zimmer-, Gäste-, Apartment-, Sonderleistungs- und
 Preisverwaltung.
 Derzeit wird ein neuartiges PMS erstellt, dass auf Groovy-und-Grails basiert.
  
@@ -587,23 +590,23 @@ Nebenkosten, Rabattaktionen, Provisionen der Geschäftspartner für eine
 Zimmervermittlung, Zeitraum und überschneidende Ereignisse in der Umgebung
 \cite[S. 44]{hahn1993tourismuspsychologie}. Mit Ereignissen sind Veranstaltungen
 oder Feiertage sowie Saisons gemeint, die die Angebot und Nachfragen beeinflussen. Bewertungen, die
-das Hotel auf Buchungsportalen bekommen hat sind auch Preisentscheident. Wenn
+das Hotel auf Buchungsportalen bekommen hat sind auch Preisentscheidend. Wenn
 z.B. mehrere schlechte Bewertungen abgegeben wurden und darauf nur noch wenige
 Gäste buchen, muss überlegt werden, ob das mit dem Preis zu regulieren ist.
 Nicht zuletzt beeinflusst die Auslastung einer Zimmerkategorie oder die
 Gesamtauslastung des Hotels den Zimmerpreis. Das bedeutet, wenn nur noch ein
 Zimmer im Hotel verfügbar ist, dann kann es entsprechend teuer verkauft werden.
-Die Auslastung, Ereignise und die Tage bis zu den Ereignissen zusammen
-kombiniert, beinflussen den Preis weiter. Auch die aktuelle Liquidität des
+Die Auslastung, Ereignisse und die Tage bis zu den Ereignissen zusammen
+kombiniert, beeinflussen den Preis weiter. Auch die aktuelle Liquidität des
 Unternehmens kann Einfluss darauf haben. Der Zimmerpreis ist auch sensibel
-gegenüber den Preisen der direkten Konkurenz in der Umgebung. \\
+gegenüber den Preisen der direkten Konkurrenz in der Umgebung. \\
 Der Faktor Markt ist der wohl am schwersten zu determinierende, da er sich aus
 vielen anderen Faktoren zusammensetzt. Dazu gehört z.B. die Beziehung zwischen
 angebotenen Hotelzimmern und nachgefragten. Wenn die Auslastung steigt und die
 Nachfrage gleich bleibt, dann resultiert das in steigende Preise.
 Bei sozialen, kulturellen oder politischen Ereignissen weichen die Zimmerpreise
 erheblich von der ``Rac-Rate'' (Grundpreisrate) ab.
-Es stellt sich als schweirig heraus, alle Faktoren deterministisch zu
+Es stellt sich als schwierig heraus, alle Faktoren deterministisch zu
 modellieren, da vor allem der subjektive Geschmack oder persönliche Motivationen
 der potentiellen Gäste nur über statistische Werte berechenbar sind. Genau so
 ist es mit der Faktorenauswahl bei ökonomischen bzw. volkswirtschaftlichen
@@ -662,7 +665,7 @@ dass ein Programmierer mit langjähriger Erfahrung das auch ohne Schema erstelle
 konnte.
 Begonnen wurde mit einem TestTreiber, der eine Textdatei einliest und diese
 Interpretiert bzw. evaluiert.
-Cliff James hatt das in einem
+Cliff James hat das in einem
 Tutorial\footnote{http://www.nextinstruction.com/blog/2012/01/08/creating-dsls-with-groovy/}
 bewerkstelligt und folgenden Trick angewendet:
 Die DSL befindet sich innerhalb einer separaten Datei und ist nach Ausführung
@@ -672,12 +675,12 @@ Da dieser eingefügte String, innerhalb einer ``run'' Methode liegt ist der
 Aufruf immer der selbe.
 Die DSL wird letztendlich von der Groovy Shell Instanz evaluiert (\cite[S.
 368]{koenig2007groovy}).
-Doch ohne den Kontex, in dem die DSL ``ausgeführt'' werden soll, ist die DSL
+Doch ohne den Kontext, in dem die DSL ``ausgeführt'' werden soll, ist die DSL
 nutzlos. Daher wird eine Instanz von Binding (\cite[S. 368]{koenig2007groovy})
 dazu benutzt, um vordefinierte Variablen an das Script zu übergeben.
 Z.B. um die Variable \texttt{run} eine Closure
 zuzuweisen, die die loadDSL Methode im Runner aufruft (Z.22 Code Listing
-\ref{dslrunner.groovy}). Die Binding instanz wird dann an die GroovyShell
+\ref{dslrunner.groovy}). Die Binding Instanz wird dann an die GroovyShell
 Instanz übergeben, um die Assoziationen zu gewährleisten.
 
 Mit Groovy-Metaprogrammierung ist es möglich, den Kontext einer Instanz zu
@@ -694,7 +697,7 @@ Groovy-Script-Code auszuführen, ist es dementsprechend auch möglich, den Inhal
 des besagten Textfeldes als Input zu benutzen. Diese Implementierung
 wurde übersprungen, da die DSL durch Testgetriebenen Verfahren
 \cite{beck2002driven} direkt in der IDE\footnote{www.jetbrains.com/idea/ }
-ausgefürt werden kann.
+ausgeführt werden kann.
  Eine Schleifeniteration besteht aus einer List oder
 einem Abschnitt (Range), gefolgt von der \texttt{each} Methode und der
 auszuführenden Closure als Parameter dafür \ref{normalGroovyLoop.goovy}.
@@ -718,9 +721,9 @@ Weiterhin wurde die Instanz
 der \texttt{ExpandoMetaClass} der Date-Klasse (Date.metaClass) dazu verwendet,
 um eine Methode namens ``bis'' für die Date-Klasse zu definieren, die wieder ein Date
 Objekt als Argument entgegennimmt und daraus einen (Zeit)Abschnitt (engl.
-Range, Notation: ``start..stop''  ) ableitet.
+Range, Notation: \texttt{(start..stop)}  ) ableitet.
 
-Durch das Binding Objekt konnte die vordefinierte instanz (new Date()) mit dem
+Durch das Binding Objekt konnte die vordefinierte Instanz (\texttt{new Date()}) mit dem
 Variablennamen \texttt{heute} übergeben werden. Diese Variable konnte somit in
 der DSL also als solche verwendet werden. 
 
@@ -729,13 +732,13 @@ erheblich durch Sonderzeichen beeinträchtigt. Ziel war nun die Lesbarkeit zu st
 englische Begriffe durch deutsche ersetzen werden.
 Zuerst wurde das Wort \texttt{each'' durch \texttt{alle} ersetzt. Das gelang dadurch, dass
 die die Bedeutung an sich ``jedes Element} in einer bestimmten Menge
-(engl. Collection) ihren Ursprung hat. Hier wurde wiederrum das
+(engl. Collection) ihren Ursprung hat. Hier wurde wiederum das
 ExpandoMetaObject dafür Benutzt, um der Überklasse ``java.util.Collection'' eine
 Closure für die neu definierte Eigenschaft \texttt{alle} zu übergeben. Die
 Closure sollte nun eine Iteration über alle Elemente in der Menge leisten und dabei
 nochmals eine Closure entgegennehmen, in der dann die Operation auf das Element
 definiert wird. Ausserdem muss der Deligierte wieder auf die Mengeninstanz
-gewechselt werden. Abbilung \ref{alle.groovy} zeigt den Codeabschnitt im
+gewechselt werden. Abbildung \ref{alle.groovy} zeigt den Codeabschnitt im
 DSLRunner.
 
 \lstinputlisting[caption={Definition von [1,2].alle(\{..\})},
@@ -769,7 +772,7 @@ Ein valider Kompromiss ist folgender: ``von heute bis 2.jahre alleTage \{ tag
 -> \ldots\}''.
 Dieser Kompromiss wurde ausgehend von der vorhandenen Programmiersprache, in der
 die DSL ``eingebettet'' sein soll, und der subjektiven Empfindungsweise des
-Authors gemacht. 
+Autors gemacht. 
 Die Präposition ``von'' ist der Name einer Methode, die als Argument ein Datum
 akzeptiert und eine Methode als Rückgabewert hat.
 ``Von'' ist somit eine Methode höherer
@@ -781,7 +784,7 @@ label={fluentInterface.groovy},style=default]{code/fluentInterface.groovy}
 
 Der Rückgabetyp ist eine HashMap mit ``keys'' als Methodennamen und Closures als
 ``values'' bzw. dazugehörige ``Methodenkörper''.
-Wenn genau das der Fall ist, ist so ein Listeneintrag wiederrum ein Objekt an
+Wenn genau das der Fall ist, ist so ein Listeneintrag wiederum ein Objekt an
 dem Methoden aufgerufen werden können. Wenn eine Map zurückgegeben wird, dann
 identifiziert sich der Eintrag der Map anhand des Schlüssels (\texttt{bis}).
 Bis referenziert somit einen Closurekörper, der ein Argument entgegennimmt
@@ -827,7 +830,7 @@ für das Estate Objekt ist dann \texttt{Hotel}.
 Da aber die Zimmerkategorien auf kein Feld innerhalb des Domänenmodells
 referenziert, muss ein erneutes Mapping erfolgen. Trivial wäre es in dem
 Domänenobjekt eine Kopie auf \texttt{estateRoomTypes} zu machen. Da aber so keine
-Kapselung erreichen wird ist es notwendig ein WrapperObjekt zu erstellen und das
+Kapselung erreichen wird ist es notwendig ein Wrapper-Objekt zu erstellen und das
 an die DSL zu binden (Code Listing \ref{EstateDSLWrapper.groovy}).
  
 
@@ -852,7 +855,7 @@ In Code Listing \ref{multipleLoops.dsl} ist zusätzlich auch schon der erste
 {\bf Ausdruck} in Zeile 4 dargestellt. Es handelt sich um
 eine Variablendefinition inklusive {\bf Zuweisung}. Dieser Greift auf
 die Iterationsvariable \texttt{ZimmerTyp} zu und referenziert die in dem Wrapper
-festgelegte Eigenschaft Grundpreis. Im DomänenModell Estate heisst diese
+festgelegte Eigenschaft Grundpreis. Im DomänenModell \texttt{Estate} heisst diese
 Klassenvariable \texttt{racRate}.
 Die {\bf Variable} \texttt{Tagespreis} ist letztendlich die, die modifiziert
 werden soll und anschließend in die Ergebnistabelle dem Tag und der
@@ -860,7 +863,7 @@ Kategorie zugewiesen werden soll. Die Endtabelle soll in Form einer Liste
 definiert werden, um dann mit dem Listenoperator ( << ) diese
 zu füllen. Die Listennotation ist trivialerweise folgende: ``listenname = []''.
 
-Bisher wurden alle Informationen beschrieben, um eine finale implementierung
+Bisher wurden alle Informationen beschrieben, um eine finale Implementierung
 durchzuführen. Code Listing \ref{trivialSolution.groovy} zeigt, das die
 Zielstellung dahingehen erreicht ist, dass eine Liste wie in Tabelle
 \ref{zielDefinition} durch die DSL berechnet wird.
@@ -900,7 +903,7 @@ eines Fluent Interfaces benutzt (Code Listing
 label={ifelseCase.groovy},style=default]{code/ifelseCase.groovy}
 
 Diese Wenn-Dann-Kombination ist wie an der 0 zu erkennen nur für Formeln
-einsetztbar. 
+einsetzbar. 
 Alle Zusätzlichen Erweiterungen für die Date-Klasse sind in Code Listing
 \ref{completeDateMetaClass.groovy} dargestellt. Darunter befindet sich auch die
 Erweiterung ``getWochenende bzw. wochenende''.
@@ -926,32 +929,32 @@ label={predefinedVars.groovy},style=default]{code/predefinedVars.groovy}
  
 Abschließend soll hier noch weiter die Möglichkeit vorgestellt werden wie auf
 die vorher erwähnten bzw. vordefinierten Ereignisse zugegriffen werden kann, um
-eine Tagespreismanipulation durchzuführen.
+eine Tagespreis-Manipulation durchzuführen.
 Code Listing \ref{finalDSLComplete.dsl} zeigt eine mögliche Form der DSL, in der
 ca. 90\% der Konzepte Beispielhaft dargestellt sind.  
 
 \lstinputlisting[caption={DSL Beispiel},
 label={finalDSLComplete.dsl},style=default]{code/finalDSLComplete.dsl}
 
-Dabei sei nochmal auf folgende besondere Konstruktion hingewiesen: \texttt{tage
+Dabei sei nochmals auf folgende besondere Konstruktion hingewiesen: \texttt{tage
 von:
 heute, bis: ereignis.start} (Ziele 15). Das ist eine spezielle Notation in
 Groovy namens ``named parameters''. \texttt{tage} ist eine Methode, die zwei
 Parameter entgegennimmt.
 \texttt{von} und \texttt{bis}, die auch so benannt werden müssen. Durch das
-Entfernen der Klammern ist jetzt die dahinterliegenede Struktur zu erkennen. Die
-Alternative hinter dem Ausdrück im Kommentar (Zeile 15) ist anders aufgebaut.
+Entfernen der Klammern ist jetzt die dahinterliegende Struktur zu erkennen. Die
+Alternative hinter dem Ausdruck im Kommentar (Zeile 15) ist anders aufgebaut.
 \texttt{abstand} ist eine Methode, die eine Closure als Argument entgegennimmt,
 in diesem Fall einen Abschnitt (Range).
 
 \section{Das semantischen Modell}
 
 Im Kapitel \ref{erstellungDSL} wurde beschrieben wie die DSL erstellt wurde.
-Dabei wurden einige Begriff in bold markiert um die wichtigsten
-Meta-Bestandteile zu verdeutlichen. In Abbilung \ref{mm.png}
-ist deren Zusammensetztung bzw. das semantische Modell der Preisberechnung
+Dabei wurden einige Begriff mit bold markiert um die wichtigsten
+Meta-Bestandteile zu verdeutlichen. In Abbildung \ref{mm.png}
+ist deren Zusammensetzung bzw. das semantische Modell der Preisberechnung
 dargestellt.
-Dieses ist sehr stark an das einer Skriptsprache angeleht.
+Dieses ist sehr stark an das einer Skriptsprache angelehnt.
 In diesem Modell sind nur Berechnungsbestandteile durch Ausdrücke und Schleifen
 definiert. In einer Scriptsprache ist darüber hinaus noch mehr möglich.
  
@@ -996,14 +999,14 @@ http://srvme.de/mda/mitschnitt.mp4} aufgezeichnet wurden.
 
 Der Entwurf der DSL wurde dem Domänenexperten vorgestellt und es wurden
 Aufgaben bezüglich der in Code Listing \ref{finalDSLComplete.dsl} gezeigten DSL gemacht.
-Die Aufgbaen sind:
+Die Aufgaben sind:
 
 \begin{itemize} 
 \item Erhöhen sie den Grundpreis aller Kategorien um 10 Euro. 
 \item Der Zeitraum soll anstatt von heute von morgen beginnen.
 \item Die Ereignisse sollen bei der Berechnung keine Rolle mehr spielen.
 \item Die Gesamtzimmeranzahl ist um eins gestiegen.
-\item Der Lastminuterabatt soll in Lastminutezuschlag umgewanldet werden.
+\item Der Lastminuterabatt soll in Lastminutezuschlag umgewandelt werden.
 \item Definieren sie neu: ExtraLastminuterabatt bei dem 5 tage vorher
 das Zimmer 20 euro weniger kosten soll. 
 \item Die Liste soll mit einem Tabellenkopf versehen werden, der die
@@ -1049,9 +1052,9 @@ Kommunikationsmedium gutgeheißen, da die Kommunikation mit dem Programmierer ni
 Gegenüber einer grafischen Benutzeroberfläche wurde die DSL und deren Notation
 als ``verwirrend'' eingestuft. Jedoch wurde die DSL letztendlich als flexibler
 eingestuft, da eigne Variablendefinitionen in grafischen ehr unüblich sind.
-Postitiv sind die überwiegend richtigen Antworten der Fragen zu bewerten.
+Positiv sind die überwiegend richtigen Antworten der Fragen zu bewerten.
 Insgesamt wurden mit Hilfestellung 80\% der Fragen beantwortet. Die Fragen waren
-aufgrund ihrerer Nachfragen nur zu 80\% eineindeutig.
+aufgrund ihrer Nachfragen nur zu 80\% eineindeutig.
 
 %Bewertung des Probands: Lesbarkeit, intuitivem Verständnis und Flexibilität
 
@@ -1075,8 +1078,8 @@ erheblicher Gewinn gegenüber den herkömmlichen Programmiermethoden, da nach
 einer Implementierung Ausdrucksstärkerer Quelltext vorliegt, der die Lesbarkeit
 fördert.
 Eine zukünftige Verwendung von DSLs und dem MOP ist nach dieser Arbeit für den
-Author fasst nicht mehr wegzudenken, da der Nutzen gegenüber dem Aufwand des
-Erstellens deutlich überwiegt. Lediglich bei der Erlernung der Konzepte gab es
+Autor fasst nicht mehr wegzudenken, da der Nutzen gegenüber dem Aufwand beim 
+Erstellen deutlich überwiegt. Lediglich beim Lernen der Konzepte gab es
 einen deutlichen Mehraufwand.
  
 \chapter{Zusammenfassung und Ausblick}
@@ -1105,4 +1108,3 @@ unvermeidbar, um die Akzeptanz der Domänenexperten noch weiter zu steigern.
 
 %\listoffigures
 \end{document}
-¬¬
