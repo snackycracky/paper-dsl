@@ -270,7 +270,7 @@ benötigten Mittel bereit.
 
 
 
-\section{internet DSL mit Groovy}
+\section{Interne DSLs mit Groovy}
 
 Groovy wurde entwurfen, um auf der JVM (Java Virtual Machine)
 ausgeführt zu werden. Ruby, Python, Dylan und Smalltalk dienten als Inspiration
@@ -293,7 +293,7 @@ dieser Programmiersprache, die sich für die Erstellung einer internen DSL
 eignen. 
 
 
-\section{MOP Leistungsträger}
+\section{Die MOP Leistungsträger}
 Das MOP besteht aus den Haupt-Leistungsträgern: ``Metaclass'',
 ``Kategorien'' und ``Expandos''.
 
@@ -317,7 +317,7 @@ Um eine Methode x zu der vorhandenen Klasse java.lang.Number hinzuzufügen, ist
 das erstellen einer neuen Klasse mit einer statischen Methode x erforderlich.
 Das erste Argument der Methode ist dann eine Referenz auf die Instanz.
 Angewendet wird dann eine Kategorieklasse durch die folgende Notation:
-\texttt{use(KlasseMitStatischemX)\{x kann jetzt auf eine Instanz von Number angewendet werden.\}}
+\texttt{use(KlasseMitStatischemX)\{zahl.x\}}
 
 
  \subsection{Metaclass}\label{Metaclass}
@@ -985,10 +985,14 @@ das es sich um ein und das selbe handelt.
 	\label{mmInstanz.png}
 \end{figure}
  \clearpage
-\section{Beurteilung durch den Domänenexperten}
+ 
+\chapter{Einbezug der Domänenexperten}
 
 Die Vorstellung der DSL ist hier in einem Interviewmitschnitt\footnote{51 min -
 http://srvme.de/mda/mitschnitt.mp4} aufgezeichnet wurden.
+
+
+\section{Aufgaben zur DSL für den Domänenexperten}
 
 Der Entwurf der DSL wurde dem Domänenexperten vorgestellt und es wurden
 Aufgaben bezüglich der in Code Listing \ref{finalDSLComplete.dsl} gezeigten DSL gemacht.
@@ -1006,32 +1010,84 @@ das Zimmer 20 euro weniger kosten soll.
 Spaltenbezeichung beinhaltet: ``Kategorie'', ``Datum'', ``Tagespreis''. 
 \end{itemize}
 
-Einem Domänenexperten, ohne Betriebswirtschaftlichen Hintergrund wurde die
-vorhandenen DSL gezeigt und erklärt.
-Dabei sollten die Fragen beantwortet werden. Der Experte war nur mit erheblicher
-Hilfe dazu in der Lage die Fragen zu lösen.
-Abschließend wurde es als ein geeignetes Kommunikationsmedium gutgeheissen. Da
-die Kommunikation mit dem Programmierer nicht immer eindeutig ist.
-Gegenüber einer grafischen Benutzeroberfläche wurde die DSL und deren Notation als ``verwirrend'' eingestuft.
-Durch das fehlen einer Legende wurde der Lösungsweg weiterhin erschwert.
-Eine Aufzeichnung\footnote{42 min - http://srvme.de/mda/aufgabenloesung.mp3}
-von dem Interview schildert die Aufgabenlösung. 
+\section{Lösungen zu den Aufgaben}
+
+Einer anderen Domänenexpertin, ohne Betriebswirtschaftlichen Hintergrund und
+viel Erfahrung und Umgang mit Excel, wurde die vorhandenen DSL (Code Listing
+\ref{finalDSLComplete.dsl}) gezeigt und erklärt.
+Dabei sollten die Fragen beantwortet werden. Der Experte war nur mit Hilfe dazu
+in der Lage die Fragen zu beantworten.
+Die Befragung fand im Büro ohne jegliche Störungen statt. Der Expertin wurde die
+Preislogik-DSL vorgestellt und es wurden Erläuterungen zum Denkprozess bei der
+Erstellung der DSL kommuniziert (ca. 20 Minuten). 20 Minuten wurden für die
+Aufgabenlösung und 2 Minuten zur Auswertung verwendet. Durch die Abwesenheit
+einer Legende wurde der Lösungsweg weiterhin erschwert. Die DSL wurde ohne
+Syntaxhighlighting auf dem Bildschirm repräsentiert. Die Benutzung
+der DSL musste sich die Expertin als ein Gedankenexperiment
+vorstellen.
+Eine Aufzeichnung\footnote{42 min - http://srvme.de/mda/aufgabenloesung.mp3} von dem Interview schildert die Aufgabenlösung.
+
+
   
 \chapter{Auswertung}
+  
+
+\section{Beurteilung durch Domänenexperte}
+
+Die Idee eine DSL einzuführen wurde überwiegend positiv aufgenommen, weil
+denkbar jede elektronische Unterstützung für die Domäne zuallererst als
+Hilfreich bewertet wird.
+In dem vorhandenen PMS hat die Domänenexpertin keinen direkten Kontakt mit der
+Preislogik, sondern nur indirekt.
+Unsicherheit entstand, als die Domänenexpertin die DSL zur Preisberechnung
+ zum ersten mal gesehen hat, weil eine
+rein textuelle Repräsentation nicht ihrer Gewöhnung entspricht. Die Wahrnehmung
+und die Erkennung der Bestandteile wurde erst bei näherem Betrachten klarer. 
+Die Expertin war der Meinung, dass eine bessere visuelle Repräsentation der
+Unterscheidung helfen würde. Abschließend wurde die DSL als ein geeignetes
+Kommunikationsmedium gutgeheißen, da die Kommunikation mit dem Programmierer nicht immer eindeutig ist.
+Gegenüber einer grafischen Benutzeroberfläche wurde die DSL und deren Notation
+als ``verwirrend'' eingestuft. Jedoch wurde die DSL letztendlich als flexibler
+eingestuft, da eigne Variablendefinitionen in grafischen ehr unüblich sind.
+Postitiv sind die überwiegend richtigen Antworten der Fragen zu bewerten.
+Insgesamt wurden mit Hilfestellung 80\% der Fragen beantwortet. Die Fragen waren
+aufgrund ihrerer Nachfragen nur zu 80\% eineindeutig.
+
+%Bewertung des Probands: Lesbarkeit, intuitivem Verständnis und Flexibilität
+
+
+\section{Beurteilung durch Programmierer}
  
-\subsection{Wahl der DSL Variante}
-Bewertung des Probands: Lesbarkeit, intuitivem Verständnis und Flexibilität
+Die Einsparung des GUI-Interfaces ist gegenüber der Entwicklungsgeschwindigkeit
+als positiv zu bewerten, wenn die DSL als Kommunikationsmedium mit dem Experten
+benutzt werden soll. 
+Da die DSL keinen speziellen Editor verfügt, der direkte Hilfe für die
+Erstellung der DSL bietet (Syntax Fehler, Autovervollständigung, Debugger,
+Versionskontrolle) ist ein fehlerfreies und effektives Editieren fasst unmöglich
+und würde beim Domänenexperten schnell zu Frustration führen. 
 
-klammern sind syntactical noise\ldots
+Die Möglichkeiten zur Erstellung einer DSL in Groovy sind ausreichend aber oft
+in der Notation beschränkt. 
+Die Implementierung einer eigenen DSL war für den Programmierer neuartiges
+Gebiet. Der Aufwand zum erlernen der DSL-Leistungsträger in Groovy war gegenüber
+einer herkömmlichen statischen Implementierung hoch. Die Benutzung des MOP ein
+erheblicher Gewinn gegenüber den herkömmlichen Programmiermethoden, da nach
+einer Implementierung Ausdrucksstärkerer Quelltext vorliegt, der die Lesbarkeit
+fördert.
+Eine zukünftige Verwendung von DSLs und dem MOP ist nach dieser Arbeit für den
+Author fasst nicht mehr wegzudenken, da der Nutzen gegenüber dem Aufwand des
+Erstellens deutlich überwiegt. Lediglich bei der Erlernung der Konzepte gab es
+einen deutlichen Mehraufwand.
+ 
+\chapter{Zusammenfassung und Ausblick}
 
-\subsection{Beurteilung des Domänenexperten}
-
-\subsection{Beurteilung der Meta-Programmierungstools von Grovvy} 
-Einfacher da kein aufwand für gui zu betreiben ist.
- - history wie bei einem vcs mit benutzen\ldots
-\chapter{Zusammenfassung und Schlussbetrachtung}
-
-
+Sprachorientierte Programmierung wurde in dieser Arbeit betrachtet. Als
+Mittel für die Erstellung einer DSL wurde die Groovy-MOP verwendet, weil die
+Wirtssprache des PMS auch Groovy ist. Die erstellte DSL
+diente als Bewertungsgrundlage dieses Paradigmas aus der Sicht des
+Programmierers und aus der des Domänenexperten. 
+In zukünftigen Arbeiten ist die Verwendung einer ``Language Workbench''\cite{fowler2005language}
+unvermeidbar, um die Akzeptanz der Domänenexperten noch weiter zu steigern.
  
  
 \bibliographystyle{alphadin}
