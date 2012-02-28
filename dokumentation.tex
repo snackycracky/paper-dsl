@@ -146,9 +146,7 @@ Domänenexperten, die keine Erfahrung mit Programmierung haben, sollen an
 interne DSLs für deren bekannte Domäne herangeführt werden, um diese
 anschließend nach Lesbarkeit, intuitivem Verständnis und Flexibilität zu
 bewerten. Dabei bekommen die Probanden mehrere Aufgaben, die mit den
-gegebenen DSLs zu lösen sind.
- 
- %TODO erwartungen?
+gegebenen DSLs zu lösen sind. 
  
 \section{Gliederung}
 
@@ -400,14 +398,6 @@ einzukapseln, sondern nimmt an, dass dieses Wissen nicht
 vorhanden oder irrelevant ist. '' \cite{dsmUhrenArtikel}
  
 
-\section{Metaprogrammierung}\label{metaprogrammingLabel}
-
-Mittels Metaprogrammierung ist ein Programmierer in der Lage, Quelltext zur
-Laufzeit zu ändern. Ein Meta-Objekt-Protokoll (MOP) stellt diese dafür
-benötigten Mittel bereit.
-
-
-
 \section{Interne DSLs mit Groovy}
 
 Groovy wurde entworfen, um auf der JVM (Java Virtual Machine)
@@ -430,6 +420,29 @@ In den nächsten Abschnitten handelt diese Arbeit von den wichtigsten Features
 dieser Programmiersprache, die sich für die Erstellung einer internen DSL
 eignen. 
 
+
+\subsection{Syntaxeigentschaften}
+
+Bei ``top-level'' Ausdrücken wie z.B. \texttt{println(``x'')} ist es erlaubt,
+die Klammern wegzulassen: \texttt{println ``x'' }
+ 
+Wenn der letzte Parameter einer einer Methode eine Closure ist, dann kann die
+Closure auch ausserhalb des Methodenaufrufs geschrieben werden:
+``\texttt{list.each()\{ println it \}}''. Die Klammern können auch weggelassen
+werden: ``\texttt{list.each \{ println it \}}''.  
+  
+Bei Klassenmethoden können bei deren Aufruf die
+Klammern nicht weggelassen werden. Bei Zuweisungen ebenfalls nicht ``\texttt{def
+x = methodenName y}''.
+   
+ 
+\section{Metaprogrammierung}\label{metaprogrammingLabel}
+
+Mittels Metaprogrammierung ist ein Programmierer in der Lage, Quelltext zur
+Laufzeit zu ändern. Ein Meta-Objekt-Protokoll (MOP) stellt diese dafür
+benötigten Mittel bereit.
+ 
+ 
 
 \section{Die MOP Leistungsträger}
 Das MOP besteht aus den Haupt-Leistungsträgern: ``Metaclass'',
@@ -524,23 +537,7 @@ Methoden können auch überladen werden. Konstruktoren können hinzugefügt oder
 überschrieben werden. 
   
 
-
-\subsection{Syntaxeigentschaften}
-
-Bei ``top-level'' Ausdrücken wie z.B. \texttt{println(``x'')} ist es erlaubt,
-die Klammern wegzulassen: \texttt{println ``x'' }
  
-Wenn der letzte Parameter einer einer Methode eine Closure ist, dann kann die
-Closure auch ausserhalb des Methodenaufrufs geschrieben werden:
-``\texttt{list.each()\{ println it \}}''. Die Klammern können auch weggelassen
-werden: ``\texttt{list.each \{ println it \}}''.  
-  
-Bei Klassenmethoden können bei deren Aufruf die
-Klammern nicht weggelassen werden. Bei Zuweisungen ebenfalls nicht ``\texttt{def
-x = methodenName y}''.
- 
- \subsection{Command Expressions}
- %TODO
 
 
  
