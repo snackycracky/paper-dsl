@@ -1,6 +1,3 @@
-%TODO Verständnis:
-
- 
  
  
 \documentclass[11pt,english,ngerman, headsepline]{scrreprt}
@@ -171,9 +168,7 @@ Repräsentation von DSLs abzielen. “Natural language processing” soll nur
 oberflächlich betrachtet werden. Der praktische Teil berichtet ausschließlich
 über die Groovy-Metaprogrammierung. 
 Es werden nur interne DSLs betrachtet und es findet kein Vergleich zu externen
-DSLs statt.
-
-%TODO nu interne DSLs werden praktisch angewendet.s und kein MPS
+DSLs statt. 
 
 \chapter{ Sprachorientierte Programmierung} 
 
@@ -486,8 +481,8 @@ Die \texttt{MetaClass} Klasse wird dadurch referenziert.
 %TODO der folgende satz klingt komisch... "ist kein ..." besser "besteht kein solches"...
 
 Verwendeten Java-Klassen implementieren dieses Interface nicht. Die 
-\texttt{MetaClass} wird trotzdem denen zugewiesen und in einer
-\texttt{MetaClass}-Registrierung \cite{fowler2003patterns}
+\texttt{MetaClass} wird den Klassen auch zugewiesen und in einer
+\texttt{MetaClass}-Registrierung (Registry Muster \cite{fowler2003patterns})
 verwaltet.
 In der \texttt{MetaClass} werden alle Metainformationen der eigentlichen Klasse
 verwaltet. Die \texttt{MetaClass} erlaubt es, nach dem Expando (Abschnitt
@@ -836,7 +831,7 @@ Da aber die Zimmerkategorien auf kein Feld innerhalb des Domänenmodells
 referenziert sind, muss ein erneutes Mapping erfolgen. Trivial wäre es in dem
 Domänenobjekt eine Kopie auf \texttt{estateRoomTypes} zu machen. Da aber so
 keine Kapselung erreichen wird ist es notwendig ein Wrapper-Objekt
-(Adapter-Pattern)
+(Adapter-Muster)
  \cite{gamma1995design} zu erstellen und das an die DSL zu binden (Code Listing
  \ref{EstateDSLWrapper.groovy}).
  
@@ -939,7 +934,7 @@ ca. 90\% der Konzepte beispielhaft dargestellt sind.
 
 \lstinputlisting[caption={DSL Beispiel},
 label={finalDSLComplete.dsl},style=default]{code/finalDSLComplete.dsl}
-
+ 
 Dabei sei nochmals auf folgende besondere Konstruktion hingewiesen: \texttt{tage
 von:
 heute, bis: ereignis.start} (Ziele 15). Das ist eine spezielle Notation in
@@ -980,7 +975,7 @@ verifizieren.
 Durch die Codezeilen-Eigenschaft eines Berechnungsbestandteils kann die
 Abarbeitungssequenz dargestellt werden. Die drei Schleifen werden abgebildet und
 die einzelnen Ausdrücke innerhalb der Schleifen, wie z.B. \texttt{wenn
-TagInnerhalbEreignis dann 10 prozent tagesPreis} oder \texttt{Tagespreis =
+TagInnerhalbEreignis dann 10 prozent tagesPreis} oder\\ \texttt{Tagespreis =
 Zimmertyp.Grundpreis}. Die grau markierten Instanzen sollen farblich darstellen,
 dass es sich um ein und dasselbe handelt. 
 
@@ -1084,19 +1079,21 @@ fördert.
 Eine zukünftige Verwendung von DSLs und dem MOP ist nach dieser Arbeit für den
 Autor fast nicht mehr wegzudenken, da der Nutzen den Aufwand beim 
 Erstellen deutlich überwiegt. Lediglich beim Lernen der Konzepte gab es
-einen deutlichen Mehraufwand.
+einen deutlichen Mehraufwand. 
  
-\chapter{Zusammenfassung und Ausblick}
+\section{Zusammenfassung und Ausblick}
 
 Sprachorientierte Programmierung wurde in dieser Arbeit betrachtet. Als
 Mittel für die Erstellung einer DSL wurde die Groovy-MOP verwendet, weil die
 Wirtssprache des PMS auch Groovy ist. Die erstellte DSL
 diente als Bewertungsgrundlage dieses Paradigmas aus der Sicht des
 Programmierers und aus der des Domänenexperten. 
-In zukünftigen Arbeiten ist die Verwendung einer ``Language Workbench''\cite{fowler2005language}
-unvermeidbar, um die Akzeptanz der Domänenexperten noch weiter zu steigern.
-
- 
+In zukünftigen Arbeiten ist die Verwendung von geeigneten Editoren für DSLs 
+unvermeidbar, um das Paradigma Sprachorientierte Programmierung noch besser
+anwendbar zu machen.  ``Language Workbenches'' bieten eine vielversprechende
+Lösung (\cite{10.1109/MS.2011.139}, \cite{fowler2005language}
+ \cite{dmitriev2004}, \cite{fowler2011domain}).
+    
 \bibliographystyle{alphadin}
 \clearpage\addcontentsline{toc}{chapter}{\bibname}\bibliography{jabref}
 \appendix

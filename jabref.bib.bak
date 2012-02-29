@@ -46,6 +46,19 @@
   publisher = {IEEE Computer Society}
 }
 
+@ARTICLE{dmitriev2004,
+  author = {Dmitriev, Sergey},
+  title = {{Language Oriented Programming: The Next Programming Paradigm}},
+  year = {2004},
+  added-at = {2011-08-22T14:33:27.000+0200},
+  biburl = {http://www.bibsonomy.org/bibtex/2141f0c8425b8136fd24f821a04fd7a7f/maxirichter},
+  interhash = {d5a6f1d2351459f2846172590f1b19f2},
+  intrahash = {141f0c8425b8136fd24f821a04fd7a7f},
+  keywords = {lop mps programming},
+  timestamp = {2011-08-22T14:33:27.000+0200},
+  url = {http://www.onboard.jetbrains.com/is1/articles/04/10/lop/mps.pdf}
+}
+
 @MISC{fowler2005fluent,
   author = {Fowler, M.},
   title = {Fluent interface},
@@ -271,6 +284,19 @@
   url = {http://de.wikipedia.org/wiki/Groovy},
   owner = {nils},
   timestamp = {2012.02.20}
+}
+
+@ARTICLE{10.1109/MS.2011.139,
+  author = {Markus Volter},
+  title = {From Programming to Modeling - and Back Again},
+  journal = {IEEE Software},
+  year = {2011},
+  volume = {28},
+  pages = {20-25},
+  address = {Los Alamitos, CA, USA},
+  doi = {http://doi.ieeecomputersociety.org/10.1109/MS.2011.139},
+  issn = {0740-7459},
+  publisher = {IEEE Computer Society}
 }
 
 @ELECTRONIC{wikiAbsraktion,
