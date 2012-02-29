@@ -661,9 +661,10 @@ Grundlage des semantischen Modells erstellt wurde, sondern rein intuitiv auf
 Basis von bekanntem Domänenwissen. Da sich das semantische Modell als das einer
 Bash-Script-Sequenz mit Schleifen herausstellte, ist es nicht verwunderlich,
 dass ein Programmierer mit langjähriger Erfahrung dies auch ohne Schema erstellen
-konnte.
-Begonnen wurde mit einem TestTreiber, der eine Textdatei einliest und diese
-interpretiert bzw. evaluiert.
+konnte. Markus Völter beschreibt dazu in seinem
+Artikel\cite{10.1109/MS.2011.139}, dass die Schwelle zwischen Programmieren und Modellieren immer kleiner wird, was bei dieser
+Arbeit der Fall ist.
+Begonnen wurde mit einem TestTreiber, der eine Textdatei einliest und diese interpretiert bzw. evaluiert.
 Cliff James hat das in einem
 Tutorial\footnote{http://www.nextinstruction.com/blog/2012/01/08/creating-dsls-with-groovy/}
 bewerkstelligt und folgenden Trick angewendet:
@@ -932,7 +933,7 @@ eine Tagespreis-Manipulation durchzuführen.
 Code Listing \ref{finalDSLComplete.dsl} zeigt eine mögliche Form der DSL, in der
 ca. 90\% der Konzepte beispielhaft dargestellt sind.  
 
-\lstinputlisting[caption={DSL Beispiel},
+\lstinputlisting[caption={DSL für Preispolitik},
 label={finalDSLComplete.dsl},style=default]{code/finalDSLComplete.dsl}
  
 Dabei sei nochmals auf folgende besondere Konstruktion hingewiesen: \texttt{tage
